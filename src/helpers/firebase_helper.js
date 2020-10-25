@@ -1,5 +1,5 @@
 import firebase from "firebase/app";
-
+import {Auth} from "aws-amplify"
 // Add the Firebase products that you want to use
 import "firebase/auth";
 import "firebase/firestore";
@@ -62,12 +62,11 @@ class FirebaseAuthBackend {
    */
   loginUser = (email, password) => {
     return new Promise((resolve, reject) => {
-      firebase
-        .auth()
-        .signInWithEmailAndPassword(email, password)
+      Auth
+        .signIn(email, password)
         .then(
           user => {
-            resolve(firebase.auth().currentUser);
+            resolve(user);
           },
           error => {
             reject(this._handleError(error));

@@ -7,7 +7,9 @@ import './i18n';
 import { Provider } from 'react-redux';
 
 import store from './store';
-
+import Amplify from "aws-amplify"
+import config from "./aws-exports"
+Amplify.configure(config)
 const app = (
     <Provider store={store}>
         <BrowserRouter>
