@@ -6,7 +6,7 @@ import { profileSuccess, profileError } from './actions';
 
 //Include Both Helper File with needed methods
 import { getFirebaseBackend } from '../../../helpers/firebase_helper';
-import { postFakeProfile, postJwtProfile  } from '../../../helpers/fakebackend_helper';
+import { postFakeProfile, postJwtProfile  } from '../../../helpers/cognito';
  
 const fireBaseBackend = getFirebaseBackend();
 

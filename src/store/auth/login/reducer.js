@@ -1,8 +1,9 @@
-import { LOGIN_USER, LOGIN_SUCCESS, LOGOUT_USER, LOGOUT_USER_SUCCESS, API_ERROR } from './actionTypes';
+import { LOGIN_USER, LOGIN_SUCCESS, LOGOUT_USER, LOGOUT_USER_SUCCESS, API_ERROR, MODAL_PASSWORD } from './actionTypes';
 
 const initialState = {
     error: "",
-    loading: false
+    loading: false,
+    modalAlterPassword: false
 }
 
 const login = (state = initialState, action) => {
@@ -22,6 +23,9 @@ const login = (state = initialState, action) => {
         case LOGOUT_USER:
             state = { ...state };
             break;
+        case MODAL_PASSWORD:
+            state = { ...state, modalAlterPassword: action.payload };
+                break;
         case LOGOUT_USER_SUCCESS:
             state = { ...state };
             break;

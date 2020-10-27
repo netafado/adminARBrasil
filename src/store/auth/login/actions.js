@@ -1,4 +1,4 @@
-import { LOGIN_USER, LOGIN_SUCCESS, LOGOUT_USER, LOGOUT_USER_SUCCESS, API_ERROR } from './actionTypes';
+import { LOGIN_USER, LOGIN_SUCCESS, LOGOUT_USER, LOGOUT_USER_SUCCESS, API_ERROR, MODAL_PASSWORD, MODAL_PASSWORD_REQUESTED } from './actionTypes';
 
 export const loginUser = (user, history) => {
     return {
@@ -13,6 +13,25 @@ export const loginSuccess = (user) => {
         payload: user
     }
 }
+
+export const modalChangePassword = (value) => {
+    console.log("value")
+    return {
+        type: MODAL_PASSWORD,
+        payload: value
+    }
+}
+
+export const modalChangePasswordInit = (value) => {
+    console.log("modalChangePasswordInit")
+    return {
+        type: MODAL_PASSWORD_REQUESTED,
+        payload: value
+    }
+}
+
+
+
 
 export const logoutUser = (history) => {
     return {
