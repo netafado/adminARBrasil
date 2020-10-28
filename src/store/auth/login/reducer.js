@@ -1,9 +1,10 @@
-import { LOGIN_USER, LOGIN_SUCCESS, LOGOUT_USER, LOGOUT_USER_SUCCESS, API_ERROR, MODAL_PASSWORD } from './actionTypes';
+import { LOGIN_USER, LOGIN_SUCCESS, LOGOUT_USER, LOGOUT_USER_SUCCESS, API_ERROR, SET_USER_SUCCESS } from './actionTypes';
 
 const initialState = {
     error: "",
     loading: false,
-    modalAlterPassword: false
+    modalAlterPassword: false,
+    user: null
 }
 
 const login = (state = initialState, action) => {
@@ -17,15 +18,22 @@ const login = (state = initialState, action) => {
         case LOGIN_SUCCESS:
             state = {
                 ...state,
-                loading: false
+                loading: false,
+                user: action.payload
+            }
+            break;
+
+        case SET_USER_SUCCESS:
+            state = {
+                ...state,
+                loading: false,
+                user: action.payload
             }
             break;
         case LOGOUT_USER:
             state = { ...state };
             break;
-        case MODAL_PASSWORD:
-            state = { ...state, modalAlterPassword: action.payload };
-                break;
+
         case LOGOUT_USER_SUCCESS:
             state = { ...state };
             break;

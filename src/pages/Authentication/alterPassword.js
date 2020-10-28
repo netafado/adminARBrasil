@@ -1,10 +1,11 @@
 import React from 'react';
 
-import { Row, Col, CardBody, Card, Alert,Container, Modal } from "reactstrap";
+import { Row, Col, CardBody, Card, Alert,Container } from "reactstrap";
 
 // Redux
 import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
+import {useSelector} from "react-redux"
 
 // availity-reactstrap-validation
 import { AvForm, AvField } from 'availity-reactstrap-validation';
@@ -12,6 +13,7 @@ import { AvForm, AvField } from 'availity-reactstrap-validation';
 // actions
 import { loginUser,apiError } from '../../store/actions';
 
+import {Auth} from "aws-amplify"
 // import images
 import profile from "../../assets/images/profile-img.png";
 import logo from "../../assets/images/SVG/simboloARr.svg";
@@ -19,16 +21,25 @@ import logo from "../../assets/images/SVG/simboloARr.svg";
 import toastr from 'toastr'
 import 'toastr/build/toastr.min.css'
 
- const Login = (props) => {
-    // handleValidSubmit
 
 
-  function  handleValidSubmit(event, values) {
-        toastr.info("teste","teste")
-        props.loginUser(values, props.history);
+const AlterPassword = (props) => {
+    const user = useSelector(state => state.Login.user)
+    const passwordChanced = (data) => {
+        toastr.success("Sua senha foi alterada", "Senha alterada")
     }
-          return (
-             <React.Fragment>
+    const passwordChancedFailed = (e) =>{
+        toastr.error("Erro ao alterar senha",e)
+
+    }
+    async function changePassword(event, values) {
+        await Auth.completeNewPassword(user, values.oldPassword, values.newpassword)
+        .then( data => passwordChanced(data) )
+        .catch(err => passwordChancedFailed(err))
+    }
+       
+    return (
+        <React.Fragment>
                 <div className="home-btn d-none d-sm-block">
                     <Link to="/" className="text-dark"><i className="fas fa-home h2"></i></Link>
                 </div>
@@ -41,8 +52,8 @@ import 'toastr/build/toastr.min.css'
                                         <Row>
                                             <Col className="col-7">
                                                 <div className="text-primary p-4">
-                                                    <h5 className="text-primary">Seja bem-vindo!</h5>
-                                                    <p>Entre no sistema com email e senha.</p>
+                                                    <h5 className="text-primary">Trocar senha!</h5>
+                                                    <p>Antes de prosseguir altere sua senha.</p>
                                                 </div>
                                             </Col>
                                             <Col className="col-5 align-self-end">
@@ -62,30 +73,23 @@ import 'toastr/build/toastr.min.css'
                                         </div>
                                         <div className="p-2">
 
-                                            <AvForm className="form-horizontal" onValidSubmit={(e,v) => { handleValidSubmit(e,v) }}>
+                                            <AvForm className="form-horizontal" onValidSubmit={(e,v) => { changePassword(e,v) }}>
 
                                                 {props.error && props.error ? <Alert color="danger">{props.error}</Alert> : null}
 
                                                 <div className="form-group">
-                                                    <AvField name="email" label="E-mail" errorMessage="Campo obrigatório"  className="form-control" placeholder="Seu email" type="email" required />
+                                                    <AvField name="oldPassword" label="Senha atual" errorMessage="Campo obrigatório"  className="form-control" placeholder="Senha atual" type="password" required />
                                                 </div>
 
                                                 <div className="form-group">
-                                                    <AvField name="password" label="Password"  errorMessage="Campo obrigatório" type="password" required placeholder="Enter Password" />
+                                                    <AvField name="newPassword" label="Nova Senha"  errorMessage="Campo obrigatório" type="password" required placeholder="Nova senha" />
                                                 </div>
 
-                                                <div className="custom-control custom-checkbox">
-                                                    <input type="checkbox" className="custom-control-input" id="customControlInline" />
-                                                    <label className="custom-control-label" htmlFor="customControlInline">lembrar</label>
-                                                </div>
 
                                                 <div className="mt-3">
-                                                    <button className="btn btn-primary btn-block waves-effect waves-light" type="submit">Entrar</button>
+                                                    <button className="btn btn-primary btn-block waves-effect waves-light" type="submit">Trocar senha</button>
                                                 </div>
 
-                                                <div className="mt-4 text-center">
-                                                    <Link to="/forgot-password" className="text-muted"><i className="mdi mdi-lock mr-1"></i> Esqueceu sua senha</Link>
-                                                </div>
                                             </AvForm>
                                         </div>
                                     </CardBody>
@@ -106,5 +110,5 @@ const mapStatetoProps = state => {
     return { error };
 }
 
-export default withRouter(connect(mapStatetoProps, { loginUser,apiError })(Login));
+export default withRouter(connect(mapStatetoProps, { loginUser,apiError })(AlterPassword));
 

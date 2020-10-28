@@ -99,10 +99,10 @@ class FirebaseAuthBackend {
    */
   logout = () => {
     return new Promise((resolve, reject) => {
-      firebase
-        .auth()
+      Auth
         .signOut()
-        .then(() => {
+        .then((data) => {
+          console.log("lig out", data)
           resolve(true);
         })
         .catch(error => {
