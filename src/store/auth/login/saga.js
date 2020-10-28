@@ -41,10 +41,7 @@ function* logoutUser({ payload: { history } }) {
     }
 }
 
-
-
 function* setUser ({ payload }){
-    console.log(payload)
     yield put (setUserSucess(payload))
 } 
 
