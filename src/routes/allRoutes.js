@@ -10,12 +10,19 @@ import ForgetPwd from "../pages/Authentication/ForgetPassword";
 
 // Dashboard
 import Dashboard from "../pages/Dashboard/index";
+import Clientes from "../pages/clientes";
+import ClientesAdd from "../pages/clientes/addCliente";
+import Tecnicos from "../pages/tecnico";
 
 const userRoutes = [
 
 	{ path: "/dashboard", component: Dashboard },
+	{ path: "/clientes", component: Clientes, exact: true },
+	{ path: "/clientes-adicionar", component: ClientesAdd },
+	{ path: "/tecnicos", component: Tecnicos },
 
-	// this route should be at the end of all other routes
+	
+
 	{ path: "/", exact: true, component: () => <Redirect to="/dashboard" /> }
 ];
 

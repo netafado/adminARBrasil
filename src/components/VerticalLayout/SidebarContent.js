@@ -76,6 +76,38 @@ const SidebarContent = (props) => {
                                     <li><Link to="/dashboard">{props.t('Default') }</Link></li>
                                 </ul>
                      </li>
+                     <li className="menu-title">{props.t('Usuários') }</li>
+                     <li>
+                        <Link to="/#" className="has-arrow waves-effect">
+                            <i className="bx bxs-user-detail"></i>
+                            <span>{props.t('Cliente') }</span>
+                        </Link>
+                        <ul className="sub-menu" aria-expanded="false">
+                            <li><Link to="/clientes">{props.t('lista de cliente') }</Link></li>
+                            <li><Link to="ecommerce-product-detail">{props.t('Criar novo') }</Link></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <Link to="/#" className="has-arrow waves-effect">
+                            <i className="bx bx-user-circle"></i>
+                            <span>{props.t('Técnicos') }</span>
+                        </Link>
+                        <ul className="sub-menu" aria-expanded="false">
+                            <li><Link to="/tecnicos">{props.t('Lista de técnicos') }</Link></li>
+                            <li><Link to="ecommerce-product-detail">{props.t('Criar novo') }</Link></li>
+                        </ul>
+                    </li>
+                    <li className="menu-title">{props.t('Chamados') }</li>
+                    <li>
+                        <Link to="/#" className="has-arrow waves-effect">
+                            <i className="bx bxs-detail"></i>
+                            <span>{props.t('Chamados')}</span>
+                        </Link>
+                        <ul className="sub-menu" aria-expanded="false">
+                            <li><Link to="ecommerce-products">{props.t('Lista de chamados') }</Link></li>
+                            <li><Link to="ecommerce-product-detail">{props.t('Criar novo') }</Link></li>
+                        </ul>
+                    </li>
                 </ul>
             </div>
             </React.Fragment>

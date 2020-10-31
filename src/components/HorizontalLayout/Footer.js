@@ -8,11 +8,11 @@ const Footer = (props) => {
                 <Container fluid={true}>
                     <Row>
                         <Col md={6}>
-                            {new Date().getFullYear()} © Skote.
+                            {new Date().getFullYear()} © ARBRASIL.
                         </Col>
                         <Col md={6}>
                             <div className="text-sm-right d-none d-sm-block">
-                                Design & Develop by Themesbrand
+                                Design & Develop by Isaias
                             </div>
                         </Col>
                     </Row>
