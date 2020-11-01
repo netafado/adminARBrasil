@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from "react-router-dom";
-import { Col, Card, CardBody, UncontrolledTooltip, Media, Badge } from "reactstrap";
+import { Col, Card, CardBody, UncontrolledTooltip, Media, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from "reactstrap";
 
 
 const CardProject = (props) => {
@@ -10,74 +10,53 @@ const CardProject = (props) => {
                 {
                     props.projects.map((project, key) =>
                         <Col xl="4" sm="6" key={"_project_" + key} >
+                            
                             <Card>
-                                <CardBody>
-                                    <Media>
-                                        <div className="avatar-md mr-4">
-                                            <span className="avatar-title rounded-circle bg-light text-danger font-size-16">
-                                                <img src={project.img} alt="" height="30" />
-                                            </span>
-                                        </div>
-
-                                        <Media className="overflow-hidden" body>
-                                            <h5 className="text-truncate font-size-15"><Link to="#" className="text-dark">{project.name}</Link></h5>
-                                            <p className="text-muted mb-4">{project.description}</p>
-
-                                            <div className="team">
-                                                {
-                                                    project.child.map((team, key) =>
-                                                        team.img !== "Null"
-                                                            ?
-                                                            <Link to="#" className="team-member d-inline-block" id={"member" + team.id} key={"_team_" + key}>
-                                                                
-                                                                <p className="text-muted mb-4"><img src={team.img} className="rounded-circle avatar-xs m-1" alt="" /> {team.name}</p>
-                                                                <p className="text-muted mb-4">{team.tel || " "}</p>
-                                                                <UncontrolledTooltip placement="top" target={"member" + team.id}>
-                                                                    {team.name}
-                                                                </UncontrolledTooltip>
-                                                            </Link>
-                                                            :
-                                                            <Link to="#" className="team-member d-inline-block" id={"member" + team.id} key={"_team_" + key}>
-                                                                <div className="avatar-xs m-1">
-                                                                    
-                                                                    <span className={"avatar-title rounded-circle bg-soft-" + team.color + " text-" + team.color + " font-size-16"}>
-                                                                        {team.name.charAt(0)}
-                                                                    </span>
-                                                                    <UncontrolledTooltip placement="top" target={"member" + team.id}>
-                                                                        {team.name}
-                                                                    </UncontrolledTooltip>
-                                                                </div>
-                                                                <p className="text-muted mb-4">{team.tel || " "}</p>
-                                                            </Link>
-                                                    )
-                                                }
+                                <Link to="/cliente">
+                                    <CardBody>
+                                        <Media>
+                                            <div className="avatar-md mr-4">
+                                                <span className="avatar-title rounded-circle bg-light text-danger font-size-16">
+                                                    <img src={project.img} alt="" height="30" />
+                                                </span>
                                             </div>
+
+                                            <Media className="overflow-hidden" body>
+                                                <h5 className="text-truncate font-size-15"><Link to="#" className="text-dark">{project.name}</Link></h5>
+                                                <p className="text-muted mb-1">CNPJ: 200.222.01/111</p>
+                                                <p className="text-muted mb-1">tel: (22) 988 3455</p>
+                                                <p className="text-muted mb-1">contrato até: 22/02/2020</p>
+                                            </Media>
                                         </Media>
-                                    </Media>
-                                </CardBody>
+                                    </CardBody>
+                                </Link>
                                 <div className="px-4 py-3 border-top">
                                     <ul className="list-inline mb-0">
-                                        <li className="list-inline-item mr-3" id="Produtos">
-                                            <i className="bx bx-calendar mr-1"></i> 324
-                                            <UncontrolledTooltip placement="top" target="Produtos">
-                                                Chamados
-                                            </UncontrolledTooltip>
-                                        </li>
-                                        <li className="list-inline-item mr-3" id="dueDate">
-                                            <i className="bx bx-calendar mr-1"></i> {project.date}
-                                            <UncontrolledTooltip placement="top" target="dueDate">
-                                                Termino do contrato
-                                    </UncontrolledTooltip>
-                                        </li>
+
+
                                         <li className="list-inline-item mr-3" id="comments">
-                                            <i className="bx bx-comment-dots mr-1"></i> {project.comments}
+                                            <i className="bx bxs-detail mr-1"></i> {project.comments}
                                             <UncontrolledTooltip placement="top" target="comments">
-                                                Chamados
-                                    </UncontrolledTooltip>
+                                               Chamados
+                                        </UncontrolledTooltip>
                                         </li>
+                                        <li className="list-inline-item mr-3 float-right">
+                                            <UncontrolledDropdown>
+                                                <DropdownToggle href="#" className="card-drop" tag="i">
+                                                    <i className="mdi mdi-dots-horizontal font-size-18"></i>
+                                                </DropdownToggle>
+                                                <DropdownMenu>
+                                                    <DropdownItem tag={Link} to="/clientes-adicionar"><i className="mdi mdi-pencil font-size-16 text-success mr-2"></i>Editar</DropdownItem>
+                                                    <DropdownItem href="#"><i className="mdi mdi-trash-can font-size-16 text-danger mr-2"></i>Deletar</DropdownItem>
+                                                </DropdownMenu>
+                                            </UncontrolledDropdown>
+                                        </li>
+
                                     </ul>
                                 </div>
                             </Card>
+                            
+
                         </Col>
                     )
                 }

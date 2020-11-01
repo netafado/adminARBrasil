@@ -64,10 +64,7 @@ const options = [
                                                         <Label htmlFor="productname">Nome</Label>
                                                         <Input id="productname" name="productname" type="text" className="form-control" />
                                                     </FormGroup>
-                                                    <FormGroup>
-                                                        <Label htmlFor="manufacturername">CNPJ  </Label>
-                                                        <Input id="manufacturername" name="manufacturername" type="text" className="form-control" />
-                                                    </FormGroup>
+
                                                     <FormGroup>
                                                         <Label htmlFor="manufacturerbrand">CEP</Label>
                                                         <Input id="manufacturerbrand" name="manufacturerbrand" type="text" className="form-control" />
@@ -76,54 +73,50 @@ const options = [
                                                         <Label htmlFor="price">Enredeço</Label>
                                                         <Input id="price" name="price" type="text" className="form-control" />
                                                     </FormGroup>
+                                                    <FormGroup>
+                                                        <Label htmlFor="price">Bairro</Label>
+                                                        <Input id="price" name="price" type="text" className="form-control" />
+                                                    </FormGroup>
+                                                    <FormGroup>
+                                                        <Label htmlFor="price">Estado</Label>
+                                                        <Input id="price" name="price" type="text" className="form-control" />
+                                                    </FormGroup>
                                                 </Col>
 
                                                 <Col sm="6">
                                                     <FormGroup>
-                                                        <Label className="control-label">Category</Label>
-                                                        <select className="form-control select2">
-                                                            <option>Select</option>
-                                                            <option value="AK">Alaska</option>
-                                                            <option value="HI">Hawaii</option>
-                                                        </select>
+                                                        <Label htmlFor="manufacturername">CNPJ  </Label>
+                                                        <Input id="manufacturername" name="manufacturername" type="text" className="form-control" />
                                                     </FormGroup>
-                                                    <FormGroup className="select2-container">
-                                                        <Label className="control-label">Features</Label>
-                                                        <Select classNamePrefix="select2-selection" placeholder="Chose..." title="Country" options={options} isMulti />
-                                                    </FormGroup>
+
                                                     <FormGroup>
-                                                        <Label htmlFor="productdesc">Product Description</Label>
-                                                        <textarea className="form-control" id="productdesc" rows="5"></textarea>
+                                                        <Label htmlFor="productdesc">Logo da emppresa</Label>
+                                                        <Dropzone
+                                                            onDrop={acceptedFiles => { handleAcceptedFiles(acceptedFiles) }
+                                                            }
+                                                            >
+                                                                {({ getRootProps, getInputProps }) => (
+                                                                    <div className="dropzone">
+                                                                        <div
+                                                                            className="dz-message needsclick"
+                                                                            {...getRootProps()}
+                                                                        >
+                                                                            <input {...getInputProps()} />
+                                                                            <div className="dz-message needsclick">
+                                                                                <div className="mb-3">
+                                                                                    <i className="display-4 text-muted bx bxs-cloud-upload"></i>
+                                                                                </div>
+                                                                                <h4>Logo da Empresa</h4>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                )}
+                                                        </Dropzone>
                                                     </FormGroup>
 
                                                 </Col>
-                                                <Col sm="12">
-                                                <Dropzone
-                                                onDrop={acceptedFiles => { handleAcceptedFiles(acceptedFiles) }
-                                                }
-                                            >
-                                                {({ getRootProps, getInputProps }) => (
-                                                    <div className="dropzone">
-                                                        <div
-                                                            className="dz-message needsclick"
-                                                            {...getRootProps()}
-                                                        >
-                                                            <input {...getInputProps()} />
-                                                            <div className="dz-message needsclick">
-                                                                <div className="mb-3">
-                                                                    <i className="display-4 text-muted bx bxs-cloud-upload"></i>
-                                                                </div>
-                                                                <h4>Logo da Empresa</h4>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                )}
-                                            </Dropzone>
-                                                </Col>
-                                            </Row>
 
-                                            <Button type="submit" color="primary" className="mr-1 waves-effect waves-light">Save Changes</Button>
-                                            <Button type="submit" color="secondary" className="waves-effect">Cancel</Button>
+                                            </Row>
                                         </Form>
 
                                     </CardBody>
@@ -132,34 +125,8 @@ const options = [
 
                                 <Card>
                                     <CardBody>
+                                        <Button type="submit" tag={Link} to="/cliente" color="primary" className="mr-1 waves-effect waves-light">Salvar</Button>
 
-                                        <CardTitle>Meta Data</CardTitle>
-                                        <CardSubtitle className="mb-3">Fill all information below</CardSubtitle>
-
-                                        <Form>
-                                            <Row>
-                                                <Col sm={6}>
-                                                    <FormGroup>
-                                                        <Label htmlFor="metatitle">Meta title</Label>
-                                                        <Input id="metatitle" name="productname" type="text" className="form-control" />
-                                                    </FormGroup>
-                                                    <FormGroup>
-                                                        <Label htmlFor="metakeywords">Meta Keywords</Label>
-                                                        <Input id="metakeywords" name="manufacturername" type="text" className="form-control" />
-                                                    </FormGroup>
-                                                </Col>
-
-                                                <Col sm={6}>
-                                                    <FormGroup>
-                                                        <Label htmlFor="metadescription">Meta Description</Label>
-                                                        <textarea className="form-control" id="metadescription" rows="5"></textarea>
-                                                    </FormGroup>
-                                                </Col>
-                                            </Row>
-
-                                            <Button type="submit" color="primary" className="mr-1 waves-effect waves-light">Save Changes</Button>
-                                            <Button type="submit" color="secondary" className="waves-effect">Cancel</Button>
-                                        </Form>
                                     </CardBody>
                                 </Card>
                             </Col>
