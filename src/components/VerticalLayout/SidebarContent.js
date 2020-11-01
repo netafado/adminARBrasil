@@ -94,7 +94,7 @@ const SidebarContent = (props) => {
                         </Link>
                         <ul className="sub-menu" aria-expanded="false">
                             <li><Link to="/tecnicos">{props.t('Lista de técnicos') }</Link></li>
-                            <li><Link to="ecommerce-product-detail">{props.t('Criar novo') }</Link></li>
+                            <li><Link to="/adicionar-tecnico">{props.t('Criar novo') }</Link></li>
                         </ul>
                     </li>
                     <li className="menu-title">{props.t('Aplicação') }</li>
@@ -110,7 +110,7 @@ const SidebarContent = (props) => {
                     </li>
                     <li>
                         <Link to="/#" className="has-arrow waves-effect">
-                            <i className="bx bxs-detail"></i>
+                            <i className="bx bxs-basket"></i>
                             <span>{props.t('Produtos')}</span>
                         </Link>
                         <ul className="sub-menu" aria-expanded="false">

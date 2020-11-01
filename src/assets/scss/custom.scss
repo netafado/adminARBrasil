@@ -57,3 +57,42 @@ margin-right: 15px;
 {
     background-color: #7cb342!important;
 }
+
+.fileinput .thumbnail{
+    display: inline-block;
+    margin-bottom: 10px;
+    overflow: hidden;
+    position: relative;
+    text-align: center;
+    vertical-align: middle;
+    width: 100%;
+    height: 250px;
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    box-shadow: 0 1px 15px 1px rgba(39,39,39,.1);   
+  }
+  
+  .fileinput input[type=file] {
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+  }
+
+  .fileinput .avatar-upload{
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+  }
+  
+  
+  .fileinput {
+    display: inline-block;
+    margin-bottom: 9px;
+    width: 100%;
+  }
+  

@@ -27,12 +27,15 @@ import { withNamespaces } from 'react-i18next';
      const [modal, setmodal] = useState(false);
 
           const reports = [
-                { title: "Em aberto", iconClass: "bx-copy-alt", description: "235" },
-                { title: "Em andamento", iconClass: "bx-archive-in", description: "723" },
-                { title: "Fechado sem solução", iconClass: "bx-purchase-tag-alt", description: "16" },
-                { title: "Resolvidos", iconClass: "bx-purchase-tag-alt", description: "6" }
+                { title: "Orders", iconClass: "bx-copy-alt", description: "1,235" },
+                { title: "Revenue", iconClass: "bx-archive-in", description: "$35, 723" },
+                { title: "Average Price", iconClass: "bx-purchase-tag-alt", description: "$16.2" }
             ];
-
+         const email = [
+                { title: "Week", linkto: "#", isActive: false },
+                { title: "Month", linkto: "#", isActive: false },
+                { title: "Year", linkto: "#", isActive: true }
+            ];
 
           return (
               <React.Fragment>
@@ -40,15 +43,18 @@ import { withNamespaces } from 'react-i18next';
                     <Container fluid>
 
                         {/* Render Breadcrumb */}
-                        <Breadcrumbs title={props.t('Dashboard')} breadcrumbItem={props.t('Central do cliente')} />
+                        <Breadcrumbs title={props.t('Dashboard')} breadcrumbItem={props.t('Dashboard')} />
 
                         <Row>
+                            <Col xl="12">
+                                <WelcomeComp />
+                            </Col>
                             <Col xl="12">
                                 <Row>
                                     {/* Reports Render */}
                                     {
                                         reports.map((report, key) =>
-                                            <Col md="3" key={"_col_" + key}>
+                                            <Col md="4" key={"_col_" + key}>
                                                 <Card className="mini-stats-wid">
                                                     <CardBody>
                                                         <Media>
@@ -68,10 +74,23 @@ import { withNamespaces } from 'react-i18next';
                                         )
                                     }
                                 </Row>
+
+
                             </Col>
                         </Row>
 
+                        <Row>
+                            <Col xl="4">
+                                <SocialSource />
+                            </Col>
+                            <Col xl="4">
+                                <ActivityComp />
+                            </Col>
 
+                            <Col xl="4">
+                                <TopCities />
+                            </Col>
+                        </Row>
 
                         <Row>
                             <Col lg="12">

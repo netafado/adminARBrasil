@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from "react-router-dom";
-import { Col, Card, CardBody, UncontrolledTooltip, Media, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from "reactstrap";
+import { Col, Card, CardBody, UncontrolledTooltip, Media, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem, Badge } from "reactstrap";
 
 
 const CardProject = (props) => {
@@ -25,20 +25,32 @@ const CardProject = (props) => {
                                                 <h5 className="text-truncate font-size-15"><Link to="#" className="text-dark">{project.name}</Link></h5>
                                                 <p className="text-muted mb-1">CNPJ: 200.222.01/111</p>
                                                 <p className="text-muted mb-1">tel: (22) 988 3455</p>
-                                                <p className="text-muted mb-1">contrato até: 22/02/2020</p>
+                                                <p className="text-muted mb-1">contrato 
+                                                {
+                                                    project.contrato ?
+                                                    <> <Badge color="success" className="mr-1">vigente</Badge> até: 22/02/2020</>
+                                                    :
+                                                    <> <Badge color="danger" className="mr-1">Sem contrato</Badge> ---</>
+                                                } 
+                                                
+                                                </p>
                                             </Media>
                                         </Media>
                                     </CardBody>
                                 </Link>
                                 <div className="px-4 py-3 border-top">
                                     <ul className="list-inline mb-0">
-
-
                                         <li className="list-inline-item mr-3" id="comments">
                                             <i className="bx bxs-detail mr-1"></i> {project.comments}
                                             <UncontrolledTooltip placement="top" target="comments">
                                                Chamados
-                                        </UncontrolledTooltip>
+                                            </UncontrolledTooltip>
+                                        </li>
+                                        <li className="list-inline-item mr-3" id="comments">
+                                            <i className="bx bxs-detail mr-1"></i> {project.comments}
+                                            <UncontrolledTooltip placement="top" target="comments">
+                                               Usurios
+                                            </UncontrolledTooltip>
                                         </li>
                                         <li className="list-inline-item mr-3 float-right">
                                             <UncontrolledDropdown>

@@ -1,17 +1,34 @@
 import React, {useState} from 'react';
 
 import { Link } from "react-router-dom";
-import {  Col, Button, Modal, FormGroup, Label, Input, Row } from "reactstrap";
+import {  Col, Button, Modal, FormGroup, Row } from "reactstrap";
 
+import { AvForm, AvField } from 'availity-reactstrap-validation';
 
+import  imageUrls from "../../assets/images/logoEmpresa.jpg"
 
 const ProjectsOverview = ({modal, toggle}) => {
 
+    const [ImgUrl, setImage] = useState(imageUrls)
+
+    const mudarImg = (e) => {
+        e.preventDefault();
+        const file = new FileReader();
+        const arquivo = e.target.files[0];
+        file.readAsDataURL(arquivo);
+
+        file.onloadend = (event) => {
+
+            setImage(event.target.result);
+
+        };
+    };
 
     return (
              <React.Fragment>
 
                 <Modal
+                    size="lg"
                     isOpen={modal}
                     toggle={() => { toggle() }}
                     centered={true}
@@ -31,42 +48,54 @@ const ProjectsOverview = ({modal, toggle}) => {
                     <div className="modal-body">
 
                     <Row>
-                        <Col sm="6">
-                            <FormGroup>
-                                <Label htmlFor="productname">Nome</Label>
-                                <input className="form-control" type="text" id="example-datetime-local-input" />
-                            </FormGroup>
+                    <Col sm={3}>
+                    <div className="fileinput text-center">
 
+                    <input type="file" onChange={mudarImg} accept="image/*"/>
+                        <div className="thumbnail avatar-upload" style={{backgroundImage: `url(${ImgUrl})`}}></div>
+                        <div><Button type="button" className="btn-round btn btn-secondary">Selecione a foto</Button></div>
+
+                    </div>
+                    </Col>
+                        <Col sm={9}>
+                        <AvForm>
+                            <Row>
+                                <Col sm="12">
+                                    <AvField name="nome" label="Nome" type="text" errorMessage="Campo obrigatório" validate={{
+                                        required: {value: true, errorMessage: 'Campo obrigatório'},
+                                    }} />
+                                </Col>
+                                <Col sm="12">
+                                    <AvField name="cpf" label="CPF" type="text" errorMessage="Campo obrigatório" validate={{
+                                        required: {value: true, errorMessage: 'Campo obrigatório'},
+                                    }} />
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col sm="12">
+                                    <AvField name="telefone" label="Telefone" type="text" errorMessage="Campo obrigatório" validate={{
+                                        required: {value: true, errorMessage: 'Campo obrigatório'},
+                                    }} />
+                                </Col>
+                                <Col sm="12">
+                                    < AvField name="email" label="Email" type="email" errorMessage="Campo obrigatório" validate={{
+                                        required: {value: true, errorMessage: 'Campo obrigatório'},
+                                        email: {value: true, errorMessage: "formato do email invalido"}
+                                    }} />
+                                </Col>
+                            </Row>
                             <FormGroup>
-                                <Label htmlFor="manufacturerbrand">Telefone</Label>
-                                <input className="form-control" type="text"  />
+                                <Button type="submit"  className="form-control" >Salvar</Button>
                             </FormGroup>
+                        </AvForm>
                         </Col>
-                        <Col sm="6">
-                            <FormGroup>
-                                <Label htmlFor="productname">Cargo</Label>
-                                <input className="form-control" type="text"  />
-                            </FormGroup>
-
-                            <FormGroup>
-                                <Label htmlFor="manufacturerbrand">email</Label>
-                                <input className="form-control" type="text"  />
-                            </FormGroup>
+                    
 
 
-                        </Col>
-                        <Col sm="12">
-                            <FormGroup>
-                                <Label htmlFor="price">Foto</Label>
-                                <Input id="price" name="price" type="file" className="form-control" />
-                            </FormGroup>
-                        </Col>
-                    </Row>
+                </Row>
                     </div>
                     <div className="modal-footer">
-                        <FormGroup>
-                            <Button  className="form-control" >Salvar</Button>
-                        </FormGroup>
+
                     </div>
                 </Modal>
     

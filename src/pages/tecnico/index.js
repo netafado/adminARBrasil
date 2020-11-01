@@ -99,7 +99,9 @@ const users = [
                             </Col>
                             <Col sm="8">
                                 <div className="text-sm-right">
-                                    <Button type="button" color="success" className="btn-rounded waves-effect waves-light mb-2 mr-2"><i className="mdi mdi-plus mr-1"></i> novo Cliente</Button>
+                                    <Button type="button" color="success" className="btn-rounded waves-effect waves-light mb-2 mr-2">
+                                        <i className="mdi mdi-plus mr-1"></i> novo Técnico
+                                    </Button>
                                 </div>
                             </Col>
                         </Row>

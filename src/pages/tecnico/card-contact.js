@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from "react-router-dom";
-import { Col, Card, CardBody, CardFooter, UncontrolledTooltip } from "reactstrap";
+import { Col, Card, CardBody, CardFooter, UncontrolledTooltip, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from "reactstrap";
 
 const CardContact = (props) => {
 
@@ -26,6 +26,17 @@ const CardContact = (props) => {
 
                             <h5 className="font-size-15"><Link to="#" className="text-dark">{user.name}</Link></h5>
                             <p className="text-muted">{user.designation}</p>
+                            <div className="position-absolute" style={{top: 10, right: 10}}>
+                            <UncontrolledDropdown right>
+                                <DropdownToggle href="#" className="card-drop" tag="i">
+                                    <i className="mdi mdi-dots-horizontal font-size-18"></i>
+                                </DropdownToggle>
+                                <DropdownMenu>
+                                    <DropdownItem tag={Link} to="/adicionar-tecnico"><i className="mdi mdi-pencil font-size-16 text-success mr-2"></i>Editar</DropdownItem>
+                                    <DropdownItem href="#"><i className="mdi mdi-trash-can font-size-16 text-danger mr-2"></i>Deletar</DropdownItem>
+                                </DropdownMenu>
+                            </UncontrolledDropdown>
+                            </div>
 
 
                         </CardBody>

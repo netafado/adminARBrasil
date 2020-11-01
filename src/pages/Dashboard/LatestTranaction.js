@@ -20,7 +20,7 @@ const LatestTranaction = (props) => {
                 <Card>
                     <CardBody>
                         <CardTitle className="mb-4">
-                            Latest Transaction
+                            Ùltimos chamados
                         </CardTitle>
                         <div className="table-responsive">
                             <table className="table table-centered table-nowrap mb-0">
@@ -32,13 +32,12 @@ const LatestTranaction = (props) => {
                                                 <label className="custom-control-label" htmlFor="customCheck1">&nbsp;</label>
                                             </div>
                                         </th>
-                                        <th>Order ID</th>
-                                        <th>Billing Name</th>
-                                        <th>Date</th>
-                                        <th>Total</th>
-                                        <th>Payment Status</th>
-                                        <th>Payment Method</th>
-                                        <th>View Details</th>
+                                        <th>ID</th>
+                                        <th>Empresa</th>
+                                        <th>Data</th>
+                                        <th>Responsavel</th>
+                                        <th>Status</th>
+                                        <th>Ação</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -61,9 +60,6 @@ const LatestTranaction = (props) => {
                                                 </td>
                                                 <td>
                                                     <Badge className={"font-size-12 badge-soft-" + transaction.badgeClass} color={transaction.badgeClass} pill>{transaction.paymentStatus}</Badge>
-                                                </td>
-                                                <td>
-                                                    <i className={"fab " + transaction.methodIcon + " mr-1"}></i> {transaction.paymentMethod}
                                                 </td>
                                                 <td>
                                                     <Button type="button" color="primary" size="sm" className="btn-rounded waves-effect waves-light">

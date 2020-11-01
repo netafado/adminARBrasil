@@ -6,7 +6,7 @@ import { AvForm, AvField } from 'availity-reactstrap-validation';
 //Import Breadcrumb
 import Breadcrumbs from '../../components/Common/Breadcrumb';
 
-import  imageUrls from "../../assets/images/logoEmpresa.jpg"
+import  imageUrls from "../../assets/images/users/avatar-1.jpg"
 
 
 const AdicionarCliente = (props) => {
@@ -43,33 +43,33 @@ const AdicionarCliente = (props) => {
                 <div className="page-content">
                     <Container fluid>
                         {/* Render Breadcrumb */}
-                        <Breadcrumbs title="Novo Cliente" breadcrumbItem="adicionar Cliente" />
+                        <Breadcrumbs title=" Técnico" breadcrumbItem="adicionar Técnico" />
                         <Row>
                             <Col xs="12">
                                 <Card>
                                     <CardBody>
-                                        <CardTitle>Informações da Empresa</CardTitle>
+                                        <CardTitle>Informações</CardTitle>
                                         <CardSubtitle className="mb-3">Preencha todos os campos abaixo</CardSubtitle>
                                         <AvForm>
                                             <Row>
                                                 <Col sm={3}>
                                                 <div className="fileinput text-center">
 
-                                                <input type="file" onChange={mudarImg} />
+                                                <input type="file" onChange={mudarImg} accept="image/*"/>
                                                     <div className="thumbnail avatar-upload" style={{backgroundImage: `url(${ImgUrl})`}}></div>
-                                                    <div><Button type="button" className="btn-round btn btn-secondary">Selecione o logo</Button></div>
+                                                    <div><Button type="button" className="btn-round btn btn-secondary">Selecione a foto</Button></div>
     
                                                 </div>
                                                 </Col>
                                                 <Col>
                                                     <Row>
                                                         <Col sm="6">
-                                                            <AvField name="nome" label="Nome do produto" type="text" errorMessage="Campo obrigatório" validate={{
+                                                            <AvField name="nome" label="Nome" type="text" errorMessage="Campo obrigatório" validate={{
                                                                 required: {value: true, errorMessage: 'Campo obrigatório'},
                                                             }} />
                                                         </Col>
                                                         <Col sm="6">
-                                                            <AvField name="cnpj" label="CNPJ" type="text" errorMessage="Campo obrigatório" validate={{
+                                                            <AvField name="cpf" label="CPF" type="text" errorMessage="Campo obrigatório" validate={{
                                                                 required: {value: true, errorMessage: 'Campo obrigatório'},
                                                             }} />
                                                         </Col>
