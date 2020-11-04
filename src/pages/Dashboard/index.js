@@ -1,19 +1,9 @@
 import React, { useState } from 'react';
-import { Container, Row, Col, Button, Card, CardBody, CardTitle, Modal, ModalHeader, ModalBody, ModalFooter, Media, Table } from "reactstrap";
+import { Container, Row, Col, Button, Card, CardBody,  Modal, ModalHeader, ModalBody, ModalFooter, Media, Table } from "reactstrap";
 import { Link } from "react-router-dom";
 
-//import Charts
-import StackedColumnChart from "./StackedColumnChart";
-
-import modalimage1 from "../../assets/images/product/img-7.png";
-import modalimage2 from "../../assets/images/product/img-4.png";
 
 // Pages Components
-import WelcomeComp from "./WelcomeComp";
-import MonthlyEarning from "./MonthlyEarning";
-import SocialSource from "./SocialSource";
-import ActivityComp from "./ActivityComp";
-import TopCities from "./TopCities";
 import LatestTranaction from "./LatestTranaction";
 
 //Import Breadcrumb
@@ -27,10 +17,10 @@ import { withNamespaces } from 'react-i18next';
      const [modal, setmodal] = useState(false);
 
           const reports = [
-                { title: "Em aberto", iconClass: "bx-copy-alt", description: "235" },
-                { title: "Em andamento", iconClass: "bx-archive-in", description: "723" },
-                { title: "Fechado sem solução", iconClass: "bx-purchase-tag-alt", description: "16" },
-                { title: "Resolvidos", iconClass: "bx-purchase-tag-alt", description: "6" }
+                { title: "Em aberto", iconClass: "bx-copy-alt", description: "0" },
+                { title: "Em andamento", iconClass: "bx bx-briefcase-alt", description: "0" },
+                { title: "Fechado sem solução", iconClass: "bx bx-bomb", description: "0" },
+                { title: "Resolvidos", iconClass: "bx bx-check-double", description: "0" }
             ];
 
 
@@ -80,80 +70,7 @@ import { withNamespaces } from 'react-i18next';
                         </Row>
                     </Container>
                 </div>
-                <Modal isOpen={modal} role="dialog" autoFocus={true} centered={true} className="exampleModal" tabindex="-1" toggle={() => { setmodal(!modal); }}>
-                    <div className="modal-content">
-                        <ModalHeader toggle={() => { setmodal(!modal); }}>
-                            Order Details
-                        </ModalHeader >
-                        <ModalBody>
-                            <p className="mb-2">Product id: <span className="text-primary">#SK2540</span></p>
-                            <p className="mb-4">Billing Name: <span className="text-primary">Neal Matthews</span></p>
 
-                            <div className="table-responsive">
-                                <Table className="table table-centered table-nowrap">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">Product</th>
-                                            <th scope="col">Product Name</th>
-                                            <th scope="col">Price</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <th scope="row">
-                                                <div>
-                                                    <img src={modalimage1} alt="" className="avatar-sm" />
-                                                </div>
-                                            </th>
-                                            <td>
-                                                <div>
-                                                    <h5 className="text-truncate font-size-14">Wireless Headphone (Black)</h5>
-                                                    <p className="text-muted mb-0">$ 225 x 1</p>
-                                                </div>
-                                            </td>
-                                            <td>$ 255</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">
-                                                <div>
-                                                    <img src={modalimage2} alt="" className="avatar-sm" />
-                                                </div>
-                                            </th>
-                                            <td>
-                                                <div>
-                                                    <h5 className="text-truncate font-size-14">Hoodie (Blue)</h5>
-                                                    <p className="text-muted mb-0">$ 145 x 1</p>
-                                                </div>
-                                            </td>
-                                            <td>$ 145</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2">
-                                                <h6 className="m-0 text-right">Sub Total:</h6>
-                                            </td>
-                                            <td>$ 400</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2">
-                                                <h6 className="m-0 text-right">Shipping:</h6>
-                                            </td>
-                                            <td>Free</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2">
-                                                <h6 className="m-0 text-right">Total:</h6>
-                                            </td>
-                                            <td>$ 400</td>
-                                        </tr>
-                                    </tbody>
-                                </Table>
-                            </div>
-                        </ModalBody>
-                        <ModalFooter>
-                            <Button type="button" color="secondary" onClick={() => { setmodal(!modal); }}>Close</Button>
-                        </ModalFooter>
-                    </div>
-                </Modal>
             </React.Fragment>
           );
         }

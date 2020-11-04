@@ -1,31 +1,29 @@
 import React from 'react';
 
-import { Row, Col, CardBody, Card, Alert,Container, Modal } from "reactstrap";
+import { Row, Col, CardBody, Card, Alert,Container } from "reactstrap";
 
 // Redux
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
 
 // availity-reactstrap-validation
 import { AvForm, AvField } from 'availity-reactstrap-validation';
 
 // actions
-import { loginUser,apiError } from '../../store/actions';
+import { loginUser } from '../../store/actions';
 
 // import images
 import profile from "../../assets/images/profile-img.png";
 import logo from "../../assets/images/SVG/simboloARr.svg";
-
-import toastr from 'toastr'
-import 'toastr/build/toastr.min.css'
+import {useDispatch} from "react-redux"
 
  const Login = (props) => {
     // handleValidSubmit
-
+    const dispatch = useDispatch()
+    const { error, loading } = useSelector((state) => state.Login) ;
 
   function  handleValidSubmit(event, values) {
-        toastr.info("teste","teste")
-        props.loginUser(values, props.history);
+        dispatch(loginUser(values, props.history));
     }
           return (
              <React.Fragment>
@@ -55,7 +53,7 @@ import 'toastr/build/toastr.min.css'
                                             <Link to="/">
                                                 <div className="avatar-md profile-user-wid mb-4">
                                                     <span className="avatar-title rounded-circle bg-light">
-                                                        <img src={logo} alt="" className="rounded-circle" height="34" />
+                                                        <img src={logo} alt="" height="34" />
                                                     </span>
                                                 </div>
                                             </Link>
@@ -64,14 +62,14 @@ import 'toastr/build/toastr.min.css'
 
                                             <AvForm className="form-horizontal" onValidSubmit={(e,v) => { handleValidSubmit(e,v) }}>
 
-                                                {props.error && props.error ? <Alert color="danger">{props.error}</Alert> : null}
+                                                {error && error ? <Alert color="danger">{error}</Alert> : null}
 
                                                 <div className="form-group">
                                                     <AvField name="email" label="E-mail" errorMessage="Campo obrigatório"  className="form-control" placeholder="Seu email" type="email" required />
                                                 </div>
 
                                                 <div className="form-group">
-                                                    <AvField name="password" label="Password"  errorMessage="Campo obrigatório" type="password" required placeholder="Enter Password" />
+                                                    <AvField name="password" label="Senha"  errorMessage="Campo obrigatório" type="password" required placeholder="Senha" />
                                                 </div>
 
                                                 <div className="custom-control custom-checkbox">
@@ -80,7 +78,16 @@ import 'toastr/build/toastr.min.css'
                                                 </div>
 
                                                 <div className="mt-3">
-                                                    <button className="btn btn-primary btn-block waves-effect waves-light" type="submit">Entrar</button>
+                                                    <button disabled={loading}  className="btn btn-primary btn-block waves-effect waves-light" type="submit">
+                                                        {
+                                                            loading ?
+                                                            <>
+                                                                <i className="bx bx-loader bx-spin font-size-16 align-middle mr-2"></i>Carregando
+                                                            </>
+                                                            :
+                                                            "Entrar"
+                                                        }
+                                                    </button>
                                                 </div>
 
                                                 <div className="mt-4 text-center">
@@ -101,10 +108,7 @@ import 'toastr/build/toastr.min.css'
           );
         }
 
-const mapStatetoProps = state => {
-    const { error } = state.Login;
-    return { error };
-}
 
-export default withRouter(connect(mapStatetoProps, { loginUser,apiError })(Login));
+
+export default withRouter(Login);
 

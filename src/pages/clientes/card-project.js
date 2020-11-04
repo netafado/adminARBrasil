@@ -12,7 +12,7 @@ const CardProject = (props) => {
                         <Col xl="4" sm="6" key={"_project_" + key} >
                             
                             <Card>
-                                <Link to="/cliente">
+
                                     <CardBody>
                                         <Media>
                                             <div className="avatar-md mr-4">
@@ -37,7 +37,7 @@ const CardProject = (props) => {
                                             </Media>
                                         </Media>
                                     </CardBody>
-                                </Link>
+
                                 <div className="px-4 py-3 border-top">
                                     <ul className="list-inline mb-0">
                                         <li className="list-inline-item mr-3" id="comments">
@@ -53,11 +53,11 @@ const CardProject = (props) => {
                                             </UncontrolledTooltip>
                                         </li>
                                         <li className="list-inline-item mr-3 float-right">
-                                            <UncontrolledDropdown>
+                                            <UncontrolledDropdown >
                                                 <DropdownToggle href="#" className="card-drop" tag="i">
                                                     <i className="mdi mdi-dots-horizontal font-size-18"></i>
                                                 </DropdownToggle>
-                                                <DropdownMenu>
+                                                <DropdownMenu right>
                                                     <DropdownItem tag={Link} to="/clientes-adicionar"><i className="mdi mdi-pencil font-size-16 text-success mr-2"></i>Editar</DropdownItem>
                                                     <DropdownItem href="#"><i className="mdi mdi-trash-can font-size-16 text-danger mr-2"></i>Deletar</DropdownItem>
                                                 </DropdownMenu>

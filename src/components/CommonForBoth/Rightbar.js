@@ -18,10 +18,7 @@ import SimpleBar from "simplebar-react";
 import { Link } from "react-router-dom";
 
 import "./rightbar.scss";
-//Import images
-import layout1 from "../../assets/images/layouts/layout-1.jpg";
-import layout2 from "../../assets/images/layouts/layout-2.jpg";
-import layout3 from "../../assets/images/layouts/layout-3.jpg";
+
 
 const RightSidebar = (props) => {
 
@@ -34,7 +31,7 @@ const RightSidebar = (props) => {
                 <Link to="#" onClick={(e) => {  e.preventDefault();  props.showRightSidebarAction(false); }} className="right-bar-toggle float-right">
                   <i className="mdi mdi-close noti-icon"></i>
                 </Link>
-                <h5 className="m-0">Settings</h5>
+                <h5 className="m-0">Configuração</h5>
               </div>
 
               <hr className="my-0" />
@@ -64,7 +61,7 @@ const RightSidebar = (props) => {
                  <hr className="mt-1"/>
 
                 <div className="radio-toolbar">
-                  <span className="mb-2 d-block" id="radio-title">Layout Width</span>
+                  <span className="mb-2 d-block" id="radio-title">Largura</span>
                   <input
                     type="radio"
                     id="radioFluid"
@@ -72,7 +69,7 @@ const RightSidebar = (props) => {
                     value="fluid"
                     checked={props.layoutWidth !== "boxed"}
                     onChange={(e) => {  if (e.target.checked) { props.changeLayoutWidth(e.target.value); } }} />
-                  <label htmlFor="radioFluid">Fluid</label>
+                  <label htmlFor="radioFluid">Total</label>
                   {"   "}
                   <input
                     type="radio"
@@ -81,12 +78,12 @@ const RightSidebar = (props) => {
                     value="boxed"
                     checked={props.layoutWidth === "boxed"}
                     onChange={(e) => {  if (e.target.checked) { props.changeLayoutWidth(e.target.value); } }} />
-                  <label htmlFor="radioBoxed">Boxed</label>
+                  <label htmlFor="radioBoxed">Centralizado</label>
                 </div>
                 <hr className="mt-1"/>
 
                 <div className="radio-toolbar">
-                  <span className="mb-2 d-block" id="radio-title">Topbar Theme</span>
+                  <span className="mb-2 d-block" id="radio-title">Cor do topo</span>
                   <input
                     type="radio"
                     id="radioThemeLight"
@@ -122,7 +119,7 @@ const RightSidebar = (props) => {
                 {props.layoutType === "vertical" ? <React.Fragment>
                   <hr className="mt-1"/>
                   <div className="radio-toolbar">
-                    <span className="mb-2 d-block" id="radio-title">Left Sidebar Type </span>
+                    <span className="mb-2 d-block" id="radio-title">Menu esquerda </span>
                     <input
                       type="radio"
                       id="sidebarDefault"
@@ -130,7 +127,7 @@ const RightSidebar = (props) => {
                       value="default"
                       checked={props.leftSideBarType === "default"}
                       onChange={(e) => {  if (e.target.checked) { props.changeSidebarType(e.target.value); } }} />
-                     <label htmlFor="sidebarDefault">Default</label>
+                     <label htmlFor="sidebarDefault">Padrão</label>
                     {"   "}
                     <input
                       type="radio"
@@ -139,7 +136,7 @@ const RightSidebar = (props) => {
                       value="compact"
                       checked={props.leftSideBarType === "compact"}     
                       onChange={(e) => {  if (e.target.checked) { props.changeSidebarType(e.target.value); } }} />
-                     <label htmlFor="sidebarCompact">Compact</label>
+                     <label htmlFor="sidebarCompact">Compacto</label>
                     {"   "}
                     <input
                       type="radio"
@@ -148,7 +145,7 @@ const RightSidebar = (props) => {
                       value="icon"
                       checked={props.leftSideBarType === "icon"}
                      onChange={(e) => {  if (e.target.checked) { props.changeSidebarType(e.target.value); } }} />
-                    <label htmlFor="sidebarIcon">Icon</label>
+                    <label htmlFor="sidebarIcon">Icones</label>
 
                   </div>
 
@@ -204,51 +201,7 @@ const RightSidebar = (props) => {
                   </div>
                 </FormGroup>
 
-                <h6 className="text-center">Choose Layouts</h6>
 
-                <div className="mb-2">
-                  <Link to="//skote-v-light.react.themesbrand.com" target="_blank">
-                    <img
-                      src={layout1}
-                      className="img-fluid img-thumbnail"
-                      alt=""
-                    />
-                  </Link>
-                </div>
-
-                <div className="mb-2">
-                  <Link
-                    to="//skote-v-dark.react.themesbrand.com"
-                    target="_blank"
-                  >
-                    <img
-                      src={layout2}
-                      className="img-fluid img-thumbnail"
-                      alt=""
-                    />
-                  </Link>
-                </div>
-
-                <div className="mb-2">
-                  <Link
-                    to="//skote-v-rtl.react.themesbrand.com"
-                    target="_blank"
-                  >
-                    <img
-                      src={layout3}
-                      className="img-fluid img-thumbnail"
-                      alt=""
-                    />
-                  </Link>
-                </div>
-
-                <Link
-                  to="#"
-                  className="btn btn-primary btn-block mt-3"
-                  target="_blank"
-                >
-                  <i className="mdi mdi-cart mr-1"></i> Purchase Now
-                </Link>
              
 
             </div>

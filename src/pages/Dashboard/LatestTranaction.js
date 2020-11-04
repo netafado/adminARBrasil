@@ -7,12 +7,7 @@ const LatestTranaction = (props) => {
 
 
             const  transactions = [
-                { id: "customCheck2", orderId: "#SK2540", billingName: "Neal Matthews", Date: "07 Oct, 2019", total: "$400", badgeClass: "success", paymentStatus: "Paid", methodIcon: "fa-cc-mastercard", paymentMethod: "Mastercard", link: "#" },
-                { id: "customCheck3", orderId: "#SK2541", billingName: "Jamal Burnett", Date: "07 Oct, 2019", total: "$380", badgeClass: "danger", paymentStatus: "Chargeback", methodIcon: "fa-cc-visa", paymentMethod: "Visa", link: "#" },
-                { id: "customCheck4", orderId: "#SK2542", billingName: "Juan Mitchell", Date: "06 Oct, 2019", total: "$384", badgeClass: "success", paymentStatus: "Paid", methodIcon: "fa-cc-paypal", paymentMethod: "Paypal", link: "#" },
-                { id: "customCheck5", orderId: "#SK2543", billingName: "Barry Dick", Date: "05 Oct, 2019", total: "$412", badgeClass: "success", paymentStatus: "Paid", methodIcon: "fa-cc-mastercard", paymentMethod: "Mastercard", link: "#" },
-                { id: "customCheck6", orderId: "#SK2544", billingName: "Ronald Taylor", Date: "04 Oct, 2019", total: "$404", badgeClass: "warning", paymentStatus: "Refund", methodIcon: "fa-cc-visa", paymentMethod: "Visa", link: "#" },
-                { id: "customCheck7", orderId: "#SK2545", billingName: "Jacob Hunter", Date: "04 Oct, 2019", total: "$392", badgeClass: "success", paymentStatus: "Paid", methodIcon: "fa-cc-paypal", paymentMethod: "Paypal", link: "#" }
+                
             ]; 
 
           return (
@@ -20,19 +15,12 @@ const LatestTranaction = (props) => {
                 <Card>
                     <CardBody>
                         <CardTitle className="mb-4">
-                            Ùltimos chamados
+                        Últimos chamados
                         </CardTitle>
                         <div className="table-responsive">
                             <table className="table table-centered table-nowrap mb-0">
                                 <thead className="thead-light">
                                     <tr>
-                                        <th style={{ width: "20px" }}>
-                                            <div className="custom-control custom-checkbox">
-                                                <input type="checkbox" className="custom-control-input" id="customCheck1" />
-                                                <label className="custom-control-label" htmlFor="customCheck1">&nbsp;</label>
-                                            </div>
-                                        </th>
-                                        <th>ID</th>
                                         <th>Empresa</th>
                                         <th>Data</th>
                                         <th>Responsavel</th>
@@ -44,12 +32,6 @@ const LatestTranaction = (props) => {
                                     {
                                         transactions.map((transaction, key) =>
                                             <tr key={"_tr_" + key}>
-                                                <td>
-                                                    <div className="custom-control custom-checkbox">
-                                                        <input type="checkbox" className="custom-control-input" id={transaction.id} />
-                                                        <label className="custom-control-label" htmlFor={transaction.id}>&nbsp;</label>
-                                                    </div>
-                                                </td>
                                                 <td><Link to="#" className="text-body font-weight-bold"> {transaction.orderId} </Link> </td>
                                                 <td>{transaction.billingName}</td>
                                                 <td>
@@ -69,9 +51,11 @@ const LatestTranaction = (props) => {
                                             </tr>
                                         )
                                     }
+                                    
                                 </tbody>
                             </table>
                         </div>
+                        <p className="mt-2">Oba! nenhum chamado pendente!</p>
                     </CardBody>
                 </Card>
             </React.Fragment>

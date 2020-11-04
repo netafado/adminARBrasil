@@ -1,14 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Generator: Adobe Illustrator 22.0.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!-- Generator: Adobe Illustrator 25.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 viewBox="0 0 225 225" style="enable-background:new 0 0 225 225;" xml:space="preserve">
 <style type="text/css">
-	.st0{fill:none;stroke:#ffffff;stroke-width:20;stroke-linecap:round;stroke-miterlimit:3;}
+	.st0{fill:none;}
+	.st1{fill:#FFFFFF;}
 </style>
-<g transform="matrix( 1, 0, 0, 1, 0,0) ">
-	<g>
-		<path id="Layer0_0_1_STROKES" class="st0" d="M173.8,151.5l13.6-13.6 M35.4,89.9l29.1-29 M89.4,34.9v1 M137.4,187.9l-0.6-0.4
-			 M36.6,138.7l0.2-0.2 M56.1,169.1l27.7-27.6 M63.8,111.5l74.3-74.4 M87.1,188.1L187.6,87.6 M110.8,114.5l57.8-57.8"/>
-	</g>
+<g>
+	<path class="st0" d="M168.8,11.9C168.8,11.9,168.8,11.9,168.8,11.9l-49.8,0v0H168.8z"/>
+	<path class="st0" d="M104.6,11.9H56.2c0,0,0,0,0,0L104.6,11.9L104.6,11.9z"/>
+	<path class="st1" d="M28.9,112.1c0-43.3,33.3-78.8,75.7-82.4V11.9H56.2c-24.5,0-44.3,20-44.3,44.7v111.9
+		c0,24.7,19.9,44.7,44.3,44.7h48.3v-18.7C62.2,190.9,28.9,155.4,28.9,112.1z"/>
+	<path class="st1" d="M168.8,11.9H119v17.9c42.2,3.8,75.3,39.2,75.3,82.4c0,43.2-33.1,78.6-75.3,82.3v18.7h49.7
+		c24.5,0,44.4-20,44.4-44.7V56.5C213.1,31.9,193.2,11.9,168.8,11.9z"/>
+	<polygon class="st1" points="112.1,45 101,65.4 122.9,65.4 	"/>
+	<path class="st1" d="M180,112.1c0-32.1-22.3-59.1-52.2-66.4h-0.6c0,0-0.6-0.3-2-0.6L141.5,76H81.7l16.8-30.8
+		c-1.6,0.3-2.5,0.5-2.5,0.5h-0.6C65.5,53,43.2,80,43.2,112.1c0,37.7,30.7,68.4,68.4,68.4C149.3,180.5,180,149.8,180,112.1z"/>
+	<rect x="104.6" y="11.9" class="st1" width="14.4" height="0"/>
 </g>
 </svg>

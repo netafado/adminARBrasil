@@ -31,14 +31,12 @@ const CardContact = (props) => {
                                 <DropdownToggle href="#" className="card-drop" tag="i">
                                     <i className="mdi mdi-dots-horizontal font-size-18"></i>
                                 </DropdownToggle>
-                                <DropdownMenu>
+                                <DropdownMenu right>
                                     <DropdownItem tag={Link} to="/adicionar-tecnico"><i className="mdi mdi-pencil font-size-16 text-success mr-2"></i>Editar</DropdownItem>
                                     <DropdownItem href="#"><i className="mdi mdi-trash-can font-size-16 text-danger mr-2"></i>Deletar</DropdownItem>
                                 </DropdownMenu>
                             </UncontrolledDropdown>
                             </div>
-
-
                         </CardBody>
                         <CardFooter className="bg-transparent border-top">
                             <div className="contact-links d-flex font-size-20">

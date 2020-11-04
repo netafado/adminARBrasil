@@ -5,23 +5,25 @@ import { LOGIN_USER, LOGOUT_USER, SET_USER_REQUESTED } from './actionTypes';
 import { loginSuccess, logoutUserSuccess, apiError, setUserSucess } from './actions';
 
 //Include Both Helper File with needed methods
-import { getFirebaseBackend } from '../../../helpers/firebase_helper';
+import  * as cognito from '../../../helpers/firebase_helper';
 
-const cognitoUtils = getFirebaseBackend();
 
 function*  loginUser({ payload: { user, history } }) {
     try {
-        const response = yield call(cognitoUtils.loginUser, user.email, user.password);
-        yield put(loginSuccess(response));
+        const response = yield call(cognito.loginUser, user.email, user.password);
+        yield put(setUserSucess(response));
         if(response.challengeName === "NEW_PASSWORD_REQUIRED"){
             history.push('/alter-password');
             return
         }
+        const result = yield call(cognito.getCurrentUser);
+        console.log(result)
 
         history.push('/dashboard');
           
     } catch (error) {
         let err = error
+        console.log(error)
         if(err === "User does not exist."){
             err = "Usuário não existe"
         }else if(err === "Incorrect username or password."){
@@ -33,7 +35,8 @@ function*  loginUser({ payload: { user, history } }) {
 
 function* logoutUser({ payload: { history } }) {
     try {
-        const response = yield call(cognitoUtils.logout);
+        const response = yield call(cognito.logout);
+        yield put(logoutUserSuccess(response));
         yield put(logoutUserSuccess(response));
         history.push('/login');
     } catch (error) {

@@ -6,22 +6,13 @@ import {  Col, Button, Modal, FormGroup, Row } from "reactstrap";
 import { AvForm, AvField } from 'availity-reactstrap-validation';
 
 import  imageUrls from "../../assets/images/logoEmpresa.jpg"
-
+import {createThumb} from "../../helpers/utils"
 const ProjectsOverview = ({modal, toggle}) => {
 
     const [ImgUrl, setImage] = useState(imageUrls)
 
     const mudarImg = (e) => {
-        e.preventDefault();
-        const file = new FileReader();
-        const arquivo = e.target.files[0];
-        file.readAsDataURL(arquivo);
-
-        file.onloadend = (event) => {
-
-            setImage(event.target.result);
-
-        };
+        createThumb(e, setImage);
     };
 
     return (

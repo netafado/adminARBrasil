@@ -99,7 +99,7 @@ const users = [
                             </Col>
                             <Col sm="8">
                                 <div className="text-sm-right">
-                                    <Button type="button" color="success" className="btn-rounded waves-effect waves-light mb-2 mr-2">
+                                    <Button type="button" tag={Link}  to="/adicionar-tecnico" color="success" className="btn-rounded waves-effect waves-light mb-2 mr-2">
                                         <i className="mdi mdi-plus mr-1"></i> novo Técnico
                                     </Button>
                                 </div>
@@ -117,7 +117,7 @@ const users = [
                         <Row>
                             <Col xs="12">
                                 <div className="text-center my-3">
-                                    <Link to="#" className="text-success"><i className="bx bx-hourglass bx-spin mr-2"></i> Load more </Link>
+                                    <Link to="#" className="text-success"><i className="bx bx-hourglass bx-spin mr-2"></i> Carregar mais </Link>
                                 </div>
                             </Col>
                         </Row>

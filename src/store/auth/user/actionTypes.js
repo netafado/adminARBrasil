@@ -1,0 +1,4 @@
+export const SET_USET = 'SET_USET';
+
+export const SET_USER_SUCCESS = 'SET_USER_SUCCESS';
+export const SET_USER_REQUESTED = 'SET_USER_REQUESTED';

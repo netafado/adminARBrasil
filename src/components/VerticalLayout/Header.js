@@ -90,7 +90,7 @@ function tToggle()
                     <img src={logoLightSvg} alt="" height="22" />
                   </span>
                   <span className="logo-lg">
-                    <img src={logoLightPng} alt="" height="19" />
+                    <img src={logoLightPng} alt="" height="24" />
                   </span>
                 </Link>
               </div>
@@ -99,12 +99,6 @@ function tToggle()
                 <i className="fa fa-fw fa-bars"></i>
               </button>
 
-              <form className="app-search d-none d-lg-block">
-                <div className="position-relative">
-                  <input type="text" className="form-control" placeholder={props.t('Search') + "..."} />
-                  <span className="bx bx-search-alt"></span>
-                </div>
-              </form>
 
 
             </div>
@@ -140,12 +134,14 @@ function tToggle()
 
               <NotificationDropdown />
               <ProfileMenu />
+              {
+                  <div onClick={() => { props.showRightSidebarAction(!props.showRightSidebar); }} className="dropdown d-inline-block">
+                  <button type="button" className="btn header-item noti-icon right-bar-toggle waves-effect">
+                    <i className="bx bx-cog bx-spin"></i>
+                  </button>
+                </div>          
+              }
 
-              <div onClick={() => { props.showRightSidebarAction(!props.showRightSidebar); }} className="dropdown d-inline-block">
-                <button type="button" className="btn header-item noti-icon right-bar-toggle waves-effect">
-                  <i className="bx bx-cog bx-spin"></i>
-                </button>
-              </div>
 
             </div>
           </div>

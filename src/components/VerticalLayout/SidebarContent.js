@@ -69,7 +69,8 @@ const SidebarContent = (props) => {
                     <li className="menu-title">{props.t('Menu') }  </li>
                      <li>
                          <Link to="/#" className="waves-effect">
-                                <i className="bx bx-home-circle"></i><span className="badge badge-pill badge-info float-right">03</span>
+                                <i className="bx bx-home-circle"></i>
+                                {/* <span className="badge badge-pill badge-info float-right">03</span>*/}
                                 <span>{props.t('Dashboards') }</span>
                                 </Link>
                                 <ul className="sub-menu" aria-expanded="false">

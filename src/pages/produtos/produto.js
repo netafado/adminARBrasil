@@ -20,6 +20,15 @@ const options = [
             { value: 'WA', label: 'Washington' },
         ];
 
+        const options2 = [
+            { value: 'AK', label: 'pdf' },
+            { value: 'HI', label: 'word' },
+            { value: 'CA', label: 'Power Point' },
+            { value: 'NV', label: 'Site' },
+            { value: 'OR', label: 'url' },
+
+        ];
+
      function handleAcceptedFiles(files){
         files.map(file => Object.assign(file, {
             preview: URL.createObjectURL(file),
@@ -79,7 +88,6 @@ const options = [
                                                         <Label className="control-label">Features</Label>
                                                         <Select classNamePrefix="select2-selection" placeholder="Chose..." title="Country" options={options} isMulti />
                                                     </FormGroup>
-
                                                 </Col>
                                                 <Col sm="12">
                                                     <FormGroup>
@@ -113,7 +121,7 @@ const options = [
                                                                 <div className="mb-3">
                                                                     <i className="display-4 text-muted bx bxs-cloud-upload"></i>
                                                                 </div>
-                                                                <h4>Drop files here or click to upload.</h4>
+                                                                <h4>Carregar foto do produto</h4>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -166,70 +174,33 @@ const options = [
                                     <CardBody>
                                         <CardTitle className="mb-3">Anexos</CardTitle>
                                         <Form>
-                                            <Dropzone
-                                                onDrop={acceptedFiles => { handleAcceptedFiles(acceptedFiles) }
-                                                }
-                                            >
-                                                {({ getRootProps, getInputProps }) => (
-                                                    <div className="dropzone">
-                                                        <div
-                                                            className="dz-message needsclick"
-                                                            {...getRootProps()}
-                                                        >
-                                                            <input {...getInputProps()} />
-                                                            <div className="dz-message needsclick">
-                                                                <div className="mb-3">
-                                                                    <i className="display-4 text-muted bx bxs-cloud-upload"></i>
-                                                                </div>
-                                                                <h4>Drop files here or click to upload.</h4>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                )}
-                                            </Dropzone>
-                                            <div
-                                                className="dropzone-previews mt-3"
-                                                id="file-previews"
-                                            >
-                                                {selectedFiles.map((f, i) => {
-                                                    return (
-                                                        <Card
-                                                            className="mt-1 mb-0 shadow-none border dz-processing dz-image-preview dz-success dz-complete"
-                                                            key={i + "-file"}
-                                                        >
-                                                            <div className="p-2">
-                                                                <Row className="align-items-center">
-                                                                    <Col className="col-auto">
-                                                                        <img
-                                                                            data-dz-thumbnail=""
-                                                                            height="80"
-                                                                            className="avatar-sm rounded bg-light"
-                                                                            alt={f.name}
-                                                                            src={f.preview}
-                                                                        />
-                                                                    </Col>
-                                                                    <Col>
-                                                                        <Link
-                                                                            to="#"
-                                                                            className="text-muted font-weight-bold"
-                                                                        >
-                                                                            {f.name}
-                                                                        </Link>
-                                                                        <p className="mb-0">
-                                                                            <strong>{f.formattedSize}</strong>
-                                                                        </p>
-                                                                    </Col>
-                                                                </Row>
-                                                            </div>
-                                                        </Card>
-                                                    );
-                                                })}
-                                            </div>
-                                            <Button type="submit" color="primary" className="mr-1 waves-effect waves-light">Save Changes</Button>
+                                            
+                                            <Row>
+                                                <Col sm="2">
+                                                    <FormGroup className="select2-container">
+                                                        <Select classNamePrefix="select2-selection" placeholder="Tipo..." title="Country" options={options2} />
+                                                    </FormGroup>
+                                                </Col>
+                                                <Col sm="8">
+                                                    <FormGroup>
+                                                        <Input id="price" name="price" type="text" placeholder="www.enderecodoarquivo.com" className="form-control" />
+                                                    </FormGroup>
+                                                </Col>
+                                                <Col sm='2'>
+                                                    <FormGroup>
+                                                        <Button id="price" name="price" type="text" className="form-control" >Salvar</Button>
+                                                    </FormGroup>
+                                                </Col>
+                                            </Row>
+
 
                                         </Form>
                                     </CardBody>
                                 </Card>
+
+                            </Col>
+                            <Col>
+                                <Button type="submit" color="primary" className="mr-1 waves-effect waves-light">Salvar</Button>
 
                             </Col>
                         </Row>

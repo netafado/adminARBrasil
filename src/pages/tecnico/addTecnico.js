@@ -8,6 +8,7 @@ import Breadcrumbs from '../../components/Common/Breadcrumb';
 
 import  imageUrls from "../../assets/images/users/avatar-1.jpg"
 
+import {createThumb} from "../../helpers/utils"
 
 const AdicionarCliente = (props) => {
 
@@ -26,16 +27,7 @@ const AdicionarCliente = (props) => {
     }
 
     const mudarImg = (e) => {
-        e.preventDefault();
-        const file = new FileReader();
-        const arquivo = e.target.files[0];
-        file.readAsDataURL(arquivo);
-
-        file.onloadend = (event) => {
-
-            setImage(event.target.result);
-
-        };
+        createThumb(e, setImage);
     };
 
     return (
@@ -58,7 +50,6 @@ const AdicionarCliente = (props) => {
                                                 <input type="file" onChange={mudarImg} accept="image/*"/>
                                                     <div className="thumbnail avatar-upload" style={{backgroundImage: `url(${ImgUrl})`}}></div>
                                                     <div><Button type="button" className="btn-round btn btn-secondary">Selecione a foto</Button></div>
-    
                                                 </div>
                                                 </Col>
                                                 <Col>
