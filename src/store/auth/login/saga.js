@@ -17,7 +17,6 @@ function*  loginUser({ payload: { user, history } }) {
             return
         }
         const result = yield call(cognito.getCurrentUser);
-        console.log(result)
 
         history.push('/dashboard');
           

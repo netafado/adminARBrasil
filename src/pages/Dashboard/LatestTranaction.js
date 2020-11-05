@@ -3,13 +3,9 @@ import { Card, CardBody, CardTitle, Badge, Button } from "reactstrap";
 import { Link } from "react-router-dom";
 
 const LatestTranaction = (props) => {
-
-
-
             const  transactions = [
                 
             ]; 
-
           return (
               <React.Fragment>
                 <Card>
@@ -23,7 +19,7 @@ const LatestTranaction = (props) => {
                                     <tr>
                                         <th>Empresa</th>
                                         <th>Data</th>
-                                        <th>Responsavel</th>
+                                        <th>Responsável</th>
                                         <th>Status</th>
                                         <th>Ação</th>
                                     </tr>
@@ -51,7 +47,6 @@ const LatestTranaction = (props) => {
                                             </tr>
                                         )
                                     }
-                                    
                                 </tbody>
                             </table>
                         </div>

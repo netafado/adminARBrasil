@@ -1,0 +1,15 @@
+projects:
+  AR-Brasil:
+    schemaPath: src/graphql/schema.json
+    includes:
+      - src/graphql/**/*.js
+    excludes:
+      - ./amplify/**
+    extensions:
+      amplify:
+        codeGenTarget: javascript
+        generatedFileName: ''
+        docsFilePath: src/graphql
+        region: us-west-2
+        apiId: s5nehw7acbdargnygcz25gl224
+        maxDepth: 5

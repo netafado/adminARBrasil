@@ -15,13 +15,10 @@ const ProfileMenu = (props) => {
 
    // Declare a new state variable, which we'll call "menu"
    const [menu, setMenu] = useState(false);
-  
-   const [username, setusername] = useState("Admin");
+
     const dispatch = useDispatch()
-
-
     const user = useSelector((state) => state.Login.user)
-    console.log();
+
     const logOut = () =>{
         dispatch(logoutUser(props.history))
     }   

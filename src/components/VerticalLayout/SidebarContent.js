@@ -74,7 +74,7 @@ const SidebarContent = (props) => {
                                 <span>{props.t('Dashboards') }</span>
                                 </Link>
                                 <ul className="sub-menu" aria-expanded="false">
-                                    <li><Link to="/dashboard">{props.t('Default') }</Link></li>
+                                    <li><Link to="/dashboard">{props.t('Central do cliente') }</Link></li>
                                 </ul>
                      </li>
                      <li className="menu-title">{props.t('Usuários') }</li>

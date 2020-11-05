@@ -8,6 +8,8 @@ import Login from "./auth/login/reducer";
 import Account from "./auth/register/reducer";
 import ForgetPassword from "./auth/forgetpwd/reducer";
 import Profile from "./auth/profile/reducer";
+import InfoGerais from "./infoGerais/reducer";
+import Products from "./product/reducer"
 
 const rootReducer = combineReducers({
   // public
@@ -15,7 +17,9 @@ const rootReducer = combineReducers({
   Login,
   Account,
   ForgetPassword,
-  Profile
+  Profile,
+  InfoGerais,
+  Products
 });
 
 export default rootReducer;

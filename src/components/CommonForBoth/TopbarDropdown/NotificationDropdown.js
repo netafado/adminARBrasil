@@ -27,8 +27,8 @@ const NotificationDropdown = (props) => {
           <DropdownToggle
             className="btn header-item noti-icon waves-effect"
             tag="button" id="page-header-notifications-dropdown">
-            <i className="bx bx-bell bx-tada"></i>
-            <span className="badge badge-danger badge-pill">3</span>
+            <i className="bx bx-bell"></i>
+            {/*<span className="badge badge-danger badge-pill">3</span> */}
           </DropdownToggle>
 
           <DropdownMenu className="dropdown-menu dropdown-menu-lg p-0" right>
