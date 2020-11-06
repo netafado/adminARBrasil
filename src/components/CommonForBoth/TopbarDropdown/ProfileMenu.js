@@ -27,7 +27,7 @@ const ProfileMenu = (props) => {
         <Dropdown isOpen={menu} toggle={() => setMenu(!menu)} className="d-inline-block" >
             <DropdownToggle className="btn header-item waves-effect" id="page-header-user-dropdown" tag="button">
                 <img className="rounded-circle header-profile-user" src={user1} alt="Header Avatar" />
-                <span className="d-none d-xl-inline-block ml-2 mr-1">{ user ? ( user.attributes.email || user.attributes.name || "ARBRASIL")}</span>
+                <span className="d-none d-xl-inline-block ml-2 mr-1">{ user ? ( user.attributes.email || user.attributes.name || "ARBRASIL") : "ARBRASIL"}</span>
                 <i className="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
             </DropdownToggle>
             <DropdownMenu right>
