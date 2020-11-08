@@ -7,7 +7,7 @@ import { v4 as uuidv4 } from 'uuid';
 import toastr from 'toastr'
 import 'toastr/build/toastr.min.css'
 // store 
-import {saveNewProduct} from "../../store/product/actions"
+import {updateProduct} from "../../store/product/actions"
 import { Storage } from "aws-amplify"
 //Import Breadcrumb
 import Breadcrumbs from '../../components/Common/Breadcrumb';
@@ -30,13 +30,14 @@ const filesTypes = [
 ]
 
 const EditarProduto = (props) => {
-
-    const [anexos, setAnexos]                   = useState([]);
+    const produto = props.location.state.produto;
+    const [anexos, setAnexos]                   = useState( produto.anexos || []);
     const [carregandoFoto, setCarregandoFoto]   = useState(false)
     const [newAnexo, setNewAnexo]               = useState({url: "", extensao: "", nome: "", descricao: ""})
-    const [image, setImage]                     = useState({url:imageUrls, extensao: null, descricao: "", extensao: ""})
+    const [image, setImage]                     = useState(  produto.imagens ? produto.imagens[0] || {url:imageUrls, extensao: null, descricao: "", extensao: ""} : {url:imageUrls, extensao: null, descricao: "", extensao: ""})
     const loading                               = useSelector(state => state.Products.loading)
     const dispatch                              = useDispatch();
+    console.log(props.location.state.produto)
     const salvarToStorage = async(e) => {
         const file = e.target.files[0]
         setCarregandoFoto(true)
@@ -62,8 +63,10 @@ const EditarProduto = (props) => {
             image
         ]
         values.anexos = anexos
-        await dispatch(saveNewProduct(values, props.history))
-        return toastr.success("Novo Produto", "Produto salvo com sucesso!")
+        values.pk = produto.pk
+        console.log(values)
+        await dispatch(updateProduct(values, props.history))
+        return toastr.success("Editar Produto", "Produto salvo com sucesso!")
     }
 
     const changeNewAnexoURL = (e) =>{
@@ -107,14 +110,13 @@ const EditarProduto = (props) => {
         setNewAnexo({url: "", extensao: "", nome: "", descricao: ""})
 
     }
-
     return (
              <React.Fragment>
                 <div className="page-content">
                     <Container fluid>
 
                         {/* Render Breadcrumb */}
-                        <Breadcrumbs title="Produtos" breadcrumbItem="Produto" />
+                        <Breadcrumbs title="Editar produto" breadcrumbItem="Produto" />
 
                         <Row>
                             <Col xs="12">
@@ -138,30 +140,30 @@ const EditarProduto = (props) => {
                                                 <Col sm="9">
                                                     <Row>
                                                         <Col sm="3">
-                                                        <AvField name="nome" label="Nome" type="text" errorMessage="Campo obrigatório" validate={{
+                                                        <AvField name="nome" label="Nome" type="text" value={produto.nome} errorMessage="Campo obrigatório" validate={{
                                                             required: {value: true, errorMessage: 'Campo obrigatório'},
                                                         }} />
 
                                                         </Col>
                                                         <Col sm="3">
-                                                            <AvField name="fabricante" label="Fabricante" type="text" errorMessage="Campo obrigatório" validate={{
+                                                            <AvField name="fabricante" label="Fabricante"  value={produto.fabricante} type="text" errorMessage="Campo obrigatório" validate={{
                                                                 required: {value: true, errorMessage: 'Campo obrigatório'},
                                                             }} />
                                                         </Col>
 
                                                         <Col sm="3">
-                                                            <AvField name="categoria" label="categoria" type="text" errorMessage="Campo obrigatório" validate={{
+                                                            <AvField name="categoria" label="categoria" value={produto.categoria} type="text" errorMessage="Campo obrigatório" validate={{
                                                                 required: {value: true, errorMessage: 'Campo obrigatório'},
                                                             }} />
 
                                                         </Col>
                                                         <Col sm="3">
-                                                            <AvField name="informacaoAdicional" label="Informação adicional" type="text" errorMessage="Campo obrigatório" validate={{
+                                                            <AvField name="informacaoAdicional" label="Informação adicional" value={produto.informacaoAdicional} type="text" errorMessage="Campo obrigatório" validate={{
                                                                 required: {value: true, errorMessage: 'Campo obrigatório'},
                                                             }} />
                                                         </Col>
                                                         <Col sm="12">
-                                                            <AvField name="descricao" label="Descrição" type="textarea" errorMessage="Campo obrigatório" validate={{
+                                                            <AvField name="descricao" label="Descrição" type="textarea" value={produto.descricao} errorMessage="Campo obrigatório" validate={{
                                                                 required: {value: true, errorMessage: 'Campo obrigatório'},
                                                             }} />
                                                         </Col>

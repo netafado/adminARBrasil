@@ -17,7 +17,7 @@ const INIT_STATE = {
 	leftSideBarTheme: "dark",
 	leftSideBarType: "default",
 	topbarTheme: "light",
-	isPreloader: false,
+	isPreloader: true,
 	showRightSidebar: false,
 	isMobile: false,
 	showSidebar : true,

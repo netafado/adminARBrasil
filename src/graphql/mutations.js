@@ -9,6 +9,7 @@ export const deleteProduto = /* GraphQL */ `
       categoria
       fabricante
       descricao
+      informacaoAdicional
       imagens {
         url
         nome
@@ -32,6 +33,7 @@ export const createProduto = /* GraphQL */ `
       categoria
       fabricante
       descricao
+      informacaoAdicional
       imagens {
         url
         nome
@@ -55,6 +57,7 @@ export const updateProduto = /* GraphQL */ `
       categoria
       fabricante
       descricao
+      informacaoAdicional
       imagens {
         url
         nome
@@ -67,6 +70,267 @@ export const updateProduto = /* GraphQL */ `
         descricao
         extensao
       }
+    }
+  }
+`;
+export const createCliente = /* GraphQL */ `
+  mutation CreateCliente($input: ClienteInputCreate) {
+    createCliente(input: $input) {
+      pk
+      razaoSocial
+      cnpj
+      telefone
+      email
+      cep
+      rua
+      bairro
+      cidade
+      uf
+      pk_produto
+      produto {
+        pk
+        nome
+        categoria
+        fabricante
+        descricao
+        informacaoAdicional
+        imagens {
+          url
+          nome
+          descricao
+          extensao
+        }
+        anexos {
+          url
+          nome
+          descricao
+          extensao
+        }
+      }
+      logo {
+        url
+        nome
+        descricao
+        extensao
+      }
+    }
+  }
+`;
+export const updateCliente = /* GraphQL */ `
+  mutation UpdateCliente($input: ClienteInputUpdate) {
+    updateCliente(input: $input) {
+      pk
+      razaoSocial
+      cnpj
+      telefone
+      email
+      cep
+      rua
+      bairro
+      cidade
+      uf
+      pk_produto
+      produto {
+        pk
+        nome
+        categoria
+        fabricante
+        descricao
+        informacaoAdicional
+        imagens {
+          url
+          nome
+          descricao
+          extensao
+        }
+        anexos {
+          url
+          nome
+          descricao
+          extensao
+        }
+      }
+      logo {
+        url
+        nome
+        descricao
+        extensao
+      }
+    }
+  }
+`;
+export const deleteCliente = /* GraphQL */ `
+  mutation DeleteCliente($pk: String!) {
+    deleteCliente(pk: $pk) {
+      pk
+      razaoSocial
+      cnpj
+      telefone
+      email
+      cep
+      rua
+      bairro
+      cidade
+      uf
+      pk_produto
+      produto {
+        pk
+        nome
+        categoria
+        fabricante
+        descricao
+        informacaoAdicional
+        imagens {
+          url
+          nome
+          descricao
+          extensao
+        }
+        anexos {
+          url
+          nome
+          descricao
+          extensao
+        }
+      }
+      logo {
+        url
+        nome
+        descricao
+        extensao
+      }
+    }
+  }
+`;
+export const createUsuario = /* GraphQL */ `
+  mutation CreateUsuario($input: UsuarioInputCreate) {
+    createUsuario(input: $input) {
+      pk
+      nome
+      cpf
+      telefone
+      email
+      cep
+      rua
+      bairro
+      cidade
+      uf
+      pk_produto
+      produto {
+        pk
+        nome
+        categoria
+        fabricante
+        descricao
+        informacaoAdicional
+        imagens {
+          url
+          nome
+          descricao
+          extensao
+        }
+        anexos {
+          url
+          nome
+          descricao
+          extensao
+        }
+      }
+      foto {
+        url
+        nome
+        descricao
+        extensao
+      }
+      tipo
+    }
+  }
+`;
+export const updateUsuario = /* GraphQL */ `
+  mutation UpdateUsuario($input: UsuarioInputUpdate) {
+    updateUsuario(input: $input) {
+      pk
+      nome
+      cpf
+      telefone
+      email
+      cep
+      rua
+      bairro
+      cidade
+      uf
+      pk_produto
+      produto {
+        pk
+        nome
+        categoria
+        fabricante
+        descricao
+        informacaoAdicional
+        imagens {
+          url
+          nome
+          descricao
+          extensao
+        }
+        anexos {
+          url
+          nome
+          descricao
+          extensao
+        }
+      }
+      foto {
+        url
+        nome
+        descricao
+        extensao
+      }
+      tipo
+    }
+  }
+`;
+export const deleteUsuario = /* GraphQL */ `
+  mutation DeleteUsuario($pk: String!) {
+    deleteUsuario(pk: $pk) {
+      pk
+      nome
+      cpf
+      telefone
+      email
+      cep
+      rua
+      bairro
+      cidade
+      uf
+      pk_produto
+      produto {
+        pk
+        nome
+        categoria
+        fabricante
+        descricao
+        informacaoAdicional
+        imagens {
+          url
+          nome
+          descricao
+          extensao
+        }
+        anexos {
+          url
+          nome
+          descricao
+          extensao
+        }
+      }
+      foto {
+        url
+        nome
+        descricao
+        extensao
+      }
+      tipo
     }
   }
 `;

@@ -1,17 +1,19 @@
 import React from 'react';
 import { Link } from "react-router-dom";
-import { Col, Card, CardBody, Media, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem, Badge } from "reactstrap";
+import { Col, Card, CardBody, Media, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from "reactstrap";
 
 
-const CardProject = (props) => {
+const CardProject = ({projects, deleltarProduto, editarProduto}) => {
 
     return (
                <React.Fragment>
+                {projects.length <= 0 ?
+                    <Col><p>Nenhum produto cadastrado.</p></Col> : null
+                }
                 {
-                    props.projects.map((project, key) =>
+                    projects.map((project, key) =>
                     
                         <Col xl="4" sm="6" key={"_project_" + key} >
-                            {console.log(project)}
                             <Card>
 
                                     <CardBody>
@@ -32,8 +34,8 @@ const CardProject = (props) => {
                                                             <i className="mdi mdi-dots-horizontal font-size-18"></i>
                                                         </DropdownToggle>
                                                         <DropdownMenu right>
-                                                            <DropdownItem tag={Link} to="/clientes-adicionar"><i className="mdi mdi-pencil font-size-16 text-success mr-2"></i>Editar</DropdownItem>
-                                                            <DropdownItem href="#"><i className="mdi mdi-trash-can font-size-16 text-danger mr-2"></i>Deletar</DropdownItem>
+                                                            <DropdownItem  onClick={()=>editarProduto(project)}><i className="mdi mdi-pencil font-size-16 text-success mr-2"></i>Editar</DropdownItem>
+                                                            <DropdownItem  onClick={()=>deleltarProduto(project.pk)}><i className="mdi mdi-trash-can font-size-16 text-danger mr-2"></i>Deletar</DropdownItem>
                                                         </DropdownMenu>
                                                     </UncontrolledDropdown>
                                                 </div>

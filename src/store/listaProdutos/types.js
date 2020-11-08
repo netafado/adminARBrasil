@@ -1,0 +1,5 @@
+export const LIST_PRODUCT_REQUESTED = "produtc@LIST_PRODUCT_REQUESTED"
+export const LIST_PRODUCT_SUCCESS =   "produtc@LIST_PRODUCT_SUCCESS"
+export const LIST_PRODUCT_FAILED  =   "produtc@LIST_PRODUCT_FAILED"
+
+

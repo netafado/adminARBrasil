@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
+import React, { useState } from 'react';
+import { Dropdown, DropdownToggle, DropdownMenu } from 'reactstrap';
 
 //i18n
 import { withNamespaces } from 'react-i18next';

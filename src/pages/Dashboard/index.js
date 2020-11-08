@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Container, Row, Col, Button, Card, CardBody, Media } from "reactstrap";
+import React from 'react';
+import { Container, Row, Col, Card, CardBody, Media } from "reactstrap";
 //import { Link } from "react-router-dom";
 
 

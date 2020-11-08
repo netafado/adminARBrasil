@@ -9,6 +9,7 @@ export const retornarProduto = /* GraphQL */ `
       categoria
       fabricante
       descricao
+      informacaoAdicional
       imagens {
         url
         nome
@@ -24,15 +25,27 @@ export const retornarProduto = /* GraphQL */ `
     }
   }
 `;
-export const listarProduto = /* GraphQL */ `
-  query ListarProduto($limit: Int, $nextToken: String) {
-    listarProduto(limit: $limit, nextToken: $nextToken) {
-      items {
+export const retornarCliente = /* GraphQL */ `
+  query RetornarCliente($pk: String!) {
+    retornarCliente(pk: $pk) {
+      pk
+      razaoSocial
+      cnpj
+      telefone
+      email
+      cep
+      rua
+      bairro
+      cidade
+      uf
+      pk_produto
+      produto {
         pk
         nome
         categoria
         fabricante
         descricao
+        informacaoAdicional
         imagens {
           url
           nome
@@ -45,6 +58,175 @@ export const listarProduto = /* GraphQL */ `
           descricao
           extensao
         }
+      }
+      logo {
+        url
+        nome
+        descricao
+        extensao
+      }
+    }
+  }
+`;
+export const retornarUsuario = /* GraphQL */ `
+  query RetornarUsuario($pk: String!) {
+    retornarUsuario(pk: $pk) {
+      pk
+      nome
+      cpf
+      telefone
+      email
+      cep
+      rua
+      bairro
+      cidade
+      uf
+      pk_produto
+      produto {
+        pk
+        nome
+        categoria
+        fabricante
+        descricao
+        informacaoAdicional
+        imagens {
+          url
+          nome
+          descricao
+          extensao
+        }
+        anexos {
+          url
+          nome
+          descricao
+          extensao
+        }
+      }
+      foto {
+        url
+        nome
+        descricao
+        extensao
+      }
+      tipo
+    }
+  }
+`;
+export const listarProduto = /* GraphQL */ `
+  query ListarProduto($limit: Int, $nextToken: String) {
+    listarProduto(limit: $limit, nextToken: $nextToken) {
+      items {
+        pk
+        nome
+        categoria
+        fabricante
+        descricao
+        informacaoAdicional
+        imagens {
+          url
+          nome
+          descricao
+          extensao
+        }
+        anexos {
+          url
+          nome
+          descricao
+          extensao
+        }
+      }
+      nextToken
+    }
+  }
+`;
+export const listarCliente = /* GraphQL */ `
+  query ListarCliente($limit: Int, $nextToken: String) {
+    listarCliente(limit: $limit, nextToken: $nextToken) {
+      items {
+        pk
+        razaoSocial
+        cnpj
+        telefone
+        email
+        cep
+        rua
+        bairro
+        cidade
+        uf
+        pk_produto
+        produto {
+          pk
+          nome
+          categoria
+          fabricante
+          descricao
+          informacaoAdicional
+          imagens {
+            url
+            nome
+            descricao
+            extensao
+          }
+          anexos {
+            url
+            nome
+            descricao
+            extensao
+          }
+        }
+        logo {
+          url
+          nome
+          descricao
+          extensao
+        }
+      }
+      nextToken
+    }
+  }
+`;
+export const listarUsuario = /* GraphQL */ `
+  query ListarUsuario($limit: Int, $nextToken: String) {
+    listarUsuario(limit: $limit, nextToken: $nextToken) {
+      items {
+        pk
+        nome
+        cpf
+        telefone
+        email
+        cep
+        rua
+        bairro
+        cidade
+        uf
+        pk_produto
+        produto {
+          pk
+          nome
+          categoria
+          fabricante
+          descricao
+          informacaoAdicional
+          imagens {
+            url
+            nome
+            descricao
+            extensao
+          }
+          anexos {
+            url
+            nome
+            descricao
+            extensao
+          }
+        }
+        foto {
+          url
+          nome
+          descricao
+          extensao
+        }
+        tipo
       }
       nextToken
     }

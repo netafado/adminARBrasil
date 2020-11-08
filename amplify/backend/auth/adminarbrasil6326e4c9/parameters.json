@@ -1,6 +1,6 @@
 {
     "identityPoolName": "adminarbrasil6326e4c9_identitypool_6326e4c9",
-    "allowUnauthenticatedIdentities": false,
+    "allowUnauthenticatedIdentities": true,
     "resourceNameTruncated": "admina6326e4c9",
     "userPoolName": "adminarbrasil6326e4c9_userpool_6326e4c9",
     "autoVerifiedAttributes": [

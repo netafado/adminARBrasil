@@ -182,24 +182,24 @@ TuiChart.registerTheme('skoteTheme', theme);
     },
     tooltip: {
         template: function (category, items) {
-            return '<div class="tui-chart-default-tooltip">' +
-                '<div class="tui-chart-tooltip-head">' +
-                    '<span class="tui-chart-legend-rect" style="' + items.cssText + '; width: 10px; height: 10px"></span>' +
+            return '<div className="tui-chart-default-tooltip">' +
+                '<div className="tui-chart-tooltip-head">' +
+                    '<span className="tui-chart-legend-rect" style="' + items.cssText + '; width: 10px; height: 10px"></span>' +
                     '<span>' + items.legend + '</span>' +
                     '<span>' + items.label + '</span>' +
                 '</div>' +
-                '<table class="tui-chart-tooltip-body">' +
+                '<table className="tui-chart-tooltip-body">' +
                 '<tr>' +
                     '<td>GDP</td>' +
-                    '<td class="tui-chart-tooltip-value">' + items.x + '</td>' +
+                    '<td className="tui-chart-tooltip-value">' + items.x + '</td>' +
                 '</tr>' +
                 '<tr>' +
                     '<td>Life Expectancy</td>' +
-                    '<td class="tui-chart-tooltip-value">' + items.y + '</td>' +
+                    '<td className="tui-chart-tooltip-value">' + items.y + '</td>' +
                 '</tr>' +
                 '<tr>' +
                     '<td>Population</td>' +
-                    '<td class="tui-chart-tooltip-value">' + items.r + '</td>' +
+                    '<td className="tui-chart-tooltip-value">' + items.r + '</td>' +
                 '</tr>' +
                 '</table>'+
             '</div>';

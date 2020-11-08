@@ -15,6 +15,8 @@ import ClientesAdd from "../pages/clientes/addCliente";
 import Cliente from "../pages/clientes/cliente";
 
 import AddProduto from "../pages/produtos/produto";
+import EditarProduto from "../pages/produtos/editProduto";
+import Produtos from "../pages/produtos"
 
 import Tecnicos from "../pages/tecnico";
 import AddTecnico from "../pages/tecnico/addTecnico"
@@ -26,6 +28,8 @@ const userRoutes = [
 	{ path: "/cliente", component: Cliente },
 	{ path: "/clientes-adicionar", component: ClientesAdd },
 	{ path: "/adicionar-produto", component: AddProduto },
+	{ path: "/editar-produto", component: EditarProduto },
+	{ path: "/produtos", component: Produtos },
 	{ path: "/tecnicos", component: Tecnicos },
 	{ path: "/adicionar-tecnico", component: AddTecnico },
 
