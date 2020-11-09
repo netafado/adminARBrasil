@@ -74,7 +74,7 @@ function updateProductAPI({values}){
         anexos: values.anexos,
         imagens: values.imagens,
     }
-    console.log("up", input)
+
     return new Promise((resolve, reject)=> {
         API.graphql(graphqlOperation( mutations.updateProduto, {input} ))
         .then( (data) => {

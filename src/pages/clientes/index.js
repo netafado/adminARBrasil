@@ -1,13 +1,15 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 
 import { Container, Row, Col, Input, Button } from "reactstrap";
 
 //Import Breadcrumb
 import Breadcrumbs from '../../components/Common/Breadcrumb';
-
+import {useDispatch, useSelector} from "react-redux"
+import {listarClientes} from "../../store/clientes/actions"
 //Import Cards
 import CardProject from "./card-project";
 
+ 
 //Import Image
 import img1 from "../../assets/images/companies/img-1.png";
 import img2 from "../../assets/images/companies/img-2.png";
@@ -18,6 +20,12 @@ import img6 from "../../assets/images/companies/img-6.png";
 import { Link } from 'react-router-dom';
 
 const ProjectsGrid  = (props) => {
+    const dispatch = useDispatch()
+    const clientes = useSelector(state => state.Clientes.clientes)
+    console.log(clientes)
+    useEffect(()=>{
+        dispatch(listarClientes())
+    }, [])
   
     const  projects = [
                 {

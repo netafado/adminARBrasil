@@ -126,7 +126,7 @@ const EditarProduto = (props) => {
                                             <CardSubtitle className="mb-3">Preencha todas as informações</CardSubtitle>
                                             <Row>
                                                 <Col sm="3">
-                                                <div className="fileinput  text-center">
+                                                <div className="fileinput text-center">
 
                                                     <input type="file" onChange={salvarToStorage} accept="image/*"/>
                                                     <div className="align-items-center d-flex justify-content-center position-relative thumbnail" style={{backgroundImage: `url(${image.url})`}}>

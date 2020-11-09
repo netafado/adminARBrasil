@@ -7,7 +7,7 @@ import ProfileSaga from './auth/profile/saga';
 import LayoutSaga from './layout/saga';
 import ProductSaga from "./product/saga"
 import ProdutosListaSaga from "./listaProdutos/saga"
-
+import CLienteSagas from "./clientes/saga"
 
 export default function* rootSaga() {
     yield all([
@@ -18,6 +18,7 @@ export default function* rootSaga() {
         //ForgetSaga(),
         LayoutSaga(),
         ProductSaga(),
-        ProdutosListaSaga()
+        ProdutosListaSaga(),
+        CLienteSagas()
     ])
 }

@@ -1,0 +1,9 @@
+export const ADD_CLIENTE_REQUESTED = "cliente@ADD_CLIENTE_REQUESTED"
+export const ADD_CLIENTE_SUCCESS =   "cliente@ADD_CLIENTE_SUCCESS"
+export const ADD_CLIENTE_FAILED  =   "cliente@ADD_PRODUCT_FAILED"
+
+export const LIST_CLIENTE_REQUESTED = "cliente@LIST_CLIENTE_REQUESTED"
+export const LIST_CLIENTE_SUCCESS =   "cliente@LIST_CLIENTE_SUCCESS"
+export const LIST_CLIENTE_FAILED  =   "cliente@LIST_PRODUCT_FAILED"
+
+

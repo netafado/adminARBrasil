@@ -1,34 +1,41 @@
 import React, { useState } from 'react';
-import { Link } from "react-router-dom";
 import { Container, Row, Col,  Card, CardBody, CardTitle, CardSubtitle, Button } from "reactstrap";
 import { AvForm, AvField } from 'availity-reactstrap-validation';
-
+import toastr from 'toastr'
+import 'toastr/build/toastr.min.css'
 //Import Breadcrumb
 import Breadcrumbs from '../../components/Common/Breadcrumb';
 
 import  imageUrls from "../../assets/images/logoEmpresa.jpg"
 
-import {createThumb} from "../../helpers/utils"
+import {useSelector, useDispatch} from "react-redux"
+
+import { saveNewCliente } from "../../store/clientes/actions"
+import { salvarToStorage } from "../../helpers/amplify/storage"
+
+import FileUploader from "../../components/fileUploader"
 
 const AdicionarCliente = (props) => {
 
+    const dispatch = useDispatch();
+    
+    const [logo, setLogo] = useState({url:imageUrls, extensao: null, descricao: "", extensao: ""})
+    const [carregandoLogo, setCarregandoLogo] = useState(false)
+    const mudarImg = async(e) => {
+        const file = e.target.files[0]
+        setCarregandoLogo(true)
+        const urlFile = await salvarToStorage(file)
+        console.log(urlFile)
+        setCarregandoLogo(false)
+        setLogo({...logo, url: urlFile})
 
-    const [ImgUrl, setImage] = useState(imageUrls)
-
-    function formatBytes(bytes, decimals = 2)
-    {
-        if (bytes === 0) return '0 Bytes';
-        const k = 1024;
-        const dm = decimals < 0 ? 0 : decimals;
-        const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
-
-        const i = Math.floor(Math.log(bytes) / Math.log(k));
-        return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
     }
 
-    const mudarImg = (e) => {
-        createThumb(e, setImage);
-    };
+    const handleValidSubmit = async(e, values) =>{
+        values.logo = logo;
+        const a = await dispatch(saveNewCliente(values, props.history))
+        return toastr.success("Cliente adicionado!", "Produto salvo com sucesso!")
+    }
 
     return (
              <React.Fragment>
@@ -42,20 +49,15 @@ const AdicionarCliente = (props) => {
                                     <CardBody>
                                         <CardTitle>Informações da Empresa</CardTitle>
                                         <CardSubtitle className="mb-3">Preencha todos os campos abaixo</CardSubtitle>
-                                        <AvForm>
+                                        <AvForm  onValidSubmit={(e,v) => { handleValidSubmit(e,v) }}>
                                             <Row>
                                                 <Col sm={3}>
-                                                <div className="fileinput text-center">
-                                                    <input type="file" onChange={mudarImg} accept="image/*" />
-                                                    <div className="thumbnail avatar-upload" style={{backgroundImage: `url(${ImgUrl})`}}></div>
-                                                    <div><Button type="button" className="btn-round btn btn-secondary">Selecione o logo</Button></div>
-    
-                                                </div>
+                                                <FileUploader salvarToStorage={mudarImg} url={logo.url} textoBtn="Selecione o logo" carregandoFoto={carregandoLogo}/>
                                                 </Col>
                                                 <Col>
                                                     <Row>
                                                         <Col sm="6">
-                                                            <AvField name="nome" label="Nome do produto" type="text" errorMessage="Campo obrigatório" validate={{
+                                                            <AvField name="razaoSocial" label="Nome" type="text" errorMessage="Campo obrigatório" validate={{
                                                                 required: {value: true, errorMessage: 'Campo obrigatório'},
                                                             }} />
                                                         </Col>
@@ -99,7 +101,7 @@ const AdicionarCliente = (props) => {
                                                             <AvField name="cidade" label="Cidade" type="text" errorMessage="Campo obrigatório" />   
                                                         </Col>
                                                         <Col sm={2}>
-                                                        <AvField type="select" name="estado" label="Estados" >
+                                                        <AvField type="select" name="uf" label="Estados" >
                                                                 <option>AC</option>
                                                                 <option>AL</option>
                                                                 <option>AP</option>
