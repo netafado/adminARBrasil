@@ -6,25 +6,27 @@ import { Col, Card, CardBody, UncontrolledTooltip, Media, UncontrolledDropdown, 
 const CardProject = (props) => {
 
     return (
+
                <React.Fragment>
+
                 {
                     props.projects.map((project, key) =>
                         <Col xl="4" sm="6" key={"_project_" + key} >
-                            
+                                               {console.log(project)}
                             <Card>
-
                                     <CardBody>
                                         <Media>
                                             <div className="avatar-md mr-4">
                                                 <span className="avatar-title rounded-circle bg-light text-danger font-size-16">
-                                                    <img src={project.img} alt="" height="30" />
+                                                    <img src={project.logo? project.logo.url : null} alt="" height="30" />
                                                 </span>
                                             </div>
-
                                             <Media className="overflow-hidden" body>
-                                                <h5 className="text-truncate font-size-15"><Link to="#" className="text-dark">{project.name}</Link></h5>
-                                                <p className="text-muted mb-1">CNPJ: 200.222.01/111</p>
-                                                <p className="text-muted mb-1">tel: (22) 988 3455</p>
+                                                <h5 className="text-truncate font-size-15"><Link to={`cliente/${project.pk}`} className="text-dark">{project.razaoSocial}</Link></h5>
+                                                <p className="text-muted mb-1">CNPJ: {project.cnpj}</p>
+                                                <p className="text-muted mb-1">tel: {project.telefone}</p>
+                                                <p className="text-muted mb-1">e-mail: {project.email}</p>
+
                                                 <p className="text-muted mb-1">contrato 
                                                 {
                                                     project.contrato ?
@@ -41,13 +43,13 @@ const CardProject = (props) => {
                                 <div className="px-4 py-3 border-top">
                                     <ul className="list-inline mb-0">
                                         <li className="list-inline-item mr-3" id="comments">
-                                            <i className="bx bxs-detail mr-1"></i> {project.comments}
+                                            <i className="bx bxs-detail mr-1"></i> {0}
                                             <UncontrolledTooltip placement="top" target="comments">
                                                Chamados
                                             </UncontrolledTooltip>
                                         </li>
                                         <li className="list-inline-item mr-3" id="comments">
-                                            <i className="bx bxs-detail mr-1"></i> {project.comments}
+                                            <i className="bx bxs-user mr-1"></i> {0}
                                             <UncontrolledTooltip placement="top" target="comments">
                                                Usurios
                                             </UncontrolledTooltip>

@@ -14,9 +14,9 @@ export const listarClientes = () => {
 	}
 };
 
-export const listarProdutosSucesso = (product) => ({
+export const listarProdutosSucesso = (cliente) => ({
 	type:  LIST_CLIENTE_SUCCESS,
-	payload: product
+	payload: cliente
 });
 
 export const listaProdutosFalhou = (error) => ({

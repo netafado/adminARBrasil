@@ -2,11 +2,10 @@ import { takeLatest, fork, put, all, call } from 'redux-saga/effects';
 import { API, graphqlOperation, } from "aws-amplify"
 import * as mutations from "../../graphql/mutations"
 import * as queries from "../../graphql/queries"
-import {listarProdutosSucesso, listaProdutosFalhou, saveNewCliente, saveNewClienteSuccess, saveNewClientefailed} from "./actions"
+import {listarProdutosSucesso, listaProdutosFalhou, saveNewClienteSuccess, saveNewClientefailed} from "./actions"
 import * as types from "./types"
 
 const  _handleError =(error) => {
-    console.log(error)
     var errorMessage = error.message;
     return errorMessage;
 }
@@ -14,18 +13,17 @@ const  _handleError =(error) => {
 function getClientesFromAPI(){
     return new Promise((resolve, reject)=> {
         API.graphql(graphqlOperation( queries.listarCliente))
-        .then( (data) => {
-            return resolve(data.listarCliente)
+        .then( (result) => {
+            resolve(result.data.listarCliente)
         } )
         .catch( err => reject( _handleError(err)) )
     })
 }
 function* carregarCliente(action){
     try{
-        const products = yield call(getClientesFromAPI, action.payload)
-        yield put(listarProdutosSucesso(products))
+        const clientes = yield call(getClientesFromAPI, action.payload)
+        yield put(listarProdutosSucesso(clientes))
     } catch(err){
-        console.log("err", err)
         yield put(listaProdutosFalhou(err))
     }
 }
@@ -46,7 +44,6 @@ function newClienteFromAPI ({values})  {
     return new Promise((resolve, reject)=> {
         API.graphql(graphqlOperation( mutations.createCliente, {input} ))
         .then( (data) => {
-            console.log(data)
             return resolve(data.createProduto)
         } )
         .catch( err => reject( _handleError(err)) )
@@ -59,7 +56,6 @@ function* addNewCliente(action){
         yield put(saveNewClienteSuccess(cliente))
         action.payload.history.push("/clientes")
     } catch(err){
-        console.log("addNewCliente", err)
         yield put(saveNewClientefailed(err))
     }
 }

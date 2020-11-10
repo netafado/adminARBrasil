@@ -38,27 +38,6 @@ export const retornarCliente = /* GraphQL */ `
       bairro
       cidade
       uf
-      pk_produto
-      produto {
-        pk
-        nome
-        categoria
-        fabricante
-        descricao
-        informacaoAdicional
-        imagens {
-          url
-          nome
-          descricao
-          extensao
-        }
-        anexos {
-          url
-          nome
-          descricao
-          extensao
-        }
-      }
       logo {
         url
         nome
@@ -153,27 +132,6 @@ export const listarCliente = /* GraphQL */ `
         bairro
         cidade
         uf
-        pk_produto
-        produto {
-          pk
-          nome
-          categoria
-          fabricante
-          descricao
-          informacaoAdicional
-          imagens {
-            url
-            nome
-            descricao
-            extensao
-          }
-          anexos {
-            url
-            nome
-            descricao
-            extensao
-          }
-        }
         logo {
           url
           nome
@@ -186,8 +144,8 @@ export const listarCliente = /* GraphQL */ `
   }
 `;
 export const listarUsuario = /* GraphQL */ `
-  query ListarUsuario($limit: Int, $nextToken: String) {
-    listarUsuario(limit: $limit, nextToken: $nextToken) {
+  query ListarUsuario($tipo: String, $limit: Int, $nextToken: String) {
+    listarUsuario(tipo: $tipo, limit: $limit, nextToken: $nextToken) {
       items {
         pk
         nome

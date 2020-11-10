@@ -1,8 +1,10 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 
 import { Link } from "react-router-dom";
 import { Container, Row, Col, Card, CardBody, CardTitle, Media, Table, Button, UncontrolledDropdown, DropdownToggle, DropdownItem, DropdownMenu, Modal, FormGroup, Label, Input } from "reactstrap";
 
+import {useSelector, useDispatch} from "react-redux"
+import {getCliente} from "../../store/cliente/actions"
 //Import Breadcrumb
 import Breadcrumbs from '../../components/Common/Breadcrumb';
 //Import Image
@@ -16,6 +18,18 @@ import ModalCliente from "./modalClientes"
 const ProjectsOverview = (props) => {
     const [modal_center, setmodal_center] = useState(false);
     const [modal_membro, setmodal_membro] = useState(false);
+    const {cliente, loading} = useSelector(state => state.Cliente)
+    const dispatch = useDispatch()
+    console.log(cliente)
+
+    const loadInfo = async () =>{
+        const a = await dispatch( getCliente(props.location.hash)  )
+        console.log(a)
+
+    }
+    useEffect(()=>{
+        loadInfo()
+    }, [])
            const members = [
                 {
                     id: 1, img: avatar2, name: "Daniel Canales",
@@ -60,7 +74,7 @@ const ProjectsOverview = (props) => {
                 setmodal_membro(!modal_membro);
                 //removeBodyCss();
               }
-
+              if(!cliente) return null
     return (
              <React.Fragment>
                  <ModalCliente modal={modal_membro} toggle={tog_membro} />
@@ -120,11 +134,11 @@ const ProjectsOverview = (props) => {
                                 <Card>
                                     <CardBody>
                                         <Media>
-                                            <img src={img1} alt="" className="avatar-sm mr-4" />
+                                            <img src={cliente.logo.url} alt="" className="avatar-sm mr-4" />
 
                                             <Media className="overflow-hidden" body>
-                                                <h5 className="text-truncate font-size-15">Skote Dashboard UI</h5>
-                                                <p className="text-muted">Separate existence is a myth. For science, music, sport, etc.</p>
+                                                <h5 className="text-truncate font-size-15">{cliente.razaoSocial}</h5>
+                                                <p className="text-muted">{cliente.cnpj}</p>
                                             </Media>
                                             <div>
                                                 <UncontrolledDropdown>
@@ -132,7 +146,6 @@ const ProjectsOverview = (props) => {
                                                         <i className="mdi mdi-dots-horizontal font-size-18"></i>
                                                     </DropdownToggle>
                                                     <DropdownMenu right>
-                                                        <DropdownItem tag={Link} to="/clientes-adicionar"><i className="mdi mdi-pencil font-size-16 text-success mr-2"></i>Editar Empresa</DropdownItem>
                                                         <DropdownItem onClick={tog_center}><i className="mdi mdi-pencil font-size-16 text-success mr-2"></i>Editar contrato</DropdownItem>
                                                         <DropdownItem tag={Link} to="/clientes-adicionar"><i className="mdi mdi-pencil font-size-16 text-success mr-2"></i>Editar</DropdownItem>
                                                         <DropdownItem href="#"><i className="mdi mdi-trash-can font-size-16 text-danger mr-2"></i>Deletar</DropdownItem>
@@ -145,8 +158,8 @@ const ProjectsOverview = (props) => {
 
                                         <div className="text-muted mt-4">
                                             <p><i className="mdi mdi-chevron-right text-primary mr-1"></i> CPNJ: ---</p>
-                                            <p><i className="mdi mdi-chevron-right text-primary mr-1"></i>Rua joão de barros - Carapicuiba | SP - CEP: 06705 050.</p>
-                                            <p><i className="mdi mdi-chevron-right text-primary mr-1"></i> Telefone: (11) 98893 7853</p>
+                                            <p><i className="mdi mdi-chevron-right text-primary mr-1"></i>{cliente.rua} - {cliente.cidade} | {cliente.up} - CEP: {cliente.cep || "---"}.</p>
+                                            <p><i className="mdi mdi-chevron-right text-primary mr-1"></i> Telefone: {cliente.telefone}</p>
                                         </div>
                                         <hr className="mt-2"/>
                                         <h5 className="font-size-15 mt-4">Contrato :</h5>

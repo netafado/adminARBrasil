@@ -7,3 +7,4 @@ export const LIST_CLIENTE_SUCCESS =   "cliente@LIST_CLIENTE_SUCCESS"
 export const LIST_CLIENTE_FAILED  =   "cliente@LIST_PRODUCT_FAILED"
 
 
+

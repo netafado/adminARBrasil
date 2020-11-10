@@ -9,7 +9,7 @@ import Breadcrumbs from '../../components/Common/Breadcrumb';
 import  imageUrls from "../../assets/images/logoEmpresa.jpg"
 
 import {useSelector, useDispatch} from "react-redux"
-
+import BtnLoader from "../../components/ui/btnLoader"
 import { saveNewCliente } from "../../store/clientes/actions"
 import { salvarToStorage } from "../../helpers/amplify/storage"
 
@@ -18,7 +18,7 @@ import FileUploader from "../../components/fileUploader"
 const AdicionarCliente = (props) => {
 
     const dispatch = useDispatch();
-    
+    const clientes = useSelector(state => state.Clientes)
     const [logo, setLogo] = useState({url:imageUrls, extensao: null, descricao: "", extensao: ""})
     const [carregandoLogo, setCarregandoLogo] = useState(false)
     const mudarImg = async(e) => {
@@ -30,6 +30,7 @@ const AdicionarCliente = (props) => {
         setLogo({...logo, url: urlFile})
 
     }
+    console.log(clientes)
 
     const handleValidSubmit = async(e, values) =>{
         values.logo = logo;
@@ -135,7 +136,7 @@ const AdicionarCliente = (props) => {
                                             </Row>
                                             <Row>
                                                 <Col>
-                                                    <Button type="submit"  color="primary" className="mr-1 waves-effect waves-light">Salvar</Button>
+                                                    <BtnLoader loading={clientes.loading} />
                                                 </Col>
                                             </Row>
                                         </AvForm>

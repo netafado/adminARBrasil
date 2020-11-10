@@ -6,7 +6,8 @@ const inicialState = {
     error: "",
     newCliente: null,
     deleteCliente: null,
-    nextToken: ""
+    nextToken: "",
+    oneCliente: null,
 }
 
 
@@ -15,6 +16,7 @@ const clientes = function(state = inicialState, action) {
         case types.LIST_CLIENTE_REQUESTED:
             return {...state, loading: true}
         case types.LIST_CLIENTE_SUCCESS:
+            console.log(action)
             return {...state, loading: false, clientes: action.payload.items, nextToken: action.payload.nextToken}
         case types.LIST_CLIENTE_FAILED:
             return {...state, loading: false, error: action.payload}

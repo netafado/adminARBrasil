@@ -15,6 +15,7 @@ import  imageUrls from "../../assets/images/logoEmpresa.jpg"
 import { useDispatch, useSelector } from 'react-redux';
 import config from "../../aws-exports"
 import Anexos from "../../components/anexos"
+import BtnLoader from "../../components/ui/btnLoader"
 const {
     aws_user_files_s3_bucket_region: region,
     aws_user_files_s3_bucket: bucket
@@ -197,8 +198,8 @@ const EditarProduto = (props) => {
                                                 <Col sm="12">
                                                     <Anexos  anexos={anexos} removerAnexo={removerAnexo}/>
                                                 </Col>
-                                                <Col>                                
-                                            <Button type="submit" disabled={loading} color="primary" className="mr-1 waves-effect waves-light">{loading ? "Carregando" : "Salvar"}</Button>
+                                                <Col> 
+                                                    <BtnLoader loading={loading}/>                               
                                                 </Col>
                                             </Row>
 
