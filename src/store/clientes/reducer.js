@@ -25,6 +25,11 @@ const clientes = function(state = inicialState, action) {
             return {...state, loading: true}
         case types.ADD_CLIENTE_SUCCESS:
             return {...state, loading: false, newCliente: action.payload}
+        // delete produto
+        case types.DELETE_CLIENTE_REQUESTED:
+            return {...state, loading: true}
+        case types.DELETE_CLIENTE_SUCCESS:
+            return {...state, loading: false, deleteCliente: action.payload}
         default:
             return state
 

@@ -1,35 +1,41 @@
 import React, { useState } from 'react';
-import { Link } from "react-router-dom";
 import { Container, Row, Col,  Card, CardBody, CardTitle, CardSubtitle, Button } from "reactstrap";
 import { AvForm, AvField } from 'availity-reactstrap-validation';
 
 //Import Breadcrumb
 import Breadcrumbs from '../../components/Common/Breadcrumb';
-
+import toastr from 'toastr'
+import 'toastr/build/toastr.min.css'
 import  imageUrls from "../../assets/images/users/avatar-1.jpg"
 
-import {createThumb} from "../../helpers/utils"
+//redux
+import { addTecnico } from "../../store/tecnicos/actions"
+import { salvarToStorage } from "../../helpers/amplify/storage"
+import BtnLoader from "../../components/ui/btnLoader"
+
+import FileUploader from "../../components/fileUploader"
+import { useDispatch, useSelector } from 'react-redux';
 
 const AdicionarCliente = (props) => {
 
-
-    const [ImgUrl, setImage] = useState(imageUrls)
-
-    function formatBytes(bytes, decimals = 2)
-    {
-        if (bytes === 0) return '0 Bytes';
-        const k = 1024;
-        const dm = decimals < 0 ? 0 : decimals;
-        const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
-
-        const i = Math.floor(Math.log(bytes) / Math.log(k));
-        return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+    const dispatch = useDispatch();
+    const [foto, setFoto] = useState({url:imageUrls, extensao: null, descricao: "", extensao: ""})
+    const [carregandoLogo, setCarregandoLogo] = useState(false)
+    const {loading}  = useSelector(state => state.Tecnicos)
+    const mudarImg = async(e) => {
+        const file = e.target.files[0]
+        setCarregandoLogo(true)
+        const urlFile = await salvarToStorage(file)
+        console.log(urlFile)
+        setCarregandoLogo(false)
+        setFoto({...foto, url: urlFile})
     }
-
-    const mudarImg = (e) => {
-        createThumb(e, setImage);
-    };
-
+    const handleValidSubmit = async(e, values) =>{
+        values.foto = foto;
+        await dispatch(addTecnico(values, props.history))
+        return toastr.success("Técnico adicionado!", "Cliente salvo com sucesso!")
+    }
+    console.log(loading)
     return (
              <React.Fragment>
                 <div className="page-content">
@@ -42,15 +48,11 @@ const AdicionarCliente = (props) => {
                                     <CardBody>
                                         <CardTitle>Informações</CardTitle>
                                         <CardSubtitle className="mb-3">Preencha todos os campos abaixo</CardSubtitle>
-                                        <AvForm>
+                                        <AvForm  onValidSubmit={(e,v) => { handleValidSubmit(e,v) }} >
                                             <Row>
                                                 <Col sm={3}>
-                                                <div className="fileinput text-center">
+                                                <   FileUploader salvarToStorage={mudarImg} url={foto.url} textoBtn="Selecione o logo" carregandoFoto={carregandoLogo}/>
 
-                                                <input type="file" onChange={mudarImg} accept="image/*"/>
-                                                    <div className="thumbnail avatar-upload" style={{backgroundImage: `url(${ImgUrl})`}}></div>
-                                                    <div><Button type="button" className="btn-round btn btn-secondary">Selecione a foto</Button></div>
-                                                </div>
                                                 </Col>
                                                 <Col>
                                                     <Row>
@@ -99,7 +101,7 @@ const AdicionarCliente = (props) => {
                                                             <AvField name="cidade" label="Cidade" type="text" errorMessage="Campo obrigatório" />   
                                                         </Col>
                                                         <Col sm={2}>
-                                                        <AvField type="select" name="estado" label="Estados" >
+                                                        <AvField type="select" name="uf" label="Estados" >
                                                                 <option>AC</option>
                                                                 <option>AL</option>
                                                                 <option>AP</option>
@@ -133,7 +135,7 @@ const AdicionarCliente = (props) => {
                                             </Row>
                                             <Row>
                                                 <Col>
-                                                    <Button type="submit"  color="primary" className="mr-1 waves-effect waves-light">Salvar</Button>
+                                                    <BtnLoader loading={loading} />
                                                 </Col>
                                             </Row>
                                         </AvForm>

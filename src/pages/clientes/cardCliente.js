@@ -3,33 +3,31 @@ import { Link } from "react-router-dom";
 import { Col, Card, CardBody, UncontrolledTooltip, Media, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem, Badge } from "reactstrap";
 
 
-const CardProject = (props) => {
+const Cardcliente = ({delete_func, clientes}) => {
 
     return (
 
                <React.Fragment>
 
                 {
-                    props.projects.map((project, key) =>
-                        <Col xl="4" sm="6" key={"_project_" + key} >
-                                               {console.log(project)}
+                    clientes.map((cliente, key) =>
+                        <Col xl="4" sm="6" key={"_cliente_" + key} >
                             <Card>
                                     <CardBody>
                                         <Media>
                                             <div className="avatar-md mr-4">
-                                                <span className="avatar-title rounded-circle bg-light text-danger font-size-16">
-                                                    <img src={project.logo? project.logo.url : null} alt="" height="30" />
+                                                <span className="avatar-title rounded-circle bg-light text-danger font-size-16" style={{backgroundImage: `url( ${cliente.logo? cliente.logo.url : null} )`}}>
                                                 </span>
                                             </div>
                                             <Media className="overflow-hidden" body>
-                                                <h5 className="text-truncate font-size-15"><Link to={`cliente/${project.pk}`} className="text-dark">{project.razaoSocial}</Link></h5>
-                                                <p className="text-muted mb-1">CNPJ: {project.cnpj}</p>
-                                                <p className="text-muted mb-1">tel: {project.telefone}</p>
-                                                <p className="text-muted mb-1">e-mail: {project.email}</p>
+                                                <h5 className="text-truncate font-size-15"><Link to={`cliente/${cliente.pk}`} className="text-dark">{cliente.razaoSocial}</Link></h5>
+                                                <p className="text-muted mb-1">CNPJ: {cliente.cnpj}</p>
+                                                <p className="text-muted mb-1">tel: {cliente.telefone}</p>
+                                                <p className="text-muted mb-1">e-mail: {cliente.email}</p>
 
                                                 <p className="text-muted mb-1">contrato 
                                                 {
-                                                    project.contrato ?
+                                                    cliente.contrato ?
                                                     <> <Badge color="success" className="mr-1">vigente</Badge> até: 22/02/2020</>
                                                     :
                                                     <> <Badge color="danger" className="mr-1">Sem contrato</Badge> ---</>
@@ -60,8 +58,8 @@ const CardProject = (props) => {
                                                     <i className="mdi mdi-dots-horizontal font-size-18"></i>
                                                 </DropdownToggle>
                                                 <DropdownMenu right>
-                                                    <DropdownItem tag={Link} to="/clientes-adicionar"><i className="mdi mdi-pencil font-size-16 text-success mr-2"></i>Editar</DropdownItem>
-                                                    <DropdownItem href="#"><i className="mdi mdi-trash-can font-size-16 text-danger mr-2"></i>Deletar</DropdownItem>
+                                                    <DropdownItem tag={Link} to={`cliente/${cliente.pk}`}><i className="mdi mdi-pencil font-size-16 text-success mr-2"></i>Editar</DropdownItem>
+                                                    <DropdownItem onClick={()=>delete_func(cliente)}><i className="mdi mdi-trash-can font-size-16 text-danger mr-2"></i>Deletar</DropdownItem>
                                                 </DropdownMenu>
                                             </UncontrolledDropdown>
                                         </li>
@@ -79,4 +77,4 @@ const CardProject = (props) => {
           );
     }
         
-export default CardProject;
+export default Cardcliente;

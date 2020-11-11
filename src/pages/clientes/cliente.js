@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 
 import { Link } from "react-router-dom";
-import { Container, Row, Col, Card, CardBody, CardTitle, Media, Table, Button, UncontrolledDropdown, DropdownToggle, DropdownItem, DropdownMenu, Modal, FormGroup, Label, Input } from "reactstrap";
+import { Container, Row, Col, Card, CardBody, CardTitle, Media, Table, Button, UncontrolledDropdown, DropdownToggle, DropdownItem, DropdownMenu, Modal, FormGroup, Label, Input, Spinner } from "reactstrap";
 
 import {useSelector, useDispatch} from "react-redux"
 import {getCliente} from "../../store/cliente/actions"
@@ -15,17 +15,13 @@ import avatar4 from "../../assets/images/users/avatar-4.jpg";
 
 import ModalCliente from "./modalClientes"
 
-const ProjectsOverview = (props) => {
+const ClienteSingle = (props) => {
     const [modal_center, setmodal_center] = useState(false);
     const [modal_membro, setmodal_membro] = useState(false);
     const {cliente, loading} = useSelector(state => state.Cliente)
     const dispatch = useDispatch()
-    console.log(cliente)
-
     const loadInfo = async () =>{
         const a = await dispatch( getCliente(props.location.hash)  )
-        console.log(a)
-
     }
     useEffect(()=>{
         loadInfo()
@@ -78,50 +74,51 @@ const ProjectsOverview = (props) => {
     return (
              <React.Fragment>
                  <ModalCliente modal={modal_membro} toggle={tog_membro} />
+
+
                 <Modal
                     isOpen={modal_center}
                     toggle={() => { tog_center() }}
                     centered={true}
-                >
-                    <div className="modal-header">
-                    <h5 className="modal-title mt-0">Editar contrato</h5>
-                    <button
-                        type="button"
-                        onClick={() => { setmodal_center(false) } }
-                        className="close"
-                        data-dismiss="modal"
-                        aria-label="Close"
                     >
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    </div>
-                    <div className="modal-body">
+                        <div className="modal-header">
+                        <h5 className="modal-title mt-0">Editar contrato</h5>
+                        <button
+                            type="button"
+                            onClick={() => { setmodal_center(false) } }
+                            className="close"
+                            data-dismiss="modal"
+                            aria-label="Close"
+                        >
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        </div>
+                        <div className="modal-body">
 
-                    <Col sm="12">
+                        <Col sm="12">
+                                <FormGroup>
+                                    <Label htmlFor="productname">Data início</Label>
+                                    <input className="form-control" type="datetime-local" defaultValue="2019-08-19T13:45:00" id="example-datetime-local-input" />
+                                </FormGroup>
+
+                                <FormGroup>
+                                    <Label htmlFor="manufacturerbrand">Data término</Label>
+                                    <input className="form-control" type="datetime-local" defaultValue="2019-08-19T13:45:00" id="example-datetime-local-input" />
+                                </FormGroup>
+
+                                <FormGroup>
+                                    <Label htmlFor="price">Anexar o documento</Label>
+                                    <Input id="price" name="price" type="file" className="form-control" />
+                                </FormGroup>
+                            </Col>
+
+                        </div>
+                        <div className="modal-footer">
                             <FormGroup>
-                                <Label htmlFor="productname">Data inicio</Label>
-                                <input className="form-control" type="datetime-local" defaultValue="2019-08-19T13:45:00" id="example-datetime-local-input" />
+                                <Button  className="form-control" >Salvar</Button>
                             </FormGroup>
-
-                            <FormGroup>
-                                <Label htmlFor="manufacturerbrand">Data termino</Label>
-                                <input className="form-control" type="datetime-local" defaultValue="2019-08-19T13:45:00" id="example-datetime-local-input" />
-                            </FormGroup>
-
-                            <FormGroup>
-                                <Label htmlFor="price">Anexar o documento</Label>
-                                <Input id="price" name="price" type="file" className="form-control" />
-                            </FormGroup>
-                        </Col>
-
-
-                    </div>
-                    <div className="modal-footer">
-                        <FormGroup>
-                            <Button  className="form-control" >Salvar</Button>
-                        </FormGroup>
-                    </div>
-                </Modal>
+                        </div>
+                    </Modal>
  
                 <div className="page-content">
                     <Container fluid>
@@ -132,6 +129,7 @@ const ProjectsOverview = (props) => {
                         <Row>
                             <Col lg="12">
                                 <Card>
+                                    {loading ? <Spinner /> : null}
                                     <CardBody>
                                         <Media>
                                             <img src={cliente.logo.url} alt="" className="avatar-sm mr-4" />
@@ -167,7 +165,7 @@ const ProjectsOverview = (props) => {
 
                                             <Col sm="6" xs="6">
                                                 <div className="mt-2">
-                                                    <h5 className="font-size-14"><i className="bx bx-calendar mr-1 text-primary"></i> Inicio</h5>
+                                                    <h5 className="font-size-14"><i className="bx bx-calendar mr-1 text-primary"></i> Início</h5>
                                                     <p className="text-muted mb-0">08 Sept, 2019</p>
                                                 </div>
                                             </Col>
@@ -322,4 +320,4 @@ const ProjectsOverview = (props) => {
           );
     }
         
-export default ProjectsOverview;
+export default ClienteSingle;

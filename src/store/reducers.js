@@ -13,6 +13,7 @@ import Products from "./product/reducer"
 import ProdutosLista from "./listaProdutos/reducer"
 import Clientes from "./clientes/reducer"
 import Cliente from "./cliente/reducer"
+import Tecnicos from "./tecnicos/reducer"
 
 const rootReducer = combineReducers({
   // public
@@ -25,7 +26,8 @@ const rootReducer = combineReducers({
   Products,
   ProdutosLista,
   Clientes,
-  Cliente
+  Cliente,
+  Tecnicos
 });
 
 export default rootReducer;

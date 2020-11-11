@@ -1,89 +1,61 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { Link } from "react-router-dom";
 import { Container, Row, Col, Input, Button } from "reactstrap";
-
+import SweetAlert from "react-bootstrap-sweetalert";
 //Import Breadcrumb
 import Breadcrumbs from '../../components/Common/Breadcrumb';
 
 //Import Card
 import CardContact from "./card-contact";
 
+//redux
+import {useSelector, useDispatch} from "react-redux"
+import { listarTecnicos, deleteTecnico } from "../../store/tecnicos/actions"
 //Import Images
-import avatar2 from "../../assets/images/users/avatar-2.jpg";
-import avatar3 from "../../assets/images/users/avatar-3.jpg";
-import avatar4 from "../../assets/images/users/avatar-4.jpg";
-import avatar5 from "../../assets/images/users/avatar-5.jpg";
-import avatar7 from "../../assets/images/users/avatar-7.jpg";
+
 
 const ContactsGrid = (props) => {
+    const {tecnicos} = useSelector(state => state.Tecnicos)
+    const dispatch = useDispatch()
+    const [deletarMsg, setDeletarMsg] = useState(false)
+    const [idTecnicoDeletar, setIdTecnicoDeletar] = useState(null)
+    useEffect(()=>{
+        dispatch( listarTecnicos() )
+    }, [])
+    const deletarTecnico = async (pk) =>{
+        setIdTecnicoDeletar(pk)
+        abrirModalParaDeletarTecnico()
+    }
+    const confirmDeletarProduto = async() =>{
+        await dispatch(deleteTecnico(idTecnicoDeletar))
+        abrirModalParaDeletarTecnico()
+        recarregarProdutos();
+    }
 
-const users = [
-            {
-                id: 1, img: "Null", name: "David McHenry", designation: "Carapicuiba - SP", color: "primary",
-                skills: [
-                    { name: "Photoshop" },
-                    { name: "illustrator" }
-                ]
-            },
-            {
-                id: 2, img: avatar2, name: "Frank Kirk", designation: "Osasco - SP",
-                skills: [
-                    { name: "Html" },
-                    { name: "Css" },
-                    { name: "2 + more" },
-                ]
-            },
-            {
-                id: 3, img: avatar3, name: "Rafael Morales", designation: "Itapevi - SP",
-                skills: [
-                    { name: "Php" },
-                    { name: "Java" },
-                    { name: "Python" },
-                ]
-            },
-            {
-                id: 4, img: "Null", name: "Mark Ellison", designation: "Barueri - SP", color: "success",
-                skills: [
-                    { name: "Ruby" },
-                    { name: "Php" },
-                    { name: "2 + more" },
-                ]
-            },
-            {
-                id: 5, img: avatar4, name: "Minnie Walter", designation: "São Paulo - SP",
-                skills: [
-                    { name: "Html" },
-                    { name: "Css" },
-                    { name: "2 + more" },
-                ]
-            },
-            {
-                id: 6, img: avatar5, name: "Shirley Smith", designation: "UI/UX Designer",
-                skills: [
-                    { name: "Photoshop" },
-                    { name: "UI/UX Designer" }
-                ]
-            },
-            {
-                id: 7, img: "Null", name: "John Santiago", designation: "Full Stack Developer", color: "info",
-                skills: [
-                    { name: "Ruby" },
-                    { name: "Php" },
-                    { name: "2 + more" },
-                ]
-            },
-            {
-                id: 8, img: avatar7, name: "Colin Melton", designation: "Backend Developer", color: "",
-                skills: [
-                    { name: "Php" },
-                    { name: "Java" },
-                    { name: "Python" },
-                ]
-            },
-        ];
+    const abrirModalParaDeletarTecnico = () =>{
+        setDeletarMsg(!deletarMsg)
+    }
+
+    const recarregarProdutos = () => {
+        dispatch(listarTecnicos())
+    }
+    console.log(idTecnicoDeletar)
     return (
           <React.Fragment>
                 <div className="page-content">
+                {deletarMsg ? (
+                    <SweetAlert
+                        danger
+                        showCancel
+                        title="Tem certeza?"
+                        onConfirm={() => confirmDeletarProduto()  }
+                        onCancel={() => abrirModalParaDeletarTecnico()  }
+
+                    >
+                        {"Essa operação não podera ser desfeita!"}
+                    </SweetAlert>
+                ) : null}
+
                     <Container fluid>
 
                         {/* Render Breadcrumbs */}
@@ -107,19 +79,11 @@ const users = [
                         </Row>
                         <Row>
                             {
-                                users.map((user, key) =>
-                                    <CardContact user={user} key={"_user_" + key} />
+                                tecnicos.map((tecnico, key) =>
+                                    <CardContact user={tecnico} key={"_user_" + key} deletarTecnico={deletarTecnico}/>
                                 )
                             }
 
-                        </Row>
-
-                        <Row>
-                            <Col xs="12">
-                                <div className="text-center my-3">
-                                    <Link to="#" className="text-success"><i className="bx bx-hourglass bx-spin mr-2"></i> Carregar mais </Link>
-                                </div>
-                            </Col>
                         </Row>
 
                     </Container>

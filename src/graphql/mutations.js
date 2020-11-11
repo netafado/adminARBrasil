@@ -151,27 +151,6 @@ export const deleteCliente = /* GraphQL */ `
       bairro
       cidade
       uf
-      pk_produto
-      produto {
-        pk
-        nome
-        categoria
-        fabricante
-        descricao
-        informacaoAdicional
-        imagens {
-          url
-          nome
-          descricao
-          extensao
-        }
-        anexos {
-          url
-          nome
-          descricao
-          extensao
-        }
-      }
       logo {
         url
         nome

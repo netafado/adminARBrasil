@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { Container, Row, Col,  Card, CardBody, CardTitle, CardSubtitle, Button } from "reactstrap";
+import { Container, Row, Col,  Card, CardBody, CardTitle, CardSubtitle, Button, Input } from "reactstrap";
 import { AvForm, AvField } from 'availity-reactstrap-validation';
+import CpfCnpj from "@react-br-forms/cpf-cnpj-mask";
 import toastr from 'toastr'
 import 'toastr/build/toastr.min.css'
 //Import Breadcrumb
@@ -34,8 +35,8 @@ const AdicionarCliente = (props) => {
 
     const handleValidSubmit = async(e, values) =>{
         values.logo = logo;
-        const a = await dispatch(saveNewCliente(values, props.history))
-        return toastr.success("Cliente adicionado!", "Produto salvo com sucesso!")
+        await dispatch(saveNewCliente(values, props.history))
+        return toastr.success("Cliente adicionado!", "Cliente salvo com sucesso!")
     }
 
     return (
@@ -53,7 +54,7 @@ const AdicionarCliente = (props) => {
                                         <AvForm  onValidSubmit={(e,v) => { handleValidSubmit(e,v) }}>
                                             <Row>
                                                 <Col sm={3}>
-                                                <FileUploader salvarToStorage={mudarImg} url={logo.url} textoBtn="Selecione o logo" carregandoFoto={carregandoLogo}/>
+                                                    <FileUploader salvarToStorage={mudarImg} url={logo.url} textoBtn="Selecione o logo" carregandoFoto={carregandoLogo}/>
                                                 </Col>
                                                 <Col>
                                                     <Row>
@@ -63,7 +64,7 @@ const AdicionarCliente = (props) => {
                                                             }} />
                                                         </Col>
                                                         <Col sm="6">
-                                                            <AvField name="cnpj" label="CNPJ" type="text" errorMessage="Campo obrigatório" validate={{
+                                                            <AvField mask="(999) 999-9999" name="cnpj" label="CNPJ" type="text" errorMessage="Campo obrigatório" validate={{
                                                                 required: {value: true, errorMessage: 'Campo obrigatório'},
                                                             }} />
                                                         </Col>

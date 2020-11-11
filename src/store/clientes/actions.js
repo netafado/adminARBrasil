@@ -4,7 +4,8 @@ import {
 	LIST_CLIENTE_FAILED,
 	ADD_CLIENTE_REQUESTED,
 	ADD_CLIENTE_SUCCESS,
-	ADD_CLIENTE_FAILED
+	ADD_CLIENTE_FAILED,
+	DELETE_CLIENTE_REQUESTED
 } from "./types";
 
 export const listarClientes = () => {
@@ -37,6 +38,17 @@ export const saveNewClienteSuccess = (cliente) => ({
 export const saveNewClientefailed = (error) => ({
 	type: ADD_CLIENTE_FAILED,
 	payload: error
+});
+
+
+export const deleteCliente = (pk) => ({
+	type: DELETE_CLIENTE_REQUESTED,
+	payload: pk
+});
+
+export const deleteClienteSucess = (cliente) => ({
+	type: DELETE_CLIENTE_REQUESTED,
+	payload: cliente
 });
 
 
