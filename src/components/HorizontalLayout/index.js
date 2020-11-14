@@ -47,7 +47,7 @@ class Layout extends Component {
     let currentage = title.charAt(1).toUpperCase() + title.slice(2);
 
     document.title =
-      currentage + " | ARBRASIL - Central do Cliente";
+      currentage + " | Ar Brasil Compressores - Central do Cliente";
 
     this.props.changeLayout('horizontal');
     if (this.props.topbarTheme) {

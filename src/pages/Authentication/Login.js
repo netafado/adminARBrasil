@@ -91,14 +91,14 @@ import {useDispatch} from "react-redux"
                                                 </div>
 
                                                 <div className="mt-4 text-center">
-                                                    <Link to="/forgot-password" className="text-muted"><i className="mdi mdi-lock mr-1"></i> Esqueceu sua senha</Link>
+                                                    {/*<Link to="/forgot-password" className="text-muted"><i className="mdi mdi-lock mr-1"></i> Esqueceu sua senha</Link> */}
                                                 </div>
                                             </AvForm>
                                         </div>
                                     </CardBody>
                                 </Card>
                                 <div className="mt-5 text-center">
-                                    <p>© {new Date().getFullYear()} ARBRASIL. Criado por <i className="fas fa-bacon text-danger"></i> isaiasfrancisco.com.br</p>
+                                    <p>© {new Date().getFullYear()}  Ar Brasil Compressores. Criado por <i className="fas fa-bacon text-danger"></i> isaiasfrancisco.com.br</p>
                                 </div>
                             </Col>
                         </Row>

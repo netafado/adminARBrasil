@@ -1,86 +1,95 @@
 import React, { useState } from 'react';
-import { Container, Row, Col,  Card, CardBody, CardTitle, CardSubtitle, Input } from "reactstrap";
+import { Container, Row, Col,  Card, CardBody, CardTitle, CardSubtitle, Button, Input } from "reactstrap";
 import { AvForm, AvField } from 'availity-reactstrap-validation';
 
-//Import Breadcrumb
-import Breadcrumbs from '../../components/Common/Breadcrumb';
+import InputMask from 'react-input-mask';
+
 import toastr from 'toastr'
 import 'toastr/build/toastr.min.css'
-import  imageUrls from "../../assets/images/users/avatar-1.jpg"
-import InputMask from 'react-input-mask';
-//redux
-import { addTecnico } from "../../store/tecnicos/actions"
-import { salvarToStorage } from "../../helpers/amplify/storage"
+//Import Breadcrumb
+import Breadcrumbs  from '../../components/Common/Breadcrumb';
+
+import  imageUrls   from "../../assets/images/logoEmpresa.jpg"
+
+import {useSelector, useDispatch} from "react-redux"
 import BtnLoader from "../../components/ui/btnLoader"
+import { updateCliente } from "../../store/clientes/actions"
+import { salvarToStorage } from "../../helpers/amplify/storage"
 
 import FileUploader from "../../components/fileUploader"
-import { useDispatch, useSelector } from 'react-redux';
 
-const AdicionarCliente = (props) => {
-
+const EditarCliente = (props) => {
+    const cliente = props.location.state.cliente;
     const dispatch = useDispatch();
-    const [foto, setFoto] = useState({url:imageUrls, extensao: null, descricao: "", extensao: ""})
+    const{loading} = useSelector(state => state.Clientes.loading)
+    const [logo, setLogo] = useState(cliente.logo || {url:imageUrls, extensao: null, descricao: "", extensao: ""})
     const [carregandoLogo, setCarregandoLogo] = useState(false)
-    const {loading}  = useSelector(state => state.Tecnicos)
     const mudarImg = async(e) => {
         const file = e.target.files[0]
         setCarregandoLogo(true)
         const urlFile = await salvarToStorage(file)
-        console.log(urlFile)
         setCarregandoLogo(false)
-        setFoto({...foto, url: urlFile})
+        setLogo({...logo, url: urlFile})
+
     }
     const handleValidSubmit = async(e, values) =>{
-        values.foto = foto;
-        await dispatch(addTecnico(values, props.history))
-        return toastr.success("Técnico adicionado!", "Cliente salvo com sucesso!")
+        values.pk = cliente.pk
+        values.contrato = cliente.contrato
+        values.logo = logo
+        values.pk_produto = cliente.produto || [" "]
+
+        await dispatch(updateCliente(values, props.history))
+        return toastr.success("Cliente atualizado!", "Cliente atualizado com sucesso!")
     }
-    console.log(loading)
+
     return (
              <React.Fragment>
                 <div className="page-content">
                     <Container fluid>
                         {/* Render Breadcrumb */}
-                        <Breadcrumbs title=" Técnico" breadcrumbItem="adicionar Técnico" />
+                        <Breadcrumbs title="Novo Cliente" breadcrumbItem="adicionar Cliente" />
                         <Row>
                             <Col xs="12">
                                 <Card>
                                     <CardBody>
-                                        <CardTitle>Informações</CardTitle>
+                                        <CardTitle>Informações da Empresa</CardTitle>
                                         <CardSubtitle className="mb-3">Preencha todos os campos abaixo</CardSubtitle>
-                                        <AvForm  onValidSubmit={(e,v) => { handleValidSubmit(e,v) }} >
+                                        <AvForm  onValidSubmit={(e,v) => { handleValidSubmit(e,v) }}>
                                             <Row>
                                                 <Col sm={3}>
-                                                 <   FileUploader salvarToStorage={mudarImg} url={foto.url} textoBtn="Selecione o foto" carregandoFoto={carregandoLogo}/>
-
+                                                    <FileUploader salvarToStorage={mudarImg} url={logo.url} textoBtn="Selecione o logo" carregandoFoto={carregandoLogo}/>
                                                 </Col>
                                                 <Col>
                                                     <Row>
                                                         <Col sm="6">
-                                                            <AvField name="nome" label="Nome" type="text" errorMessage="Campo obrigatório" validate={{
+                                                            <AvField name="razaoSocial" value={cliente.razaoSocial} label="Nome" type="text" errorMessage="Campo obrigatório" validate={{
                                                                 required: {value: true, errorMessage: 'Campo obrigatório'},
                                                             }} />
                                                         </Col>
                                                         <Col sm="6">
-                                                            <AvField name="cpf" 
-                                                                mask="999.999.999-99"
+                                                            <AvField
+                                                                mask="99.999.999/9999-99"
                                                                 tag={[Input, InputMask]} 
-                                                                label="CPF" type="text" errorMessage="Campo obrigatório" validate={{
+                                                                value={cliente.cnpj}
+                                                                name="cnpj" label="CNPJ" type="text" errorMessage="Campo obrigatório" validate={{
                                                                 required: {value: true, errorMessage: 'Campo obrigatório'},
                                                             }} />
                                                         </Col>
                                                     </Row>
                                                     <Row>
                                                         <Col sm="6">
-                                                            <AvField name="telefone" 
+                                                            <AvField name="telefone"           
                                                                 mask="(99) 999-999999"
-                                                                maskChar="-"  tag={[Input, InputMask]} 
-                                                                label="Telefone" type="text" errorMessage="Campo obrigatório" validate={{
+                                                                value={cliente.telefone}
+                                                                maskChar="-"  tag={[Input, InputMask]} label="Telefone" type="text" 
+                                                                errorMessage="Campo obrigatório" validate={{
                                                                 required: {value: true, errorMessage: 'Campo obrigatório'},
                                                             }} />
                                                         </Col>
                                                         <Col sm="6">
-                                                            < AvField name="email" label="Email" type="email" errorMessage="Campo obrigatório" validate={{
+                                                            < AvField name="email" 
+                                                                value={cliente.email}
+                                                                label="Email" type="email" errorMessage="Campo obrigatório" validate={{
                                                                 required: {value: true, errorMessage: 'Campo obrigatório'},
                                                                 email: {value: true, errorMessage: "formato do email invalido"}
                                                             }} />
@@ -95,19 +104,29 @@ const AdicionarCliente = (props) => {
                                                 <Col>
                                                     <Row>
                                                         <Col sm={6}>
-                                                            < AvField name="cep" label="CEP" type="text" errorMessage="Campo obrigatório" />
+                                                            < AvField 
+                                                            mask="99999-999"
+                                                            tag={[Input, InputMask]} 
+                                                            value={cliente.cep}
+                                                            name="cep" label="CEP" type="text" errorMessage="Campo obrigatório" />
                                                         </Col>
                                                         <Col sm={6}>
-                                                             <AvField name="rua" label="rua" type="text" errorMessage="Campo obrigatório" />   
+                                                             <AvField
+                                                             value={cliente.rua}
+                                                             name="rua" label="rua" type="text" errorMessage="Campo obrigatório" />   
                                                         </Col>
                                                         <Col sm={6}>
-                                                            <AvField name="bairro" label="Bairro" type="text" errorMessage="Campo obrigatório" />   
+                                                            <AvField 
+                                                            value={cliente.bairro}
+                                                            name="bairro" label="Bairro" type="text" errorMessage="Campo obrigatório" />   
                                                         </Col>
                                                         <Col sm={4}>
-                                                            <AvField name="cidade" label="Cidade" type="text" errorMessage="Campo obrigatório" />   
+                                                            <AvField 
+                                                            value={cliente.cidade}
+                                                            name="cidade" label="Cidade" type="text" errorMessage="Campo obrigatório" />   
                                                         </Col>
                                                         <Col sm={2}>
-                                                        <AvField type="select" name="uf" label="Estados" >
+                                                        <AvField type="select" value={cliente.uf} name="uf" label="Estados" >
                                                                 <option>AC</option>
                                                                 <option>AL</option>
                                                                 <option>AP</option>
@@ -157,4 +176,4 @@ const AdicionarCliente = (props) => {
           );
     }
         
-export default AdicionarCliente;
+export default EditarCliente;

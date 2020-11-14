@@ -1,19 +1,24 @@
 import React, {useState} from 'react';
 
-import { Link } from "react-router-dom";
-import {  Col, Button, Modal, FormGroup, Row } from "reactstrap";
+import {  Col, Button, Modal, FormGroup, Row, Input } from "reactstrap";
+import InputMask            from 'react-input-mask';
+import { AvForm, AvField }  from 'availity-reactstrap-validation';
+import  imageUrls           from "../../../assets/images/logoEmpresa.jpg"
+import { salvarToStorage }  from "../../../helpers/amplify/storage"
+import FileUploader         from "../../../components/fileUploader"
 
-import { AvForm, AvField } from 'availity-reactstrap-validation';
 
-import  imageUrls from "../../assets/images/logoEmpresa.jpg"
-import {createThumb} from "../../helpers/utils"
-const ProjectsOverview = ({modal, toggle}) => {
+const ModalMembros = ({modal, toggle, enviarClienteNovo}) => {
 
-    const [ImgUrl, setImage] = useState(imageUrls)
-
-    const mudarImg = (e) => {
-        createThumb(e, setImage);
-    };
+    const [carregandoLogo, setCarregandoLogo] = useState(false)
+    const [foto, setFoto] = useState({ url:imageUrls, extensao: null, descricao: "" })
+    const mudarImg = async(e) => {
+        const file = e.target.files[0]
+        setCarregandoLogo(true)
+        const urlFile = await salvarToStorage(file)
+        setCarregandoLogo(false)
+        setFoto({...foto, extensao: file.type, url: urlFile})
+    }
 
     return (
              <React.Fragment>
@@ -25,7 +30,7 @@ const ProjectsOverview = ({modal, toggle}) => {
                     centered={true}
                 >
                     <div className="modal-header">
-                    <h5 className="modal-title mt-0">Adicinar membro</h5>
+                    <h5 className="modal-title mt-0">Adicionar membro</h5>
                     <button
                         type="button"
                         onClick={() => { toggle(false) } }
@@ -40,16 +45,10 @@ const ProjectsOverview = ({modal, toggle}) => {
 
                     <Row>
                     <Col sm={3}>
-                    <div className="fileinput text-center">
-
-                    <input type="file" onChange={mudarImg} accept="image/*"/>
-                        <div className="thumbnail avatar-upload" style={{backgroundImage: `url(${ImgUrl})`}}></div>
-                        <div><Button type="button" className="btn-round btn btn-secondary">Selecione a foto</Button></div>
-
-                    </div>
+                        <FileUploader salvarToStorage={mudarImg} url={foto.url} textoBtn="Selecione a foto" carregandoFoto={carregandoLogo} data={foto.extensao}/>
                     </Col>
                         <Col sm={9}>
-                        <AvForm>
+                        <AvForm  onValidSubmit={(e,v) => { enviarClienteNovo(e,v, foto) }}>
                             <Row>
                                 <Col sm="12">
                                     <AvField name="nome" label="Nome" type="text" errorMessage="Campo obrigatório" validate={{
@@ -57,14 +56,21 @@ const ProjectsOverview = ({modal, toggle}) => {
                                     }} />
                                 </Col>
                                 <Col sm="12">
-                                    <AvField name="cpf" label="CPF" type="text" errorMessage="Campo obrigatório" validate={{
+                                    <AvField name="cpf" 
+                                        mask="999.999.-999-99"
+                                        tag={[Input, InputMask]} 
+                                        label="CPF" type="text" errorMessage="Campo obrigatório" validate={{
                                         required: {value: true, errorMessage: 'Campo obrigatório'},
                                     }} />
                                 </Col>
                             </Row>
                             <Row>
                                 <Col sm="12">
-                                    <AvField name="telefone" label="Telefone" type="text" errorMessage="Campo obrigatório" validate={{
+                                    <AvField name="telefone" 
+                                        mask="(99) 999-999999"
+                                        maskChar="-"  
+                                        tag={[Input, InputMask]}
+                                        label="Telefone" type="text" errorMessage="Campo obrigatório" validate={{
                                         required: {value: true, errorMessage: 'Campo obrigatório'},
                                     }} />
                                 </Col>
@@ -94,4 +100,4 @@ const ProjectsOverview = ({modal, toggle}) => {
           );
     }
         
-export default ProjectsOverview;
+export default ModalMembros;

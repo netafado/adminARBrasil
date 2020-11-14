@@ -23,8 +23,10 @@ const CardContact = (props) => {
                                     </div>
                             }
                             <h5 className="font-size-15"><Link to="#" className="text-dark">{user.nome} </Link></h5>
-                            <p className="text-muted">{user.cidade || "---"} | {user.uf}</p>
-                            <i className="bx bx-phone"></i>{user.telefone} | <i className="bx bx-barcode"></i>{user.cpf}
+                            <p className="text-muted m-0">{user.cidade || "---"} | {user.uf}</p>
+                            <p className="text-muted">CPF: {user.cpf || "---"}</p>
+
+                            <i className="bx bx-phone"></i>{user.telefone}
 
                             <div className="position-absolute" style={{top: 10, right: 10}}>
                             <UncontrolledDropdown >
@@ -41,28 +43,12 @@ const CardContact = (props) => {
                         <CardFooter className="bg-transparent border-top">
                             <div className="contact-links d-flex font-size-20">
                                 <div className="flex-fill">
-                                    <Link to="" id={"message" + user.id}>
+                                    <div to="" id={"message" + user.id} onClick={props.abrirModal}>
                                         <i className="bx bx-message-square-dots"></i>
                                         <UncontrolledTooltip placement="top" target={"message" + user.id}>
-                                            Telefone
-                                        </UncontrolledTooltip>
-                                    </Link>
-                                </div>
-                                <div className="flex-fill">
-                                    <Link to="" id={"project" + user.id}>
-                                        <i className="bx bx-pie-chart-alt"></i>
-                                        <UncontrolledTooltip placement="top" target={"project" + user.id}>
                                             Chamados
-                                                </UncontrolledTooltip>
-                                    </Link>
-                                </div>
-                                <div className="flex-fill">
-                                    <Link id={"profile" + user.id}>
-                                        <i className="bx bx-user-circle"></i>
-                                        <UncontrolledTooltip placement="top" target={"profile" + user.id}>
-                                            Profile
                                         </UncontrolledTooltip>
-                                    </Link>
+                                    </div>
                                 </div>
                             </div>
                         </CardFooter>

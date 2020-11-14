@@ -44,6 +44,16 @@ export const retornarCliente = /* GraphQL */ `
         descricao
         extensao
       }
+      contrato {
+        dataInicio
+        dataFim
+        anexo {
+          url
+          nome
+          descricao
+          extensao
+        }
+      }
     }
   }
 `;
@@ -60,27 +70,6 @@ export const retornarUsuario = /* GraphQL */ `
       bairro
       cidade
       uf
-      pk_produto
-      produto {
-        pk
-        nome
-        categoria
-        fabricante
-        descricao
-        informacaoAdicional
-        imagens {
-          url
-          nome
-          descricao
-          extensao
-        }
-        anexos {
-          url
-          nome
-          descricao
-          extensao
-        }
-      }
       foto {
         url
         nome
@@ -88,6 +77,56 @@ export const retornarUsuario = /* GraphQL */ `
         extensao
       }
       tipo
+      pk_cliente
+      cliente {
+        pk
+        razaoSocial
+        cnpj
+        telefone
+        email
+        cep
+        rua
+        bairro
+        cidade
+        uf
+        pk_produto
+        produto {
+          pk
+          nome
+          categoria
+          fabricante
+          descricao
+          informacaoAdicional
+          imagens {
+            url
+            nome
+            descricao
+            extensao
+          }
+          anexos {
+            url
+            nome
+            descricao
+            extensao
+          }
+        }
+        logo {
+          url
+          nome
+          descricao
+          extensao
+        }
+        contrato {
+          dataInicio
+          dataFim
+          anexo {
+            url
+            nome
+            descricao
+            extensao
+          }
+        }
+      }
     }
   }
 `;
@@ -138,6 +177,16 @@ export const listarCliente = /* GraphQL */ `
           descricao
           extensao
         }
+        contrato {
+          dataInicio
+          dataFim
+          anexo {
+            url
+            nome
+            descricao
+            extensao
+          }
+        }
       }
       nextToken
     }
@@ -157,27 +206,6 @@ export const listarUsuario = /* GraphQL */ `
         bairro
         cidade
         uf
-        pk_produto
-        produto {
-          pk
-          nome
-          categoria
-          fabricante
-          descricao
-          informacaoAdicional
-          imagens {
-            url
-            nome
-            descricao
-            extensao
-          }
-          anexos {
-            url
-            nome
-            descricao
-            extensao
-          }
-        }
         foto {
           url
           nome
@@ -185,6 +213,56 @@ export const listarUsuario = /* GraphQL */ `
           extensao
         }
         tipo
+        pk_cliente
+        cliente {
+          pk
+          razaoSocial
+          cnpj
+          telefone
+          email
+          cep
+          rua
+          bairro
+          cidade
+          uf
+          pk_produto
+          produto {
+            pk
+            nome
+            categoria
+            fabricante
+            descricao
+            informacaoAdicional
+            imagens {
+              url
+              nome
+              descricao
+              extensao
+            }
+            anexos {
+              url
+              nome
+              descricao
+              extensao
+            }
+          }
+          logo {
+            url
+            nome
+            descricao
+            extensao
+          }
+          contrato {
+            dataInicio
+            dataFim
+            anexo {
+              url
+              nome
+              descricao
+              extensao
+            }
+          }
+        }
       }
       nextToken
     }

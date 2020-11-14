@@ -7,7 +7,10 @@ const Cardcliente = ({delete_func, clientes}) => {
 
     return (
 
-               <React.Fragment>
+            <React.Fragment>
+                {clientes.length <= 0 ?
+                    <Col><p>Nenhum cliente encontrado.</p></Col> : null
+                }              
 
                 {
                     clientes.map((cliente, key) =>
@@ -67,8 +70,7 @@ const Cardcliente = ({delete_func, clientes}) => {
                                     </ul>
                                 </div>
                             </Card>
-                            
-
+                        
                         </Col>
                     )
                 }

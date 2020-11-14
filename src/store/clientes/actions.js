@@ -5,7 +5,9 @@ import {
 	ADD_CLIENTE_REQUESTED,
 	ADD_CLIENTE_SUCCESS,
 	ADD_CLIENTE_FAILED,
-	DELETE_CLIENTE_REQUESTED
+	DELETE_CLIENTE_REQUESTED,
+	UPDATE_CLIENTE_REQUESTED,
+	UPDATE_CLIENTE_SUCCESS
 } from "./types";
 
 export const listarClientes = () => {
@@ -48,6 +50,17 @@ export const deleteCliente = (pk) => ({
 
 export const deleteClienteSucess = (cliente) => ({
 	type: DELETE_CLIENTE_REQUESTED,
+	payload: cliente
+});
+
+
+export const updateCliente = (values, history) => ({
+	type: UPDATE_CLIENTE_REQUESTED,
+	payload: {values, history}
+});
+
+export const updateClienteSucess = (cliente) => ({
+	type: UPDATE_CLIENTE_SUCCESS,
 	payload: cliente
 });
 

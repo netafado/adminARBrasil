@@ -86,11 +86,42 @@ export const createCliente = /* GraphQL */ `
       bairro
       cidade
       uf
+      pk_produto
+      produto {
+        pk
+        nome
+        categoria
+        fabricante
+        descricao
+        informacaoAdicional
+        imagens {
+          url
+          nome
+          descricao
+          extensao
+        }
+        anexos {
+          url
+          nome
+          descricao
+          extensao
+        }
+      }
       logo {
         url
         nome
         descricao
         extensao
+      }
+      contrato {
+        dataInicio
+        dataFim
+        anexo {
+          url
+          nome
+          descricao
+          extensao
+        }
       }
     }
   }
@@ -135,6 +166,16 @@ export const updateCliente = /* GraphQL */ `
         descricao
         extensao
       }
+      contrato {
+        dataInicio
+        dataFim
+        anexo {
+          url
+          nome
+          descricao
+          extensao
+        }
+      }
     }
   }
 `;
@@ -151,11 +192,42 @@ export const deleteCliente = /* GraphQL */ `
       bairro
       cidade
       uf
+      pk_produto
+      produto {
+        pk
+        nome
+        categoria
+        fabricante
+        descricao
+        informacaoAdicional
+        imagens {
+          url
+          nome
+          descricao
+          extensao
+        }
+        anexos {
+          url
+          nome
+          descricao
+          extensao
+        }
+      }
       logo {
         url
         nome
         descricao
         extensao
+      }
+      contrato {
+        dataInicio
+        dataFim
+        anexo {
+          url
+          nome
+          descricao
+          extensao
+        }
       }
     }
   }
@@ -173,27 +245,6 @@ export const createUsuario = /* GraphQL */ `
       bairro
       cidade
       uf
-      pk_produto
-      produto {
-        pk
-        nome
-        categoria
-        fabricante
-        descricao
-        informacaoAdicional
-        imagens {
-          url
-          nome
-          descricao
-          extensao
-        }
-        anexos {
-          url
-          nome
-          descricao
-          extensao
-        }
-      }
       foto {
         url
         nome
@@ -201,6 +252,56 @@ export const createUsuario = /* GraphQL */ `
         extensao
       }
       tipo
+      pk_cliente
+      cliente {
+        pk
+        razaoSocial
+        cnpj
+        telefone
+        email
+        cep
+        rua
+        bairro
+        cidade
+        uf
+        pk_produto
+        produto {
+          pk
+          nome
+          categoria
+          fabricante
+          descricao
+          informacaoAdicional
+          imagens {
+            url
+            nome
+            descricao
+            extensao
+          }
+          anexos {
+            url
+            nome
+            descricao
+            extensao
+          }
+        }
+        logo {
+          url
+          nome
+          descricao
+          extensao
+        }
+        contrato {
+          dataInicio
+          dataFim
+          anexo {
+            url
+            nome
+            descricao
+            extensao
+          }
+        }
+      }
     }
   }
 `;
@@ -217,27 +318,6 @@ export const updateUsuario = /* GraphQL */ `
       bairro
       cidade
       uf
-      pk_produto
-      produto {
-        pk
-        nome
-        categoria
-        fabricante
-        descricao
-        informacaoAdicional
-        imagens {
-          url
-          nome
-          descricao
-          extensao
-        }
-        anexos {
-          url
-          nome
-          descricao
-          extensao
-        }
-      }
       foto {
         url
         nome
@@ -245,6 +325,56 @@ export const updateUsuario = /* GraphQL */ `
         extensao
       }
       tipo
+      pk_cliente
+      cliente {
+        pk
+        razaoSocial
+        cnpj
+        telefone
+        email
+        cep
+        rua
+        bairro
+        cidade
+        uf
+        pk_produto
+        produto {
+          pk
+          nome
+          categoria
+          fabricante
+          descricao
+          informacaoAdicional
+          imagens {
+            url
+            nome
+            descricao
+            extensao
+          }
+          anexos {
+            url
+            nome
+            descricao
+            extensao
+          }
+        }
+        logo {
+          url
+          nome
+          descricao
+          extensao
+        }
+        contrato {
+          dataInicio
+          dataFim
+          anexo {
+            url
+            nome
+            descricao
+            extensao
+          }
+        }
+      }
     }
   }
 `;
@@ -261,27 +391,6 @@ export const deleteUsuario = /* GraphQL */ `
       bairro
       cidade
       uf
-      pk_produto
-      produto {
-        pk
-        nome
-        categoria
-        fabricante
-        descricao
-        informacaoAdicional
-        imagens {
-          url
-          nome
-          descricao
-          extensao
-        }
-        anexos {
-          url
-          nome
-          descricao
-          extensao
-        }
-      }
       foto {
         url
         nome
@@ -289,6 +398,56 @@ export const deleteUsuario = /* GraphQL */ `
         extensao
       }
       tipo
+      pk_cliente
+      cliente {
+        pk
+        razaoSocial
+        cnpj
+        telefone
+        email
+        cep
+        rua
+        bairro
+        cidade
+        uf
+        pk_produto
+        produto {
+          pk
+          nome
+          categoria
+          fabricante
+          descricao
+          informacaoAdicional
+          imagens {
+            url
+            nome
+            descricao
+            extensao
+          }
+          anexos {
+            url
+            nome
+            descricao
+            extensao
+          }
+        }
+        logo {
+          url
+          nome
+          descricao
+          extensao
+        }
+        contrato {
+          dataInicio
+          dataFim
+          anexo {
+            url
+            nome
+            descricao
+            extensao
+          }
+        }
+      }
     }
   }
 `;

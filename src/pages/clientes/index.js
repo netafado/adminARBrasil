@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 
-import { Container, Row, Col, Input, Button } from "reactstrap";
+import { Container, Row, Col, Input, Button, Spinner  } from "reactstrap";
 
 //Import Breadcrumb
 import Breadcrumbs                  from '../../components/Common/Breadcrumb';
@@ -17,20 +17,45 @@ const ProjectsGrid  = (props) => {
     const {clientes, loading} =     useSelector(state => state.Clientes)
     const [deletarClienteModal, setdeletarClienteModal] =   useState(null)
     const [clienteDeletado, setClienteDeletado]         =   useState(null)
+    const [termoFiltro, setTermoFiltro]                 =   useState("");
+    const [clientesFiltrados, setClientesFiltrados]     =   useState([])
     useEffect(()=>{
         dispatch(listarClientes())
     }, [])
 
+    useEffect(()=>{
+        setClientesFiltrados( clientes )
+    }, [clientes])
 
+    useEffect(()=>{
+        if(!termoFiltro){
+            setClientesFiltrados([...clientes])
+        }else{
+            const filtrar = clientes.filter( (item) => {
+                return   item.razaoSocial.toLowerCase().indexOf( termoFiltro.toLowerCase() ) >= 0
+            } )
+            setClientesFiltrados( filtrar )
+        }
+    }, [termoFiltro, clientes])
+
+    const reload = () => {
+        dispatch(listarClientes())
+    }
     const deletarCliente = (itemDelete)=> {
         console.log("DELETAR CLIENTE", itemDelete)
         abrirModalParaDeletarClientes(itemDelete)
         setClienteDeletado(itemDelete.pk)
     }
+
+    const setTermoFiltroFunc  = (e) =>{
+        console.log(e.target.value)
+        setTermoFiltro(e.target.value)
+    } 
     
     const  confirmDeletarCliente = () =>{
         dispatch(deletarCliente_action(clienteDeletado))
         abrirModalParaDeletarClientes()
+        reload();
     }
 
     const abrirModalParaDeletarClientes = ()=> {
@@ -56,16 +81,17 @@ const ProjectsGrid  = (props) => {
 
                         {/* Render Breadcrumbs */}
                         <Breadcrumbs title="Clientes" breadcrumbItem="Lista de clientes" />
+                        {loading ? <Spinner /> : null}
                         <Row className="mb-2">
-                            <Col sm="4">
+                            <Col xs="6">
                                 <div className="search-box mr-2 mb-2 d-inline-block">
                                     <div className="position-relative">
-                                        <Input type="text" className="form-control" placeholder="Procurar..." />
+                                        <Input type="text" onChange={setTermoFiltroFunc} className="form-control" placeholder="Procurar..." />
                                         <i className="bx bx-search-alt search-icon"></i>
                                     </div>
                                 </div>
                             </Col>
-                            <Col sm="8">
+                            <Col xs="6">
                                 <div className="text-sm-right">
                                     <Button to="/clientes-adicionar" tag={Link} type="button" color="success" className="btn-rounded waves-effect waves-light mb-2 mr-2"><i className="mdi mdi-plus mr-1"></i> novo Cliente</Button>
                                 </div>
@@ -73,7 +99,7 @@ const ProjectsGrid  = (props) => {
                         </Row>
                         <Row>
                             {/* Import Cards */}
-                            <ClientesCards clientes={clientes} delete_func={deletarCliente}/>
+                            <ClientesCards clientes={clientesFiltrados} delete_func={deletarCliente}/>
                         </Row>
 
                     </Container>

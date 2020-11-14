@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import { Container, Row, Col,  Card, CardBody, CardTitle, CardSubtitle, Button, Input } from "reactstrap";
 import { AvForm, AvField } from 'availity-reactstrap-validation';
-import CpfCnpj from "@react-br-forms/cpf-cnpj-mask";
+
+import InputMask from 'react-input-mask';
+
 import toastr from 'toastr'
 import 'toastr/build/toastr.min.css'
 //Import Breadcrumb
-import Breadcrumbs from '../../components/Common/Breadcrumb';
+import Breadcrumbs  from '../../components/Common/Breadcrumb';
 
-import  imageUrls from "../../assets/images/logoEmpresa.jpg"
+import  imageUrls   from "../../assets/images/logoEmpresa.jpg"
 
 import {useSelector, useDispatch} from "react-redux"
 import BtnLoader from "../../components/ui/btnLoader"
@@ -26,15 +28,15 @@ const AdicionarCliente = (props) => {
         const file = e.target.files[0]
         setCarregandoLogo(true)
         const urlFile = await salvarToStorage(file)
-        console.log(urlFile)
         setCarregandoLogo(false)
         setLogo({...logo, url: urlFile})
 
     }
-    console.log(clientes)
 
     const handleValidSubmit = async(e, values) =>{
         values.logo = logo;
+        values.pk_produto = [" "]
+
         await dispatch(saveNewCliente(values, props.history))
         return toastr.success("Cliente adicionado!", "Cliente salvo com sucesso!")
     }
@@ -64,14 +66,20 @@ const AdicionarCliente = (props) => {
                                                             }} />
                                                         </Col>
                                                         <Col sm="6">
-                                                            <AvField mask="(999) 999-9999" name="cnpj" label="CNPJ" type="text" errorMessage="Campo obrigatório" validate={{
+                                                            <AvField
+                                                                mask="99.999.999/9999-99"
+                                                                tag={[Input, InputMask]} 
+                                                                name="cnpj" label="CNPJ" type="text" errorMessage="Campo obrigatório" validate={{
                                                                 required: {value: true, errorMessage: 'Campo obrigatório'},
                                                             }} />
                                                         </Col>
                                                     </Row>
                                                     <Row>
                                                         <Col sm="6">
-                                                            <AvField name="telefone" label="Telefone" type="text" errorMessage="Campo obrigatório" validate={{
+                                                            <AvField name="telefone"           
+                                                                mask="(99) 999-999999"
+                                                                maskChar="-"  tag={[Input, InputMask]} label="Telefone" type="text" 
+                                                                errorMessage="Campo obrigatório" validate={{
                                                                 required: {value: true, errorMessage: 'Campo obrigatório'},
                                                             }} />
                                                         </Col>
@@ -91,7 +99,10 @@ const AdicionarCliente = (props) => {
                                                 <Col>
                                                     <Row>
                                                         <Col sm={6}>
-                                                            < AvField name="cep" label="CEP" type="text" errorMessage="Campo obrigatório" />
+                                                            < AvField 
+                                                            mask="99999-999"
+                                                            tag={[Input, InputMask]} 
+                                                            name="cep" label="CEP" type="text" errorMessage="Campo obrigatório" />
                                                         </Col>
                                                         <Col sm={6}>
                                                              <AvField name="rua" label="rua" type="text" errorMessage="Campo obrigatório" />   

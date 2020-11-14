@@ -13,15 +13,21 @@ import {useSelector, useDispatch} from "react-redux"
 import { listarTecnicos, deleteTecnico } from "../../store/tecnicos/actions"
 //Import Images
 
+import ModalChamados from "./parts/modalChamados"
 
 const ContactsGrid = (props) => {
     const {tecnicos} = useSelector(state => state.Tecnicos)
+    const [modalChamado, setModalChamado] = useState(false)
     const dispatch = useDispatch()
     const [deletarMsg, setDeletarMsg] = useState(false)
     const [idTecnicoDeletar, setIdTecnicoDeletar] = useState(null)
     useEffect(()=>{
         dispatch( listarTecnicos() )
     }, [])
+    const toggleChamado = () =>{
+        setModalChamado(!modalChamado)
+    }
+
     const deletarTecnico = async (pk) =>{
         setIdTecnicoDeletar(pk)
         abrirModalParaDeletarTecnico()
@@ -39,9 +45,10 @@ const ContactsGrid = (props) => {
     const recarregarProdutos = () => {
         dispatch(listarTecnicos())
     }
-    console.log(idTecnicoDeletar)
+
     return (
           <React.Fragment>
+              <ModalChamados modal={modalChamado} toggle={toggleChamado} />
                 <div className="page-content">
                 {deletarMsg ? (
                     <SweetAlert
@@ -78,9 +85,10 @@ const ContactsGrid = (props) => {
                             </Col>
                         </Row>
                         <Row>
+                            {tecnicos.length <= 0 ? <Col><p>Nenhum cadastro.</p></Col> : null}
                             {
                                 tecnicos.map((tecnico, key) =>
-                                    <CardContact user={tecnico} key={"_user_" + key} deletarTecnico={deletarTecnico}/>
+                                    <CardContact user={tecnico} abrirModal={toggleChamado} key={"_user_" + key} deletarTecnico={deletarTecnico}/>
                                 )
                             }
 

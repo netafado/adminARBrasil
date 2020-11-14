@@ -12,6 +12,7 @@ import ForgetPwd from "../pages/Authentication/ForgetPassword";
 import Dashboard from "../pages/Dashboard/index";
 import Clientes from "../pages/clientes";
 import ClientesAdd from "../pages/clientes/addCliente";
+import EditarCliente from "../pages/clientes/aditeCliente";
 import Cliente from "../pages/clientes/cliente";
 
 import AddProduto from "../pages/produtos/produto";
@@ -27,6 +28,7 @@ const userRoutes = [
 	{ path: "/clientes", component: Clientes, exact: true },
 	{ path: "/cliente", component: Cliente },
 	{ path: "/clientes-adicionar", component: ClientesAdd },
+	{ path: "/clientes-editar", component: EditarCliente },
 	{ path: "/adicionar-produto", component: AddProduto },
 	{ path: "/editar-produto", component: EditarProduto },
 	{ path: "/produtos", component: Produtos },

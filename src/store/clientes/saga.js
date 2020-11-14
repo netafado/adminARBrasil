@@ -3,7 +3,7 @@ import { API, graphqlOperation, } from "aws-amplify"
 import * as mutations from "../../graphql/mutations"
 import * as queries from "../../graphql/queries"
 import {listarProdutosSucesso, listaProdutosFalhou, 
-    saveNewClienteSuccess, saveNewClientefailed, listarClientes, deleteClienteSucess} from "./actions"
+    saveNewClienteSuccess, saveNewClientefailed, listarClientes, deleteClienteSucess, updateClienteSucess} from "./actions"
 import * as types from "./types"
 
 const  _handleError =(error) => {
@@ -54,11 +54,38 @@ function newClienteFromAPI ({values})  {
         cidade: values.cidade,
         uf: values.uf,
         logo: values.logo,
+        pk_produto: values.pk_produto || [ " " ]
     }
     return new Promise((resolve, reject)=> {
         API.graphql(graphqlOperation( mutations.createCliente, {input} ))
         .then( (data) => {
             return resolve(data.createProduto)
+        } )
+        .catch( err => reject( _handleError(err)) )
+    })
+}
+
+function updateClienteFromAPI ({values})  {
+    const input = {
+        pk: values.pk,
+        razaoSocial: values.razaoSocial,
+        cnpj: values.cnpj,
+        telefone: values.telefone,
+        email: values.email,
+        cep: values.cep,
+        rua: values.rua,
+        bairro: values.bairro,
+        cidade: values.cidade,
+        uf: values.uf,
+        logo: values.logo,
+        pk_produto: values.pk_produto || [ " " ],
+        contrato: values.contrato
+    }
+    console.log(input, values)
+    return new Promise((resolve, reject)=> {
+        API.graphql(graphqlOperation( mutations.updateCliente, {input} ))
+        .then( (data) => {
+            return resolve(data.updateCliente)
         } )
         .catch( err => reject( _handleError(err)) )
     })
@@ -71,17 +98,31 @@ function* addNewCliente(action){
         action.payload.history.push("/clientes")
     } catch(err){
         yield put(saveNewClientefailed(err))
+        //action.payload.history.push("/clientes")
     }
 }
 
 function* deleteCliente(action){
-    console.log(action)
     try{
         const cliente = yield call(deletarProdutoAPI, action.payload)
         yield put(deleteClienteSucess(cliente))
         yield put(listarClientes())
     } catch(err){
         console.log(err)
+        yield put(saveNewClientefailed(err))
+    }
+}
+
+
+
+function* updateCliente(action){
+    try{
+        const cliente = yield call(updateClienteFromAPI, action.payload)
+        yield put(updateClienteSucess(cliente))
+        if(action.payload.history)
+            action.payload.history.push("/clientes")
+        yield put(listarClientes())
+    } catch(err){
         yield put(saveNewClientefailed(err))
     }
 }
@@ -96,12 +137,17 @@ function* addNewClienteWatcher(){
 function* deleteClienteWatcher(){
     yield takeLatest( types.DELETE_CLIENTE_REQUESTED, deleteCliente )
 }
+function* updateClienteWatcher(){
+    yield takeLatest( types.UPDATE_CLIENTE_REQUESTED, updateCliente )
+}
+
 
 function* listarClienteSaga(){
     yield all([
         fork(listarClienteWatcher),
         fork(addNewClienteWatcher),
-        fork(deleteClienteWatcher)
+        fork(deleteClienteWatcher),
+        fork(updateClienteWatcher)
     ]);
 }
 
