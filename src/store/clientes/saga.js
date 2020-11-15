@@ -54,7 +54,7 @@ function newClienteFromAPI ({values})  {
         cidade: values.cidade,
         uf: values.uf,
         logo: values.logo,
-        pk_produto: values.pk_produto || [ " " ]
+        pk_produto: values.pk_produto,
     }
     return new Promise((resolve, reject)=> {
         API.graphql(graphqlOperation( mutations.createCliente, {input} ))
@@ -78,10 +78,10 @@ function updateClienteFromAPI ({values})  {
         cidade: values.cidade,
         uf: values.uf,
         logo: values.logo,
-        pk_produto: values.pk_produto || [ " " ],
+        pk_produto: values.pk_produto,
         contrato: values.contrato
     }
-    console.log(input, values)
+    console.log("update", input, values)
     return new Promise((resolve, reject)=> {
         API.graphql(graphqlOperation( mutations.updateCliente, {input} ))
         .then( (data) => {

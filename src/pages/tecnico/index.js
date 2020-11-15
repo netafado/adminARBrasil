@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import { Link } from "react-router-dom";
-import { Container, Row, Col, Input, Button } from "reactstrap";
+import { Container, Row, Col, Input, Button, Spinner } from "reactstrap";
 import SweetAlert from "react-bootstrap-sweetalert";
 //Import Breadcrumb
 import Breadcrumbs from '../../components/Common/Breadcrumb';
@@ -14,21 +14,33 @@ import { listarTecnicos, deleteTecnico } from "../../store/tecnicos/actions"
 //Import Images
 
 import ModalChamados from "./parts/modalChamados"
+import ModalProfile from "./parts/modalProfile"
 
 const ContactsGrid = (props) => {
-    const {tecnicos} = useSelector(state => state.Tecnicos)
-    const [modalChamado, setModalChamado] = useState(false)
+    const {tecnicos, loading} = useSelector(state => state.Tecnicos)
+    const [modalChamado, setModalChamado]           = useState(false)
+    const [modalProfile, setModalProfile]           = useState(false)
     const dispatch = useDispatch()
-    const [deletarMsg, setDeletarMsg] = useState(false)
-    const [idTecnicoDeletar, setIdTecnicoDeletar] = useState(null)
+    const [deletarMsg, setDeletarMsg]               = useState(false)
+    const [idTecnicoDeletar, setIdTecnicoDeletar]   = useState(null)
+    const [produtosClientes, setProdutosClientes]   = useState([])
+    const [termoFiltro, setTermoFiltro]             = useState("");
+    const [tecnicoFiltrado, settecnicoFiltrado]     = useState([])
 
-    const [termoFiltro, setTermoFiltro]                 =   useState("");
-    const [tecnicoFiltrado, settecnicoFiltrado]     =   useState([])
-
+    const toggleModalProfile = () =>{
+        setModalProfile(!modalProfile)
+    }
     const setTermoFiltroFunc  = (e) =>{
         console.log(e.target.value)
         setTermoFiltro(e.target.value)
-    } 
+    }
+
+    const editarTecnico = (user) => {
+        props.history.push({
+            pathname: "/tecnico-editar",
+            state: {tecnico:{...user}}
+        })
+    }
 
     useEffect(()=>{
         settecnicoFiltrado( tecnicos )
@@ -44,9 +56,11 @@ const ContactsGrid = (props) => {
             settecnicoFiltrado( filtrar )
         }
     }, [termoFiltro, tecnicos])
+
     useEffect(()=>{
         dispatch( listarTecnicos() )
     }, [])
+
     const toggleChamado = () =>{
         setModalChamado(!modalChamado)
     }
@@ -72,6 +86,7 @@ const ContactsGrid = (props) => {
     return (
           <React.Fragment>
               <ModalChamados modal={modalChamado} toggle={toggleChamado} />
+              <ModalProfile modal={modalChamado} toggle={toggleModalProfile}/>
                 <div className="page-content">
                 {deletarMsg ? (
                     <SweetAlert
@@ -106,12 +121,20 @@ const ContactsGrid = (props) => {
                             </Col>
                         </Row>
                         <Row>
-                            {tecnicoFiltrado.length <= 0 ? <Col><p>Nenhum cadastro.</p></Col> : null}
-                            {
-                                tecnicoFiltrado.map((tecnico, key) =>
-                                    <CardContact user={tecnico} abrirModal={toggleChamado} key={"_user_" + key} deletarTecnico={deletarTecnico}/>
-                                )
+                        {loading ?  <div className="h-100 w-100 align-items-center d-flex justify-content-center pt-5"><Spinner className="m-auto mt-5"/></div>: 
+                        
+                            <>
+                                {tecnicoFiltrado.length <= 0 ? <Col><p>Nenhum cadastro.</p></Col> : null}
+                                {
+                                    tecnicoFiltrado.map((tecnico, key) =>
+                                        <CardContact editarTecnico={editarTecnico} user={tecnico} toggleModalProfile={toggleModalProfile} abrirModal={toggleChamado} key={"_user_" + key} deletarTecnico={deletarTecnico}/>
+                                    )
+                                }
+                            </>
+
                             }
+                            
+
                         </Row>
                     </Container>
                 </div>

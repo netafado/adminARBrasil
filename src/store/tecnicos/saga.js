@@ -2,8 +2,8 @@ import { takeLatest, fork, put, all, call } from 'redux-saga/effects';
 import { API, graphqlOperation, } from "aws-amplify"
 import * as mutations from "../../graphql/mutations"
 import * as queries from "../../graphql/queries"
-import {listarTecnicosSucess, listarTecnicosFailed, 
-        addTecnicoSucess, addTecnicoFaild, deleteTecnicoSuccess, deleteTecnicoFaild} from "./actions"
+import {listarTecnicosSucess, listarTecnicosFailed, listarTecnicos,
+        addTecnicoSucess, addTecnicoFaild, deleteTecnicoSuccess, deleteTecnicoFaild, clearFieldsTecnico, updateTecnicoSucess, updateTecnicoFaild} from "./actions"
 import * as types from "./types"
 
 const  _handleError =(error) => {
@@ -43,8 +43,6 @@ function deletarClienteAPI(pk){
     })
 }
 
-
-
 function newTecnicoFromAPI ({values})  {
 
     const input = {
@@ -60,14 +58,36 @@ function newTecnicoFromAPI ({values})  {
         foto: values.foto,
         tipo: "T"
     }
-    console.log(input)
     return new Promise((resolve, reject)=> {
         API.graphql(graphqlOperation( mutations.createUsuario, {input} ))
         .then( (data) => {
-            console.log(data)
             return resolve(data.createUsuario)
         } )
-        .catch( err => reject( _handleError(err)) )
+        .catch( err => reject( err) )
+    })
+}
+
+function updateTecnicoAPI ({values})  {
+    const input = {
+        nome: values.nome,
+        cpf: values.cpf,
+        telefone: values.telefone,
+        email: values.email,
+        cep: values.cep,
+        pk: values.pk,
+        rua: values.rua,
+        bairro: values.bairro,
+        cidade: values.cidade,
+        uf: values.uf,
+        foto: values.foto,
+        tipo: "T"
+    }
+    return new Promise((resolve, reject)=> {
+        API.graphql(graphqlOperation( mutations.updateUsuario, {input} ))
+        .then( (data) => {
+            return resolve(data.updateUsuario)
+        } )
+        .catch( err => reject( err) )
     })
 }
 
@@ -76,9 +96,33 @@ function* addTecnico(action){
         const tecnico = yield call(newTecnicoFromAPI, action.payload)
         yield put(addTecnicoSucess(tecnico))
         action.payload.history.push("/tecnicos")
+        yield put(clearFieldsTecnico())
+
     } catch(err){
-        console.log(err)
-        yield put(addTecnicoFaild(err))
+        if(typeof err === "object"){
+            yield put(addTecnicoFaild("CPJ já cadastrado."))
+
+        }else{
+            yield put(addTecnicoFaild(err))
+        }
+    }
+}
+
+function* updateTecnico(action){
+    try{
+        const tecnico = yield call(updateTecnicoAPI, action.payload)
+        yield put(updateTecnicoSucess(tecnico))
+        action.payload.history.push("/tecnicos")
+        yield put(listarTecnicos())
+        yield put(clearFieldsTecnico())
+
+    } catch(err){
+        if(typeof err === "object"){
+            yield put(updateTecnicoFaild("CPJ já cadastrado."))
+
+        }else{
+            yield put(updateTecnicoFaild(err))
+        }
     }
 }
 
@@ -95,6 +139,9 @@ function* deletarTecnico(action){
 }
 
 
+function* clear(action){
+    yield put(clearFieldsTecnico())
+}
 
 function* listarTecnico(){
     yield takeLatest( types.LIST_TECNICO_REQUESTED, carregarTecnico )
@@ -108,12 +155,22 @@ function* deleteTecnicoWatcher(){
     yield takeLatest( types.DELETE_TECNICO_REQUESTED, deletarTecnico )
 }
 
+function* updateTecnicoWatcher(){
+    yield takeLatest( types.UPDATE_TECNICO_REQUESTED, updateTecnico )
+}
+
+function* limparWatcher(){
+    yield takeLatest( types.CLEAR_TECNICO_FIELDS, clear )
+}
+
 
 function* tecnicoSaga(){
     yield all([
         fork(listarTecnico),
         fork(addNewTecnicoWatcher),
         fork(deleteTecnicoWatcher),
+        fork(updateTecnicoWatcher),
+        fork(limparWatcher),
 
     ]);
 }

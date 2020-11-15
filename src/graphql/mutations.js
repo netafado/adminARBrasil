@@ -22,6 +22,7 @@ export const deleteProduto = /* GraphQL */ `
         descricao
         extensao
       }
+      status
     }
   }
 `;
@@ -46,6 +47,7 @@ export const createProduto = /* GraphQL */ `
         descricao
         extensao
       }
+      status
     }
   }
 `;
@@ -70,6 +72,7 @@ export const updateProduto = /* GraphQL */ `
         descricao
         extensao
       }
+      status
     }
   }
 `;
@@ -86,7 +89,10 @@ export const createCliente = /* GraphQL */ `
       bairro
       cidade
       uf
-      pk_produto
+      pk_produto {
+        pk_produto
+        setup
+      }
       produto {
         pk
         nome
@@ -106,6 +112,7 @@ export const createCliente = /* GraphQL */ `
           descricao
           extensao
         }
+        status
       }
       logo {
         url
@@ -122,6 +129,26 @@ export const createCliente = /* GraphQL */ `
           descricao
           extensao
         }
+      }
+      membros {
+        pk
+        nome
+        cpf
+        telefone
+        email
+        cep
+        rua
+        bairro
+        cidade
+        uf
+        foto {
+          url
+          nome
+          descricao
+          extensao
+        }
+        tipo
+        pk_cliente
       }
     }
   }
@@ -139,7 +166,10 @@ export const updateCliente = /* GraphQL */ `
       bairro
       cidade
       uf
-      pk_produto
+      pk_produto {
+        pk_produto
+        setup
+      }
       produto {
         pk
         nome
@@ -159,6 +189,7 @@ export const updateCliente = /* GraphQL */ `
           descricao
           extensao
         }
+        status
       }
       logo {
         url
@@ -175,6 +206,26 @@ export const updateCliente = /* GraphQL */ `
           descricao
           extensao
         }
+      }
+      membros {
+        pk
+        nome
+        cpf
+        telefone
+        email
+        cep
+        rua
+        bairro
+        cidade
+        uf
+        foto {
+          url
+          nome
+          descricao
+          extensao
+        }
+        tipo
+        pk_cliente
       }
     }
   }
@@ -192,7 +243,10 @@ export const deleteCliente = /* GraphQL */ `
       bairro
       cidade
       uf
-      pk_produto
+      pk_produto {
+        pk_produto
+        setup
+      }
       produto {
         pk
         nome
@@ -212,6 +266,7 @@ export const deleteCliente = /* GraphQL */ `
           descricao
           extensao
         }
+        status
       }
       logo {
         url
@@ -228,6 +283,26 @@ export const deleteCliente = /* GraphQL */ `
           descricao
           extensao
         }
+      }
+      membros {
+        pk
+        nome
+        cpf
+        telefone
+        email
+        cep
+        rua
+        bairro
+        cidade
+        uf
+        foto {
+          url
+          nome
+          descricao
+          extensao
+        }
+        tipo
+        pk_cliente
       }
     }
   }
@@ -253,55 +328,6 @@ export const createUsuario = /* GraphQL */ `
       }
       tipo
       pk_cliente
-      cliente {
-        pk
-        razaoSocial
-        cnpj
-        telefone
-        email
-        cep
-        rua
-        bairro
-        cidade
-        uf
-        pk_produto
-        produto {
-          pk
-          nome
-          categoria
-          fabricante
-          descricao
-          informacaoAdicional
-          imagens {
-            url
-            nome
-            descricao
-            extensao
-          }
-          anexos {
-            url
-            nome
-            descricao
-            extensao
-          }
-        }
-        logo {
-          url
-          nome
-          descricao
-          extensao
-        }
-        contrato {
-          dataInicio
-          dataFim
-          anexo {
-            url
-            nome
-            descricao
-            extensao
-          }
-        }
-      }
     }
   }
 `;
@@ -326,55 +352,6 @@ export const updateUsuario = /* GraphQL */ `
       }
       tipo
       pk_cliente
-      cliente {
-        pk
-        razaoSocial
-        cnpj
-        telefone
-        email
-        cep
-        rua
-        bairro
-        cidade
-        uf
-        pk_produto
-        produto {
-          pk
-          nome
-          categoria
-          fabricante
-          descricao
-          informacaoAdicional
-          imagens {
-            url
-            nome
-            descricao
-            extensao
-          }
-          anexos {
-            url
-            nome
-            descricao
-            extensao
-          }
-        }
-        logo {
-          url
-          nome
-          descricao
-          extensao
-        }
-        contrato {
-          dataInicio
-          dataFim
-          anexo {
-            url
-            nome
-            descricao
-            extensao
-          }
-        }
-      }
     }
   }
 `;
@@ -399,55 +376,6 @@ export const deleteUsuario = /* GraphQL */ `
       }
       tipo
       pk_cliente
-      cliente {
-        pk
-        razaoSocial
-        cnpj
-        telefone
-        email
-        cep
-        rua
-        bairro
-        cidade
-        uf
-        pk_produto
-        produto {
-          pk
-          nome
-          categoria
-          fabricante
-          descricao
-          informacaoAdicional
-          imagens {
-            url
-            nome
-            descricao
-            extensao
-          }
-          anexos {
-            url
-            nome
-            descricao
-            extensao
-          }
-        }
-        logo {
-          url
-          nome
-          descricao
-          extensao
-        }
-        contrato {
-          dataInicio
-          dataFim
-          anexo {
-            url
-            nome
-            descricao
-            extensao
-          }
-        }
-      }
     }
   }
 `;

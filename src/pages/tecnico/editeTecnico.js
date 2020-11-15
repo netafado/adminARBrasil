@@ -9,7 +9,7 @@ import 'toastr/build/toastr.min.css'
 import  imageUrls from "../../assets/images/users/avatar-1.jpg"
 import InputMask from 'react-input-mask';
 //redux
-import { addTecnico } from "../../store/tecnicos/actions"
+import { updateTecnico_action } from "../../store/tecnicos/actions"
 import { salvarToStorage } from "../../helpers/amplify/storage"
 import BtnLoader from "../../components/ui/btnLoader"
 
@@ -18,6 +18,8 @@ import { useDispatch, useSelector } from 'react-redux';
 
 const AdicionarCliente = (props) => {
 
+    console.log(props.location)
+    const tecnico = props.location.state.tecnico;
     const dispatch = useDispatch();
     const [foto, setFoto] = useState({url:imageUrls, extensao: null, descricao: "", extensao: ""})
     const [carregandoLogo, setCarregandoLogo] = useState(false)
@@ -32,10 +34,11 @@ const AdicionarCliente = (props) => {
     }
     const handleValidSubmit = async(e, values) =>{
         values.foto = foto;
-        const result  = await dispatch(addTecnico(values, props.history))
+        values.pk = tecnico.pk;
+        const result  = await dispatch(updateTecnico_action(values, props.history))
         console.log(result)
         if(!erroNewTecnico)
-            return toastr.success("Técnico adicionado!", "Cliente salvo com sucesso!")
+            return toastr.success("Técnico atualizado!", "Cliente salvo com sucesso!")
     }
 
     return (
@@ -60,7 +63,7 @@ const AdicionarCliente = (props) => {
                                                 <Col>
                                                     <Row>
                                                         <Col sm="6">
-                                                            <AvField name="nome" label="Nome" type="text" errorMessage="Campo obrigatório" validate={{
+                                                            <AvField name="nome" value={tecnico.nome} label="Nome" type="text" errorMessage="Campo obrigatório" validate={{
                                                                 required: {value: true, errorMessage: 'Campo obrigatório'},
                                                             }} />
                                                         </Col>
@@ -68,6 +71,7 @@ const AdicionarCliente = (props) => {
                                                             <AvField name="cpf" 
                                                                 mask="999.999.999-99"
                                                                 tag={[Input, InputMask]} 
+                                                                value={tecnico.cpf}
                                                                 label="CPF" type="text" errorMessage="Campo obrigatório" validate={{
                                                                 required: {value: true, errorMessage: 'Campo obrigatório'},
                                                             }} />
@@ -77,13 +81,16 @@ const AdicionarCliente = (props) => {
                                                         <Col sm="6">
                                                             <AvField name="telefone" 
                                                                 mask="(99) 999-999999"
+                                                                value={tecnico.telefone}
                                                                 maskChar="-"  tag={[Input, InputMask]} 
                                                                 label="Telefone" type="text" errorMessage="Campo obrigatório" validate={{
                                                                 required: {value: true, errorMessage: 'Campo obrigatório'},
                                                             }} />
                                                         </Col>
                                                         <Col sm="6">
-                                                            < AvField name="email" label="Email" type="email" errorMessage="Campo obrigatório" validate={{
+                                                            < AvField name="email"
+                                                                value={tecnico.email}
+                                                                label="Email" type="email" errorMessage="Campo obrigatório" validate={{
                                                                 required: {value: true, errorMessage: 'Campo obrigatório'},
                                                                 email: {value: true, errorMessage: "formato do email invalido"}
                                                             }} />
@@ -98,19 +105,19 @@ const AdicionarCliente = (props) => {
                                                 <Col>
                                                     <Row>
                                                         <Col sm={6}>
-                                                            < AvField name="cep" label="CEP" type="text" errorMessage="Campo obrigatório" />
+                                                            < AvField name="cep" label="CEP"  value={tecnico.cep} type="text" errorMessage="Campo obrigatório" />
                                                         </Col>
                                                         <Col sm={6}>
-                                                             <AvField name="rua" label="rua" type="text" errorMessage="Campo obrigatório" />   
+                                                             <AvField name="rua" label="rua" value={tecnico.rua} type="text" errorMessage="Campo obrigatório" />   
                                                         </Col>
                                                         <Col sm={6}>
-                                                            <AvField name="bairro" label="Bairro" type="text" errorMessage="Campo obrigatório" />   
+                                                            <AvField name="bairro" label="Bairro" value={tecnico.bairro} type="text" errorMessage="Campo obrigatório" />   
                                                         </Col>
                                                         <Col sm={4}>
-                                                            <AvField name="cidade" label="Cidade" type="text" errorMessage="Campo obrigatório" />   
+                                                            <AvField name="cidade" label="Cidade" type="text" value={tecnico.cidade} errorMessage="Campo obrigatório" />   
                                                         </Col>
                                                         <Col sm={2}>
-                                                        <AvField type="select" name="uf" label="Estados" >
+                                                        <AvField type="select" name="uf" label="Estados" value={tecnico.uf}>
                                                                 <option>AC</option>
                                                                 <option>AL</option>
                                                                 <option>AP</option>

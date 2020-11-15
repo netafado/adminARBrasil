@@ -34,7 +34,7 @@ const CardContact = (props) => {
                                     <i className="mdi mdi-dots-horizontal font-size-18"></i>
                                 </DropdownToggle>
                                 <DropdownMenu right>
-                                    <DropdownItem tag={Link} to="/adicionar-tecnico"><i className="mdi mdi-pencil font-size-16 text-success mr-2"></i>Editar</DropdownItem>
+                                    <DropdownItem onClick={() => props.editarTecnico(user)}><i className="mdi mdi-pencil font-size-16 text-success mr-2"></i>Editar</DropdownItem>
                                     <DropdownItem onClick={()=>props.deletarTecnico(user.pk)}><i className="mdi mdi-trash-can font-size-16 text-danger mr-2"></i>Deletar</DropdownItem>
                                 </DropdownMenu>
                             </UncontrolledDropdown>
@@ -43,8 +43,16 @@ const CardContact = (props) => {
                         <CardFooter className="bg-transparent border-top">
                             <div className="contact-links d-flex font-size-20">
                                 <div className="flex-fill">
-                                    <div to="" id={"message" + user.id} onClick={props.abrirModal}>
+                                    <div id={"message" + user.id} onClick={props.abrirModal}>
                                         <i className="bx bx-message-square-dots"></i>
+                                        <UncontrolledTooltip placement="top" target={"message" + user.id}>
+                                            Chamados
+                                        </UncontrolledTooltip>
+                                    </div>
+                                </div>
+                                <div className="flex-fill">
+                                    <div id={"message" + user.id} onClick={props.abrirModal}>
+                                        <i className="bx bx-user"></i>
                                         <UncontrolledTooltip placement="top" target={"message" + user.id}>
                                             Chamados
                                         </UncontrolledTooltip>
@@ -57,5 +65,5 @@ const CardContact = (props) => {
             </React.Fragment>
           );
     }
-        
+
 export default CardContact;

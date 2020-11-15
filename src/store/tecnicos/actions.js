@@ -9,7 +9,12 @@ import {
 
 	DELETE_TECNICO_REQUESTED,
 	DELETE_TECNICO_SUCCESS,
-	DELETE_TECNICO_FAILED
+	DELETE_TECNICO_FAILED,
+
+	UPDATE_TECNICO_REQUESTED,
+	UPDATE_TECNICO_SUCCESS,
+	UPDATE_TECNICO_FAILED,
+	CLEAR_TECNICO_FIELDS
 } from "./types";
 
 export const listarTecnicos = () => {
@@ -58,4 +63,25 @@ export const deleteTecnicoSuccess = (error) => ({
 export const deleteTecnicoFaild = (error) => ({
 	type: DELETE_TECNICO_FAILED,
 	payload: error
+});
+
+
+export const updateTecnico_action = (values, history) => ({
+	type: UPDATE_TECNICO_REQUESTED,
+	payload: {values, history}
+});
+
+export const updateTecnicoSucess = (cliente) => ({
+	type: UPDATE_TECNICO_SUCCESS,
+	payload: cliente
+});
+
+export const updateTecnicoFaild = (error) => ({
+	type: UPDATE_TECNICO_FAILED,
+	payload: error
+});
+
+export const clearFieldsTecnico = () => ({
+	type: CLEAR_TECNICO_FIELDS,
+	payload: true
 });

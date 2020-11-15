@@ -20,6 +20,8 @@ import EditarProduto from "../pages/produtos/editProduto";
 import Produtos from "../pages/produtos"
 
 import Tecnicos from "../pages/tecnico";
+import EditarTecnico from "../pages/tecnico/editeTecnico";
+
 import AddTecnico from "../pages/tecnico/addTecnico"
 
 const userRoutes = [
@@ -33,6 +35,8 @@ const userRoutes = [
 	{ path: "/editar-produto", component: EditarProduto },
 	{ path: "/produtos", component: Produtos },
 	{ path: "/tecnicos", component: Tecnicos },
+	{ path: "/tecnico-editar", component: EditarTecnico },
+
 	{ path: "/adicionar-tecnico", component: AddTecnico },
 
 	{ path: "/", exact: true, component: () => <Redirect to="/dashboard" /> }

@@ -22,6 +22,7 @@ export const retornarProduto = /* GraphQL */ `
         descricao
         extensao
       }
+      status
     }
   }
 `;
@@ -38,6 +39,31 @@ export const retornarCliente = /* GraphQL */ `
       bairro
       cidade
       uf
+      pk_produto {
+        pk_produto
+        setup
+      }
+      produto {
+        pk
+        nome
+        categoria
+        fabricante
+        descricao
+        informacaoAdicional
+        imagens {
+          url
+          nome
+          descricao
+          extensao
+        }
+        anexos {
+          url
+          nome
+          descricao
+          extensao
+        }
+        status
+      }
       logo {
         url
         nome
@@ -53,6 +79,26 @@ export const retornarCliente = /* GraphQL */ `
           descricao
           extensao
         }
+      }
+      membros {
+        pk
+        nome
+        cpf
+        telefone
+        email
+        cep
+        rua
+        bairro
+        cidade
+        uf
+        foto {
+          url
+          nome
+          descricao
+          extensao
+        }
+        tipo
+        pk_cliente
       }
     }
   }
@@ -78,55 +124,6 @@ export const retornarUsuario = /* GraphQL */ `
       }
       tipo
       pk_cliente
-      cliente {
-        pk
-        razaoSocial
-        cnpj
-        telefone
-        email
-        cep
-        rua
-        bairro
-        cidade
-        uf
-        pk_produto
-        produto {
-          pk
-          nome
-          categoria
-          fabricante
-          descricao
-          informacaoAdicional
-          imagens {
-            url
-            nome
-            descricao
-            extensao
-          }
-          anexos {
-            url
-            nome
-            descricao
-            extensao
-          }
-        }
-        logo {
-          url
-          nome
-          descricao
-          extensao
-        }
-        contrato {
-          dataInicio
-          dataFim
-          anexo {
-            url
-            nome
-            descricao
-            extensao
-          }
-        }
-      }
     }
   }
 `;
@@ -152,6 +149,7 @@ export const listarProduto = /* GraphQL */ `
           descricao
           extensao
         }
+        status
       }
       nextToken
     }
@@ -171,6 +169,19 @@ export const listarCliente = /* GraphQL */ `
         bairro
         cidade
         uf
+        pk_produto {
+          pk_produto
+          setup
+        }
+        produto {
+          pk
+          nome
+          categoria
+          fabricante
+          descricao
+          informacaoAdicional
+          status
+        }
         logo {
           url
           nome
@@ -180,12 +191,20 @@ export const listarCliente = /* GraphQL */ `
         contrato {
           dataInicio
           dataFim
-          anexo {
-            url
-            nome
-            descricao
-            extensao
-          }
+        }
+        membros {
+          pk
+          nome
+          cpf
+          telefone
+          email
+          cep
+          rua
+          bairro
+          cidade
+          uf
+          tipo
+          pk_cliente
         }
       }
       nextToken
@@ -214,55 +233,6 @@ export const listarUsuario = /* GraphQL */ `
         }
         tipo
         pk_cliente
-        cliente {
-          pk
-          razaoSocial
-          cnpj
-          telefone
-          email
-          cep
-          rua
-          bairro
-          cidade
-          uf
-          pk_produto
-          produto {
-            pk
-            nome
-            categoria
-            fabricante
-            descricao
-            informacaoAdicional
-            imagens {
-              url
-              nome
-              descricao
-              extensao
-            }
-            anexos {
-              url
-              nome
-              descricao
-              extensao
-            }
-          }
-          logo {
-            url
-            nome
-            descricao
-            extensao
-          }
-          contrato {
-            dataInicio
-            dataFim
-            anexo {
-              url
-              nome
-              descricao
-              extensao
-            }
-          }
-        }
       }
       nextToken
     }

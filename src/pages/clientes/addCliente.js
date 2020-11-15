@@ -35,8 +35,7 @@ const AdicionarCliente = (props) => {
 
     const handleValidSubmit = async(e, values) =>{
         values.logo = logo;
-        values.pk_produto = [" "]
-
+        values.pk_produto = null;
         await dispatch(saveNewCliente(values, props.history))
         return toastr.success("Cliente adicionado!", "Cliente salvo com sucesso!")
     }

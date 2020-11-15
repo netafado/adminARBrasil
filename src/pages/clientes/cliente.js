@@ -22,10 +22,12 @@ import ModalCliente from "./parts/modalClientes"
 
 const ClienteSingle = (props) => {
     const [modalContrato, setmodalContrato]     = useState(false);
-    const [membros, setMembros]                 = useState([])
+
     const [modal_membro, setmodal_membro]       = useState(false);
     const {produtcts}                           = useSelector(state => state.ProdutosLista)
     const {cliente, loading}                    = useSelector(state => state.Cliente)
+    const [membros, setMembros]                 = useState([])
+    const [produtos, setProdutos]               = useState([])
     const dispatch = useDispatch()
     const loadInfo = async () =>{
         dispatch(listarProdutos())
@@ -33,15 +35,28 @@ const ClienteSingle = (props) => {
 
     }
 
+    useEffect(()=>{
+        if(!cliente)
+            return
+        setMembros(cliente.membros)
+    }, [cliente])
+
     const updateContrato = (contrato) =>{
         const pk_produto = cliente.pk_produto
         if(!pk_produto)
             cliente.pk_produto = [" "]
-        dispatch(updateCliente({...cliente, contrato}, props.history))
+        dispatch(updateCliente({...cliente, contrato}, null))
         loadInfo();
         toggleModalContrato()
-    } 
-    // 4
+    }
+
+    const adcionarProdutoComSetUp = (produto, setUp) =>{
+        cliente.pk_produto = [...cliente.pk_produto, {pk_produto: produto.pk, setup: setUp}]
+        dispatch(updateCliente({...cliente}, null))
+        loadInfo();
+    
+
+    }
 
     const adicionarUser = async(e,v, foto) =>{
         const input = {
@@ -61,18 +76,15 @@ const ClienteSingle = (props) => {
         console.log(input)
         API.graphql(graphqlOperation( mutations.createUsuario, {input} ))
         .then( (result) => {
-            console.log(result)
             setMembros([...membros, result.data.createUsuario])
         } )
         .catch( err => {
-            setMembros([...membros, err.data.createUsuario])
-            console.log(err.data.createUsuario, "teste")
+            console.log(err, "teste")
         })
 
         tog_membro()
 
     }
-    console.log(cliente)
     useEffect(()=>{
         loadInfo()
     }, [])
@@ -83,6 +95,8 @@ const ClienteSingle = (props) => {
             state: {cliente}
         })
     }
+
+
 
     function toggleModalContrato() {
         setmodalContrato(!modalContrato);
@@ -183,10 +197,10 @@ const ClienteSingle = (props) => {
                                                             <td style={{ width: "45px" }}>
                                                                 <h5 className="font-size-14 mb-1"><Link to={cliente.contrato.anexo.url} className="text-dark">Contrato</Link></h5>
                                                             </td>
-                                                            <td>
-                                                                <div className="text-left">
+                                                            <td className="text-right">
+                                                                
                                                                     <a  href={cliente.contrato.anexo.url} className="text-dark"><i className="bx bx-download h3 m-0"></i></a>
-                                                                </div>
+                                                               
                                                             </td>
                                                         </tr>
                                                     </tbody>
@@ -217,8 +231,6 @@ const ClienteSingle = (props) => {
 
                                         <div className="table-responsive">
                                             {membros.length <= 0 ? <Col><p>Nenhum cadastro.</p></Col> : null }
-                                            <Table className="table table-centered table-nowrap">
-                                                <tbody>
 
                                                     {
                                                         membros.map((member, k) =>
@@ -257,8 +269,7 @@ const ClienteSingle = (props) => {
                                                             </tr>
                                                         )
                                                     }
-                                                </tbody>
-                                            </Table>
+
                                         </div>
                                     </CardBody>
                                 </Card>
@@ -270,7 +281,7 @@ const ClienteSingle = (props) => {
                                         <CardTitle className="mb-4">Produtos
                                         <Button  type="button" color="success" className="btn-rounded waves-effect waves-light mb-2 mr-2 float-right"><i className="mdi mdi-plus mr-1"></i> Produto</Button>
                                         </CardTitle>
-                                        <TableProdutos produtos={produtcts} />
+                                        <TableProdutos produtos={produtcts} adcionarProdutoComSetUp={adcionarProdutoComSetUp} />
 
                                     </CardBody>
                                 </Card>

@@ -10,9 +10,9 @@ import {listarClientes}             from "../../store/clientes/actions"
 import ClientesCards                from "./cardCliente";
 import SweetAlert                   from "react-bootstrap-sweetalert";
 import { Link }                     from 'react-router-dom';
-import { deleteCliente as deletarCliente_action }           from "../../store/clientes/actions" 
+import { deleteCliente as deletarCliente_action }   from "../../store/clientes/actions" 
 
-const ProjectsGrid  = (props) => {
+const ListarCliente  = (props) => {
     const dispatch =                useDispatch()
     const {clientes, loading} =     useSelector(state => state.Clientes)
     const [deletarClienteModal, setdeletarClienteModal] =   useState(null)
@@ -79,8 +79,6 @@ const ProjectsGrid  = (props) => {
                     </SweetAlert>
                 ) : null}
                     <Container fluid>
-
-                        {/* Render Breadcrumbs */}
                         <Breadcrumbs title="Clientes" breadcrumbItem="Lista de clientes" />
 
                         <Row className="mb-2">
@@ -99,11 +97,8 @@ const ProjectsGrid  = (props) => {
                             </Col>
                         </Row>
                         <Row>
-                            {/* Import Cards */}
                             {loading ?  <div className="h-100 w-100 align-items-center d-flex justify-content-center pt-5"><Spinner className="m-auto mt-5"/></div>
                             :  <ClientesCards clientes={clientesFiltrados} delete_func={deletarCliente}/>}
-
-
                         </Row>
 
                     </Container>
@@ -112,4 +107,4 @@ const ProjectsGrid  = (props) => {
           );
     }
         
-export default ProjectsGrid;
+export default ListarCliente;
