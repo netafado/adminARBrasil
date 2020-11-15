@@ -21,9 +21,28 @@ const Produtos  = (props) => {
     const {produtcts, loading} = useSelector(state => state.ProdutosLista)
     const [deletarMsg, setDeletarMsg] = useState(false)
     const [idProdDeletar, setIdProdDeletar] = useState(null)
+
+    const [termoFiltro, setTermoFiltro]                 =   useState("");
+    const [produtosFiltrados, setProdutosFiltrados]     =   useState([])
+
+    const setTermoFiltroFunc  = (e) =>{
+        console.log(e.target.value)
+        setTermoFiltro(e.target.value)
+    } 
     useEffect( ()=>{
         dispatch(listarProdutos())
     }, [] )
+
+    useEffect(()=>{
+        if(!termoFiltro){
+            setProdutosFiltrados([...produtcts])
+        }else{
+            const filtrar = produtcts.filter( (item) => {
+                return   item.nome.toLowerCase().indexOf( termoFiltro.toLowerCase().trim() ) >= 0
+            } )
+            setProdutosFiltrados( filtrar )
+        }
+    }, [termoFiltro, produtcts])
 
     const deleltarProduto = async (pk) =>{
         setIdProdDeletar(pk)
@@ -74,7 +93,7 @@ const Produtos  = (props) => {
                             <Col sm="4">
                                 <div className="search-box mr-2 mb-2 d-inline-block">
                                     <div className="position-relative">
-                                        <Input type="text" className="form-control" placeholder="Procurar produto..." />
+                                        <Input type="text" className="form-control" onChange={setTermoFiltroFunc} placeholder="Procurar produto..." />
                                         <i className="bx bx-search-alt search-icon"></i>
                                     </div>
                                 </div>
@@ -88,7 +107,7 @@ const Produtos  = (props) => {
                         <Row>
                             {loading ?
                              <div className="h-100 w-100 align-items-center d-flex justify-content-center pt-5"><Spinner className="m-auto mt-5"/></div>
-                            :<CardProject projects={produtcts} deleltarProduto={deleltarProduto} editarProduto={editarProduto}/>}
+                            :<CardProject projects={produtosFiltrados} deleltarProduto={deleltarProduto} editarProduto={editarProduto}/>}
                         </Row>
 
                     </Container>

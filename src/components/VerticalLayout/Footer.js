@@ -8,7 +8,7 @@ const Footer = (props) => {
                 <Container fluid={true}>
                     <Row>
                         <Col md={6}>
-                            {new Date().getFullYear()} © ARBRASIL.
+                            {new Date().getFullYear()} © Ar Brasil compressores.
                         </Col>
                         <Col md={6}>
                             <div className="text-sm-right d-none d-sm-block">

@@ -21,11 +21,11 @@ import ModalCliente from "./parts/modalClientes"
 
 
 const ClienteSingle = (props) => {
-    const [modalContrato, setmodalContrato] = useState(false);
-    const [membros, setMembros] = useState([])
-    const [modal_membro, setmodal_membro] = useState(false);
-    const {produtcts} = useSelector(state => state.ProdutosLista)
-    const {cliente, loading} = useSelector(state => state.Cliente)
+    const [modalContrato, setmodalContrato]     = useState(false);
+    const [membros, setMembros]                 = useState([])
+    const [modal_membro, setmodal_membro]       = useState(false);
+    const {produtcts}                           = useSelector(state => state.ProdutosLista)
+    const {cliente, loading}                    = useSelector(state => state.Cliente)
     const dispatch = useDispatch()
     const loadInfo = async () =>{
         dispatch(listarProdutos())

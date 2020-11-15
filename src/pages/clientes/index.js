@@ -19,6 +19,7 @@ const ProjectsGrid  = (props) => {
     const [clienteDeletado, setClienteDeletado]         =   useState(null)
     const [termoFiltro, setTermoFiltro]                 =   useState("");
     const [clientesFiltrados, setClientesFiltrados]     =   useState([])
+
     useEffect(()=>{
         dispatch(listarClientes())
     }, [])
@@ -81,7 +82,7 @@ const ProjectsGrid  = (props) => {
 
                         {/* Render Breadcrumbs */}
                         <Breadcrumbs title="Clientes" breadcrumbItem="Lista de clientes" />
-                        {loading ? <Spinner /> : null}
+
                         <Row className="mb-2">
                             <Col xs="6">
                                 <div className="search-box mr-2 mb-2 d-inline-block">
@@ -99,7 +100,10 @@ const ProjectsGrid  = (props) => {
                         </Row>
                         <Row>
                             {/* Import Cards */}
-                            <ClientesCards clientes={clientesFiltrados} delete_func={deletarCliente}/>
+                            {loading ?  <div className="h-100 w-100 align-items-center d-flex justify-content-center pt-5"><Spinner className="m-auto mt-5"/></div>
+                            :  <ClientesCards clientes={clientesFiltrados} delete_func={deletarCliente}/>}
+
+
                         </Row>
 
                     </Container>

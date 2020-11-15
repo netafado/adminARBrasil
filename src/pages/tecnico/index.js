@@ -21,6 +21,29 @@ const ContactsGrid = (props) => {
     const dispatch = useDispatch()
     const [deletarMsg, setDeletarMsg] = useState(false)
     const [idTecnicoDeletar, setIdTecnicoDeletar] = useState(null)
+
+    const [termoFiltro, setTermoFiltro]                 =   useState("");
+    const [tecnicoFiltrado, settecnicoFiltrado]     =   useState([])
+
+    const setTermoFiltroFunc  = (e) =>{
+        console.log(e.target.value)
+        setTermoFiltro(e.target.value)
+    } 
+
+    useEffect(()=>{
+        settecnicoFiltrado( tecnicos )
+    }, [tecnicos])
+
+    useEffect(()=>{
+        if(!termoFiltro){
+            settecnicoFiltrado([...tecnicos])
+        }else{
+            const filtrar = tecnicos.filter( (item) => {
+                return   item.nome.toLowerCase().indexOf( termoFiltro.toLowerCase() ) >= 0
+            } )
+            settecnicoFiltrado( filtrar )
+        }
+    }, [termoFiltro, tecnicos])
     useEffect(()=>{
         dispatch( listarTecnicos() )
     }, [])
@@ -59,19 +82,17 @@ const ContactsGrid = (props) => {
                         onCancel={() => abrirModalParaDeletarTecnico()  }
 
                     >
-                        {"Essa operação não podera ser desfeita!"}
+                    {"Essa operação não podera ser desfeita!"}
                     </SweetAlert>
                 ) : null}
 
                     <Container fluid>
-
-                        {/* Render Breadcrumbs */}
                         <Breadcrumbs title="Técnicos" breadcrumbItem="lista de técnicos" />
                         <Row className="mb-2">
                             <Col sm="4">
                                 <div className="search-box mr-2 mb-2 d-inline-block">
                                     <div className="position-relative">
-                                        <Input type="text" className="form-control" placeholder="Procurar..." />
+                                        <Input type="text" className="form-control" onChange={setTermoFiltroFunc} placeholder="Procurar..." />
                                         <i className="bx bx-search-alt search-icon"></i>
                                     </div>
                                 </div>
@@ -85,15 +106,13 @@ const ContactsGrid = (props) => {
                             </Col>
                         </Row>
                         <Row>
-                            {tecnicos.length <= 0 ? <Col><p>Nenhum cadastro.</p></Col> : null}
+                            {tecnicoFiltrado.length <= 0 ? <Col><p>Nenhum cadastro.</p></Col> : null}
                             {
-                                tecnicos.map((tecnico, key) =>
+                                tecnicoFiltrado.map((tecnico, key) =>
                                     <CardContact user={tecnico} abrirModal={toggleChamado} key={"_user_" + key} deletarTecnico={deletarTecnico}/>
                                 )
                             }
-
                         </Row>
-
                     </Container>
                 </div>
             </React.Fragment>
