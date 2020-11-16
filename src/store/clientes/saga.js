@@ -78,6 +78,7 @@ function updateClienteFromAPI ({values})  {
         cidade: values.cidade,
         uf: values.uf,
         logo: values.logo,
+        //membros: values.membros,
         pk_produto: values.pk_produto,
         contrato: values.contrato
     }
@@ -116,6 +117,7 @@ function* deleteCliente(action){
 
 
 function* updateCliente(action){
+    console.log(action)
     try{
         const cliente = yield call(updateClienteFromAPI, action.payload)
         yield put(updateClienteSucess(cliente))

@@ -1,19 +1,11 @@
 import React, {useState} from 'react';
 
-import {  Col, Button, Modal, FormGroup, Row, Input } from "reactstrap";
-import InputMask            from 'react-input-mask';
+import {  Col, Button, Modal, FormGroup, Row } from "reactstrap";
 import { AvForm, AvField }  from 'availity-reactstrap-validation';
-import  imageUrls           from "../../../assets/images/logoEmpresa.jpg"
-import { salvarToStorage }  from "../../../helpers/amplify/storage"
-import FileUploader         from "../../../components/fileUploader"
+import {useSelector}        from "react-redux"
 
-
-const ModalMembros = ({modal, toggle, enviarClienteNovo}) => {
-
-    const [carregandoLogo, setCarregandoLogo] = useState(false)
-    const [foto, setFoto] = useState({ url:imageUrls, extensao: null, descricao: "" })
-
-
+const ModalProdutos = ({modal, toggle, enviarNovoProduto}) => {
+    const {produtcts}  = useSelector(state => state.ProdutosLista)
     return (
              <React.Fragment>
 
@@ -24,7 +16,7 @@ const ModalMembros = ({modal, toggle, enviarClienteNovo}) => {
                     centered={true}
                 >
                     <div className="modal-header">
-                    <h5 className="modal-title mt-0">Adicionar membro</h5>
+                    <h5 className="modal-title mt-0">Adicionar produto ao cliente.</h5>
                     <button
                         type="button"
                         onClick={() => { toggle(false) } }
@@ -39,36 +31,22 @@ const ModalMembros = ({modal, toggle, enviarClienteNovo}) => {
 
                     <Row>
                         <Col sm={12}>
-                        <AvForm  onValidSubmit={(e,v) => { enviarClienteNovo(e,v, foto) }}>
+                        <AvForm  onValidSubmit={(e,v) => { enviarNovoProduto(e,v) }}>
                             <Row>
                                 <Col sm="12">
-                                    <AvField name="nome" label="Nome" type="text" errorMessage="Campo obrigatório" validate={{
+                                <AvField type="select" 
+                                    validate={{
                                         required: {value: true, errorMessage: 'Campo obrigatório'},
-                                    }} />
+                                    }}
+                                     name="pk" label="Escolha o produto" >
+                                    {produtcts.map((produto) =>{
+                                        return <option key={produto.pk} value={produto.pk}>{produto.nome}</option>
+                                    })}
+                                </AvField>
                                 </Col>
                                 <Col sm="12">
-                                    <AvField name="cpf" 
-                                        mask="999.999.-999-99"
-                                        tag={[Input, InputMask]} 
-                                        label="CPF" type="text" errorMessage="Campo obrigatório" validate={{
+                                    < AvField name="setup" label="Setup" type="textarea" errorMessage="Campo obrigatório" validate={{
                                         required: {value: true, errorMessage: 'Campo obrigatório'},
-                                    }} />
-                                </Col>
-                            </Row>
-                            <Row>
-                                <Col sm="12">
-                                    <AvField name="telefone" 
-                                        mask="(99) 999-999999"
-                                        maskChar="-"  
-                                        tag={[Input, InputMask]}
-                                        label="Telefone" type="text" errorMessage="Campo obrigatório" validate={{
-                                        required: {value: true, errorMessage: 'Campo obrigatório'},
-                                    }} />
-                                </Col>
-                                <Col sm="12">
-                                    < AvField name="email" label="Email" type="email" errorMessage="Campo obrigatório" validate={{
-                                        required: {value: true, errorMessage: 'Campo obrigatório'},
-                                        email: {value: true, errorMessage: "formato do email invalido"}
                                     }} />
                                 </Col>
                             </Row>
@@ -91,4 +69,4 @@ const ModalMembros = ({modal, toggle, enviarClienteNovo}) => {
           );
     }
         
-export default ModalMembros;
+export default ModalProdutos;

@@ -18,17 +18,24 @@ import {listarProdutos}             from "../../store/listaProdutos/actions"
 
 
 import ModalCliente from "./parts/modalClientes"
-
+import ModalProduto from "./parts/modalProdutos"
+import ModalClienteEdit from "./parts/modalClienteEditar"
 
 const ClienteSingle = (props) => {
     const [modalContrato, setmodalContrato]     = useState(false);
-
+    const [modalProdutos, setModalProdutos]     = useState(false)
     const [modal_membro, setmodal_membro]       = useState(false);
+
+    const [modal_membroEdit, setmodal_membroEdit]       = useState(false);
+    const [userEdit, setUserEdit]                       = useState({})
+
     const {produtcts}                           = useSelector(state => state.ProdutosLista)
     const {cliente, loading}                    = useSelector(state => state.Cliente)
     const [membros, setMembros]                 = useState([])
-    const [produtos, setProdutos]               = useState([])
+    const [produtosDoCLiente, setprodutosDoCLiente]  = useState([])
     const dispatch = useDispatch()
+    //abrir modal com Produtos
+    // o modal precisa de 2 campos um select e textarea
     const loadInfo = async () =>{
         dispatch(listarProdutos())
         const a = await dispatch( getCliente(props.location.hash)  )
@@ -39,23 +46,38 @@ const ClienteSingle = (props) => {
         if(!cliente)
             return
         setMembros(cliente.membros)
+        atualizarProdutosClientes()
+
+        
     }, [cliente])
+
+    const atualizarProdutosClientes = () => {
+        let {produto , pk_produto} = cliente
+        const newArray = produto.map( (item) =>{
+            let newItem = item
+            let setups  = pk_produto.filter( (pk_p) => item.pk === pk_p.pk_produto  )
+            newItem.set = setups
+            return newItem
+        } )
+        setprodutosDoCLiente(newArray)
+        console.log(newArray)
+        
+    }
 
     const updateContrato = (contrato) =>{
         const pk_produto = cliente.pk_produto
         if(!pk_produto)
-            cliente.pk_produto = [" "]
+            cliente.pk_produto = [{pk_produto: " ", setup: " "}]
         dispatch(updateCliente({...cliente, contrato}, null))
         loadInfo();
         toggleModalContrato()
     }
 
-    const adcionarProdutoComSetUp = (produto, setUp) =>{
-        cliente.pk_produto = [...cliente.pk_produto, {pk_produto: produto.pk, setup: setUp}]
-        dispatch(updateCliente({...cliente}, null))
+    const adcionarProdutoComSetUp = async(e, v) =>{
+        cliente.pk_produto = [...cliente.pk_produto, {pk_produto: v.pk, setup: v.setup}]
+        await dispatch(updateCliente({...cliente}, null))
+        toggleModalProduto()
         loadInfo();
-    
-
     }
 
     const adicionarUser = async(e,v, foto) =>{
@@ -74,7 +96,7 @@ const ClienteSingle = (props) => {
             tipo: "C"
         }
         console.log(input)
-        API.graphql(graphqlOperation( mutations.createUsuario, {input} ))
+        await API.graphql(graphqlOperation( mutations.createUsuario, {input} ))
         .then( (result) => {
             setMembros([...membros, result.data.createUsuario])
         } )
@@ -83,7 +105,52 @@ const ClienteSingle = (props) => {
         })
 
         tog_membro()
+    }
 
+    const updateUser = async(e,v, foto, user) =>{
+        const input = {
+            pk: user.pk,
+            pk_cliente: cliente.pk,
+            nome: v.nome,
+            cpf: v.cpf,
+            telefone: v.telefone,
+            email: v.email,
+            cep: v.cep,
+            rua: v.rua,
+            bairro: v.bairro,
+            cidade: v.cidade,
+            uf: v.uf,
+            foto: foto,
+            tipo: "C"
+        }
+        console.log(input)
+        API.graphql(graphqlOperation( mutations.updateUsuario, {input} ))
+        .then( (result) => {
+            loadInfo()
+        } )
+        .catch( err => {
+            console.log(err, "teste")
+        })
+
+        toggleModalClienteEdit()
+    }
+
+    const deletarUser = async(pk) =>{
+       await API.graphql(graphqlOperation( mutations.deleteUsuario, {pk} ))
+        .then( (result) => {
+            console.log(result)
+        } )
+        .catch( err => {
+            console.log(err, "teste")
+        })
+        loadInfo()
+
+    }
+    const toggleModalProduto = () => {
+        setModalProdutos(!modalProdutos)
+    }
+    const toggleModalClienteEdit = () => {
+        setmodal_membroEdit(!modal_membroEdit)
     }
     useEffect(()=>{
         loadInfo()
@@ -94,6 +161,11 @@ const ClienteSingle = (props) => {
             pathname: "/clientes-editar",
             state: {cliente}
         })
+    }
+
+    const setarUserEdit = (user) =>{
+        setUserEdit(user)
+        toggleModalClienteEdit( true )
     }
 
 
@@ -111,10 +183,10 @@ const ClienteSingle = (props) => {
 
     return (
              <React.Fragment>
-                 <ModalCliente modal={modal_membro} toggle={tog_membro} enviarClienteNovo={adicionarUser} />
-
-                 <ModalContrato modal={modalContrato} toggle={toggleModalContrato} f_func={updateContrato} contratoCliente={cliente.contrato}/>
-
+                <ModalCliente modal={modal_membro} toggle={tog_membro} enviarClienteNovo={adicionarUser} />
+                <ModalProduto modal={modalProdutos} toggle={toggleModalProduto}  enviarNovoProduto={adcionarProdutoComSetUp} />
+                <ModalContrato modal={modalContrato} toggle={toggleModalContrato} f_func={updateContrato} contratoCliente={cliente.contrato}/>
+                <ModalClienteEdit modal={modal_membroEdit} toggle={toggleModalClienteEdit} enviarClienteNovo={updateUser} user={userEdit}/>
                 <div className="page-content">
                     <Container fluid>
 
@@ -151,7 +223,6 @@ const ClienteSingle = (props) => {
                                                     <DropdownMenu right>
                                                         <DropdownItem onClick={toggleModalContrato}><i className="mdi mdi-clipboard-list font-size-16 text-info mr-2"></i>Editar contrato</DropdownItem>
                                                         <DropdownItem onClick={editarCliente} to="/clientes-adicionar"><i className="mdi mdi-pencil font-size-16 text-success mr-2"></i>Editar</DropdownItem>
-                                                        <DropdownItem href="#"><i className="mdi mdi-trash-can font-size-16 text-danger mr-2"></i>Deletar</DropdownItem>
                                                     </DropdownMenu>
                                                 </UncontrolledDropdown>
                                                 </div>
@@ -223,15 +294,16 @@ const ClienteSingle = (props) => {
                                 <Card>
                                     <CardBody>
                                         <CardTitle className="mb-4">Membros
-                                        <Button  onClick={tog_membro}  color="success" className="btn-rounded waves-effect waves-light mb-2 mr-2 float-right">
+                                        <Button  onClick={tog_membro}   color="success" className="btn-rounded waves-effect waves-light mb-2 mr-2 float-right">
                                             <i className="mdi mdi-plus mr-1"></i> novo membro
                                         </Button>
 
                                         </CardTitle>
 
-                                        <div className="table-responsive">
+                                        <div className="table-responsive mb-3">
                                             {membros.length <= 0 ? <Col><p>Nenhum cadastro.</p></Col> : null }
-
+                                            <Table>
+                                                <tbody>
                                                     {
                                                         membros.map((member, k) =>
                                                             <tr key={"_member_" + k} >
@@ -239,18 +311,18 @@ const ClienteSingle = (props) => {
                                                                     {
                                                                         member.foto
                                                                             ? <img src={member.foto.url} className="rounded-circle avatar-xs" alt="" />
-                                                                            : <div className="avatar-xs">
+                                                                            : <span className="avatar-xs">
                                                                                 <span className="avatar-title rounded-circle bg-soft-primary text-primary font-size-16">
                                                                                     {member.nome.charAt(0)}
                                                                                 </span>
-                                                                            </div>
+                                                                            </span>
                                                                     }
                                                                 </td>
                                                                 <td><h5 className="font-size-14 m-0"><Link to="" className="text-dark">{member.nome}</Link></h5></td>
                                                                 <td>
                                                                     <div>
-                                                                        <button type="button" className="btn btn-success btn-small waves-effect waves-light float-right"><i className="bx bx bx-paper-plane font-size-16 align-middle mr-2"></i> Convidar Aplicativo
-                                                                        </button>
+                                                                        <button disabled={true} type="button" className="btn btn-success btn-small waves-effect waves-light float-right"><i className="bx bx bx-paper-plane font-size-16 align-middle mr-2"></i> Convidar Aplicativo
+                                                                        </button >
                                                                     </div>
                                                                 </td>
                                                                 <td>
@@ -260,8 +332,8 @@ const ClienteSingle = (props) => {
                                                                             <i className="mdi mdi-dots-horizontal font-size-18"></i>
                                                                         </DropdownToggle>
                                                                         <DropdownMenu right>
-                                                                            <DropdownItem tag={Link} to="/clientes-adicionar"><i className="mdi mdi-pencil font-size-16 text-success mr-2"></i>Editar</DropdownItem>
-                                                                            <DropdownItem href="#"><i className="mdi mdi-trash-can font-size-16 text-danger mr-2"></i>Deletar</DropdownItem>
+                                                                            <DropdownItem onClick={()=> setarUserEdit(member)}><i className="mdi mdi-pencil font-size-16 text-success mr-2"></i>Editar</DropdownItem>
+                                                                            <DropdownItem onClick={()=> deletarUser(member.pk)}><i className="mdi mdi-trash-can font-size-16 text-danger mr-2"></i>Deletar</DropdownItem>
                                                                         </DropdownMenu>
                                                                 </UncontrolledDropdown>
                                                                     </div>
@@ -269,6 +341,10 @@ const ClienteSingle = (props) => {
                                                             </tr>
                                                         )
                                                     }
+                                                </tbody>
+
+                                            </Table>
+
 
                                         </div>
                                     </CardBody>
@@ -279,9 +355,10 @@ const ClienteSingle = (props) => {
                                 <Card>
                                     <CardBody>
                                         <CardTitle className="mb-4">Produtos
-                                        <Button  type="button" color="success" className="btn-rounded waves-effect waves-light mb-2 mr-2 float-right"><i className="mdi mdi-plus mr-1"></i> Produto</Button>
+                                            <Button  type="button" color="success" onClick={toggleModalProduto} className="btn-rounded waves-effect waves-light mb-2 mr-2 float-right">
+                                            <i className="mdi mdi-plus mr-1"></i> Produto</Button>
                                         </CardTitle>
-                                        <TableProdutos produtos={produtcts} adcionarProdutoComSetUp={adcionarProdutoComSetUp} />
+                                        <TableProdutos produtos={produtosDoCLiente} adcionarProdutoComSetUp={adcionarProdutoComSetUp} />
 
                                     </CardBody>
                                 </Card>

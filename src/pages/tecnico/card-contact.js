@@ -43,18 +43,18 @@ const CardContact = (props) => {
                         <CardFooter className="bg-transparent border-top">
                             <div className="contact-links d-flex font-size-20">
                                 <div className="flex-fill">
-                                    <div id={"message" + user.id} onClick={props.abrirModal}>
+                                    <div id={"chamado" + user.id} onClick={props.abrirModal}>
                                         <i className="bx bx-message-square-dots"></i>
-                                        <UncontrolledTooltip placement="top" target={"message" + user.id}>
+                                        <UncontrolledTooltip placement="top" target={"chamado" + user.id}>
                                             Chamados
                                         </UncontrolledTooltip>
                                     </div>
                                 </div>
                                 <div className="flex-fill">
-                                    <div id={"message" + user.id} onClick={props.abrirModal}>
+                                    <div id={"message" + user.id} onClick={() => props.toggleModalProfile(user)}>
                                         <i className="bx bx-user"></i>
                                         <UncontrolledTooltip placement="top" target={"message" + user.id}>
-                                            Chamados
+                                            Profile
                                         </UncontrolledTooltip>
                                     </div>
                                 </div>

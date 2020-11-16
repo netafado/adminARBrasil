@@ -68,6 +68,7 @@ function newTecnicoFromAPI ({values})  {
 }
 
 function updateTecnicoAPI ({values})  {
+
     const input = {
         nome: values.nome,
         cpf: values.cpf,
@@ -79,9 +80,11 @@ function updateTecnicoAPI ({values})  {
         bairro: values.bairro,
         cidade: values.cidade,
         uf: values.uf,
+        pk_cliente: " ",
         foto: values.foto,
         tipo: "T"
     }
+    console.log("tecnico", input)
     return new Promise((resolve, reject)=> {
         API.graphql(graphqlOperation( mutations.updateUsuario, {input} ))
         .then( (data) => {
@@ -96,7 +99,7 @@ function* addTecnico(action){
         const tecnico = yield call(newTecnicoFromAPI, action.payload)
         yield put(addTecnicoSucess(tecnico))
         action.payload.history.push("/tecnicos")
-        yield put(clearFieldsTecnico())
+
 
     } catch(err){
         if(typeof err === "object"){
@@ -113,10 +116,11 @@ function* updateTecnico(action){
         const tecnico = yield call(updateTecnicoAPI, action.payload)
         yield put(updateTecnicoSucess(tecnico))
         action.payload.history.push("/tecnicos")
-        yield put(listarTecnicos())
-        yield put(clearFieldsTecnico())
+
+
 
     } catch(err){
+        console.log(err)
         if(typeof err === "object"){
             yield put(updateTecnicoFaild("CPJ já cadastrado."))
 
@@ -132,6 +136,7 @@ function* deletarTecnico(action){
     try{
         const cliente = yield call(deletarClienteAPI, action.payload)
         yield put(deleteTecnicoSuccess(cliente))
+        yield put(listarTecnicos())
     } catch(err){
         console.log(err)
         yield put(deleteTecnicoFaild(err))

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 
 import {  Col, Button, Modal, FormGroup, Row, Input } from "reactstrap";
 import InputMask            from 'react-input-mask';
@@ -8,10 +8,10 @@ import { salvarToStorage }  from "../../../helpers/amplify/storage"
 import FileUploader         from "../../../components/fileUploader"
 
 
-const ModalMembros = ({modal, toggle, enviarClienteNovo}) => {
+const ModalMembros = ({modal, toggle, enviarClienteNovo, user}) => {
 
     const [carregandoLogo, setCarregandoLogo] = useState(false)
-    const [foto, setFoto] = useState({ url:imageUrls, extensao: null, descricao: "" })
+    const [foto, setFoto] =  useState( user.foto || { url:imageUrls, extensao: null, descricao: "" })
     const mudarImg = async(e) => {
         const file = e.target.files[0]
         setCarregandoLogo(true)
@@ -19,8 +19,12 @@ const ModalMembros = ({modal, toggle, enviarClienteNovo}) => {
         setCarregandoLogo(false)
         setFoto({...foto, extensao: file.type, url: urlFile})
     }
-
-
+    useEffect( ()=>{
+        if(user.foto){
+            setFoto(user.foto)
+        }
+    }, [user] )
+    console.log(foto)
     return (
              <React.Fragment>
 
@@ -49,10 +53,10 @@ const ModalMembros = ({modal, toggle, enviarClienteNovo}) => {
                         <FileUploader salvarToStorage={mudarImg} url={foto.url} textoBtn="Selecione a foto" carregandoFoto={carregandoLogo} data={foto.extensao}/>
                     </Col>
                         <Col sm={9}>
-                        <AvForm  onValidSubmit={(e,v) => { enviarClienteNovo(e,v, foto) }}>
+                        <AvForm  onValidSubmit={(e,v) => { enviarClienteNovo(e,v, foto, user) }}>
                             <Row>
                                 <Col sm="12">
-                                    <AvField name="nome" label="Nome" type="text" errorMessage="Campo obrigatório" validate={{
+                                    <AvField name="nome" value={user.nome} label="Nome" type="text" errorMessage="Campo obrigatório" validate={{
                                         required: {value: true, errorMessage: 'Campo obrigatório'},
                                     }} />
                                 </Col>
@@ -60,6 +64,7 @@ const ModalMembros = ({modal, toggle, enviarClienteNovo}) => {
                                     <AvField name="cpf" 
                                         mask="999.999.-999-99"
                                         tag={[Input, InputMask]} 
+                                        value={user.cpf}
                                         label="CPF" type="text" errorMessage="Campo obrigatório" validate={{
                                         required: {value: true, errorMessage: 'Campo obrigatório'},
                                     }} />
@@ -71,12 +76,15 @@ const ModalMembros = ({modal, toggle, enviarClienteNovo}) => {
                                         mask="(99) 999-999999"
                                         maskChar="-"  
                                         tag={[Input, InputMask]}
+                                        value={user.telefone}
                                         label="Telefone" type="text" errorMessage="Campo obrigatório" validate={{
                                         required: {value: true, errorMessage: 'Campo obrigatório'},
                                     }} />
                                 </Col>
                                 <Col sm="12">
-                                    < AvField name="email" label="Email" type="email" errorMessage="Campo obrigatório" validate={{
+                                    < AvField name="email" 
+                                        value={user.email}
+                                        label="Email" type="email" errorMessage="Campo obrigatório" validate={{
                                         required: {value: true, errorMessage: 'Campo obrigatório'},
                                         email: {value: true, errorMessage: "formato do email invalido"}
                                     }} />

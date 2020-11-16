@@ -4,7 +4,7 @@ import {  Col,  Modal,  Row } from "reactstrap";
 
 import Welcome from "./WelcomeComp"
 
-const ModalChamados = ({modal, toggle, enviarClienteNovo}) => {
+const ModalChamados = ({modal, toggle, user}) => {
 
 
 
@@ -33,7 +33,7 @@ const ModalChamados = ({modal, toggle, enviarClienteNovo}) => {
 
                     <Row>
                         <Col sm={12}>
-                            <Welcome />
+                            <Welcome user={user}/>
                         </Col>
                     </Row>
                     </div>

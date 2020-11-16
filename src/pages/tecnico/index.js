@@ -20,15 +20,19 @@ const ContactsGrid = (props) => {
     const {tecnicos, loading} = useSelector(state => state.Tecnicos)
     const [modalChamado, setModalChamado]           = useState(false)
     const [modalProfile, setModalProfile]           = useState(false)
+    const [userProfile, setUserProfile] = useState({})
     const dispatch = useDispatch()
     const [deletarMsg, setDeletarMsg]               = useState(false)
     const [idTecnicoDeletar, setIdTecnicoDeletar]   = useState(null)
-    const [produtosClientes, setProdutosClientes]   = useState([])
     const [termoFiltro, setTermoFiltro]             = useState("");
     const [tecnicoFiltrado, settecnicoFiltrado]     = useState([])
-
-    const toggleModalProfile = () =>{
+    const toggleModalProfile = (user) =>{
+        
         setModalProfile(!modalProfile)
+    }
+    const setUser = (user) =>{
+        setUserProfile(user)
+        setModalProfile(true)
     }
     const setTermoFiltroFunc  = (e) =>{
         console.log(e.target.value)
@@ -86,7 +90,7 @@ const ContactsGrid = (props) => {
     return (
           <React.Fragment>
               <ModalChamados modal={modalChamado} toggle={toggleChamado} />
-              <ModalProfile modal={modalChamado} toggle={toggleModalProfile}/>
+              <ModalProfile modal={modalProfile} toggle={toggleModalProfile}  user={userProfile}/>
                 <div className="page-content">
                 {deletarMsg ? (
                     <SweetAlert
@@ -127,7 +131,7 @@ const ContactsGrid = (props) => {
                                 {tecnicoFiltrado.length <= 0 ? <Col><p>Nenhum cadastro.</p></Col> : null}
                                 {
                                     tecnicoFiltrado.map((tecnico, key) =>
-                                        <CardContact editarTecnico={editarTecnico} user={tecnico} toggleModalProfile={toggleModalProfile} abrirModal={toggleChamado} key={"_user_" + key} deletarTecnico={deletarTecnico}/>
+                                        <CardContact editarTecnico={editarTecnico} user={tecnico} toggleModalProfile={setUser} abrirModal={toggleChamado} key={"_user_" + key} deletarTecnico={deletarTecnico}/>
                                     )
                                 }
                             </>

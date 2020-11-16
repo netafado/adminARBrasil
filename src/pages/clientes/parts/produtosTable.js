@@ -1,25 +1,25 @@
 import React, {useState} from 'react';
-import {Link} from "react-router-dom"
-import {Input, Col } from "reactstrap";
+
+import { Col } from "reactstrap";
 
 const Produto = ({order, adcionarProdutoComSetUp}) => {
-    const  [setUp, setsetUp] = useState("")
     return(
-        <div className="row" >
-        <Col xs={2}>
-            <img src={ order.imagens[0].url} placeholder="setup" alt="product-img" title="product-img" className="avatar-md" />
+        <div className="row border-bottom pb-2 pt-2" >
+        <Col xs={6} sm={4}>
+        <div className="avatar-md mr-2">
+            <span className="avatar-title rounded-circle bg-light text-danger font-size-16" style={{backgroundImage : `url(${order.imagens ? order.imagens[0].url : null})`}}>
+                </span>
+            </div>
+
         </Col>
-        <Col xs={3}>{order.nome}</Col>
-        <Col xs={4}>
-            <Input type="textarea" onChange={(e)=>setsetUp(e.target.value)} placeholder="setup"  id={order.pk} />
+        <Col xs={6} sm={6}>
+            <h5 className="font-size-15 mt-2">{order.nome}</h5>
+            <p>{ order.set ?  order.set[0].setup : null}</p>
         </Col>
-        <Col xs={2}>
+        <Col sm={2}>
         <ul className="list-inline mb-0 font-size-16">
-            <li className="list-inline-item">
-                <button onClick={()=> adcionarProdutoComSetUp(order, setUp)} className="text-success p-1"><i className="bx bxs-edit-alt"></i></button>
-            </li>
-            <li className="list-inline-item">
-                <button  className="text-danger p-1"><i className="bx bxs-trash"></i></button>
+            <li className="list-inline-item text-right float-right">
+                <button className="btn btn-lg text-danger p-1"><i className="bx bxs-trash"></i></button>
             </li>
         </ul>
         </Col>

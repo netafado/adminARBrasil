@@ -36,11 +36,13 @@ const EditarCliente = (props) => {
         values.pk = cliente.pk
         values.contrato = cliente.contrato
         values.logo = logo
-        values.pk_produto = cliente.produto || [" "]
+        values.membros = cliente.membros || []
+        values.pk_produto = cliente.pk_produto || [{pk_produto: " ", setup: " "}]
 
         await dispatch(updateCliente(values, props.history))
         return toastr.success("Cliente atualizado!", "Cliente atualizado com sucesso!")
     }
+    console.log(cliente)
 
     return (
              <React.Fragment>

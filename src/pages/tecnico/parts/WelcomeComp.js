@@ -6,34 +6,28 @@ import { Link } from "react-router-dom";
 import avatar1 from "../../../assets/images/users/avatar-1.jpg";
 
 const WelcomeComp = (props) => {
+    console.log(props.user)
+    const {user}  = props
+    if(!user) return null
           return (
            <React.Fragment>
                 <Card >
-                    <CardBody className="pt-0">
+                    <CardBody >
                         <Row>
-                            <Col sm="4">
-                                <div className="avatar-md profile-user-wid mb-4">
-                                    <img src={avatar1} alt="" className="img-thumbnail rounded-circle" />
+                            <Col sm="12">
+                                <div className="avatar-md profile-user-wid mb-4 text-center m-auto">
+                                    <img src={user.foto ? user.foto.url : avatar1} alt="" className="img-thumbnail rounded-circle m-auto" />
                                 </div>
-                                <h5 className="font-size-15 text-truncate">Henry Price</h5>
-                                <p className="text-muted mb-0 text-truncate">UI/UX Designer</p>
+                                    <h5 className="font-size-15 text-truncate text-center">{user.nome}</h5>
+                                    <p className="text-muted mb-0 text-truncate text-center" >CPF{user.cpf} </p>
                             </Col>
 
-                            <Col sm="8">
+                            <Col sm="12">
                                 <div className="pt-4">
-                                    <Row>
-                                        <Col xs="6">
-                                            <h5 className="font-size-15">125</h5>
-                                            <p className="text-muted mb-0">Projects</p>
-                                        </Col>
-                                        <Col xs="6">
-                                            <h5 className="font-size-15">$1245</h5>
-                                            <p className="text-muted mb-0">Revenue</p>
-                                        </Col>
-                                    </Row>
-                                    <div className="mt-4">
-                                        <Link to="" className="btn btn-primary waves-effect waves-light btn-sm">View Profile <i className="mdi mdi-arrow-right ml-1"></i></Link>
-                                    </div>
+
+                                            <h5 className="text-muted mb-0 text-center">telefone: {user.telefone || "---"}</h5>
+                                            <p className="text-muted mb-0 text-center">Endereço : rua {user.rua || "---"}, {user.bairro}</p>
+                                            <p className="text-muted mb-0 text-center">Cidade : {user.rua || "---"}, ${user.bairro} | Estado {user.uf}</p>
                                 </div>
                             </Col>
                         </Row>
