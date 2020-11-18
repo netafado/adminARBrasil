@@ -28,12 +28,12 @@ const Cardcliente = ({delete_func, clientes}) => {
                                                 <p className="text-muted mb-1">tel: {cliente.telefone}</p>
                                                 <p className="text-muted mb-1">e-mail: {cliente.email}</p>
 
-                                                <p className="text-muted mb-1">contrato 
+                                                <p className="text-muted mb-1">contrato:  
                                                 {
                                                     cliente.contrato ?
-                                                    <> <Badge color="success" className="mr-1">vigente</Badge> até: 22/02/2020</>
+                                                    <> <Badge color="success" className="mr-1">vigente</Badge></>
                                                     :
-                                                    <> <Badge color="danger" className="mr-1">Sem contrato</Badge> ---</>
+                                                    <> <Badge color="danger" className="mr-1">Sem contrato</Badge></>
                                                 } 
                                                 
                                                 </p>
@@ -50,7 +50,7 @@ const Cardcliente = ({delete_func, clientes}) => {
                                             </UncontrolledTooltip>
                                         </li>
                                         <li className="list-inline-item mr-3" id="comments">
-                                            <i className="bx bxs-user mr-1"></i> {0}
+                                            <i className="bx bxs-user mr-1"></i> {cliente.membros ? cliente.membros.length : 0 }
                                             <UncontrolledTooltip placement="top" target="comments">
                                                Usurios
                                             </UncontrolledTooltip>
@@ -62,7 +62,10 @@ const Cardcliente = ({delete_func, clientes}) => {
                                                 </DropdownToggle>
                                                 <DropdownMenu right>
                                                     <DropdownItem tag={Link} to={`cliente/${cliente.pk}`}><i className="mdi mdi-pencil font-size-16 text-success mr-2"></i>Editar</DropdownItem>
-                                                    <DropdownItem onClick={()=>delete_func(cliente)}><i className="mdi mdi-trash-can font-size-16 text-danger mr-2"></i>Deletar</DropdownItem>
+                                                    <DropdownItem onClick={(e)=>{
+                                                        e.stopPropagation();
+                                                        delete_func(cliente)
+                                                        }}><i className="mdi mdi-trash-can font-size-16 text-danger mr-2"></i>Deletar</DropdownItem>
                                                 </DropdownMenu>
                                             </UncontrolledDropdown>
                                         </li>

@@ -19,13 +19,14 @@ const CardProject = ({projects, deleltarProduto, editarProduto}) => {
                                     <CardBody>
                                         <Media>
                                             <div className="avatar-md mr-4">
-                                                <span className="avatar-title rounded-circle bg-light text-danger font-size-16">
-                                                    <img src={project.imagens ? project.imagens[0].url: ""} alt="" height="30" />
-                                                </span>
+                                                <div className="mb-3 mr-3 avatar-md">
+                                                     <span className="avatar-title rounded-circle bg-light text-danger font-size-16" style={{backgroundImage: `url( ${project.imagens ? project.imagens[0].url: ""} )`}}>
+                                                    </span>
+                                                </div>
                                             </div>
 
                                             <Media className="overflow-hidden" body>
-                                                <h5 className="text-truncate font-size-15"><Link to="#" className="text-dark">{project.nome}</Link></h5>
+                                                <h5 className="text-truncate font-size-15 text-dark" onClick={()=>editarProduto(project)}> {project.nome}</h5>
                                                 <p className="text-muted mb-1">fabricante: {project.fabricante}</p>
                                                 <p className="text-muted mb-1 text-truncate">descrição: {project.descricao}</p>
                                                 <div className="position-absolute" style={{top: 5, right: 10}}>

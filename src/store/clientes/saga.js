@@ -31,7 +31,6 @@ function* carregarCliente(action){
 }
 
 function deletarProdutoAPI(pk){
-    console.log(pk)
     return new Promise((resolve, reject)=> {
         API.graphql(graphqlOperation( mutations.deleteCliente, {pk}))
         .then( (data) => {
@@ -61,7 +60,7 @@ function newClienteFromAPI ({values})  {
         .then( (data) => {
             return resolve(data.createProduto)
         } )
-        .catch( err => reject( _handleError(err)) )
+        .catch( err => reject( err ) )
     })
 }
 
@@ -82,7 +81,7 @@ function updateClienteFromAPI ({values})  {
         pk_produto: values.pk_produto,
         contrato: values.contrato
     }
-    console.log("update", input, values)
+
     return new Promise((resolve, reject)=> {
         API.graphql(graphqlOperation( mutations.updateCliente, {input} ))
         .then( (data) => {
@@ -98,8 +97,13 @@ function* addNewCliente(action){
         yield put(saveNewClienteSuccess(cliente))
         action.payload.history.push("/clientes")
     } catch(err){
-        yield put(saveNewClientefailed(err))
-        //action.payload.history.push("/clientes")
+        console.log(err)
+        if(typeof err === "object"){
+            yield put(saveNewClientefailed("CNPJ já cadastrado"))
+        }else{
+            yield put(saveNewClientefailed(err))
+        }
+        
     }
 }
 
@@ -110,6 +114,7 @@ function* deleteCliente(action){
         yield put(listarClientes())
     } catch(err){
         console.log(err)
+
         yield put(saveNewClientefailed(err))
     }
 }
@@ -117,10 +122,11 @@ function* deleteCliente(action){
 
 
 function* updateCliente(action){
-    console.log(action)
     try{
         const cliente = yield call(updateClienteFromAPI, action.payload)
         yield put(updateClienteSucess(cliente))
+        if(action.updateFunc)
+            yield put(action.updateFunc())
         if(action.payload.history)
             action.payload.history.push("/clientes")
         yield put(listarClientes())

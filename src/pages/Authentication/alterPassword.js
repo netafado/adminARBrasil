@@ -25,17 +25,28 @@ import 'toastr/build/toastr.min.css'
 
 const AlterPassword = (props) => {
     const user = useSelector(state => state.Login.user)
+    const [loading, setLoafing] = React.useState(false)
     const passwordChanced = (data) => {
         toastr.success("Sua senha foi alterada", "Senha alterada")
+        props.history.push('/login');
     }
     const passwordChancedFailed = (e) =>{
-        toastr.error("Erro ao alterar senha",e)
-
+        toastr.error("Erro ao alterar senha", "Erro ao alterar senha")
     }
     async function changePassword(event, values) {
-        await Auth.completeNewPassword(user, values.oldPassword, values.newpassword)
+        setLoafing(true)
+        console.log(event, values)
+         
+        if(values.newPassword.length < 6){
+                setLoafing(false)
+                toastr.error("Erro", "Senha deve conter mais de seis digitos")
+                return
+        }
+
+        await Auth.completeNewPassword(user, values.newPassword)
         .then( data => passwordChanced(data) )
         .catch(err => passwordChancedFailed(err))
+        setLoafing(false)
     }
        
     return (
@@ -75,11 +86,8 @@ const AlterPassword = (props) => {
 
                                             <AvForm className="form-horizontal" onValidSubmit={(e,v) => { changePassword(e,v) }}>
 
-                                                {props.error && props.error ? <Alert color="danger">{props.error}</Alert> : null}
+                                                
 
-                                                <div className="form-group">
-                                                    <AvField name="oldPassword" label="Senha atual" errorMessage="Campo obrigatório"  className="form-control" placeholder="Senha atual" type="password" required />
-                                                </div>
 
                                                 <div className="form-group">
                                                     <AvField name="newPassword" label="Nova Senha"  errorMessage="Campo obrigatório" type="password" required placeholder="Nova senha" />
@@ -87,7 +95,7 @@ const AlterPassword = (props) => {
 
 
                                                 <div className="mt-3">
-                                                    <button className="btn btn-primary btn-block waves-effect waves-light" type="submit">Trocar senha</button>
+                                                    <button disabled={loading} className="btn btn-primary btn-block waves-effect waves-light" type="submit">{loading ? "Carregando":"Trocar senha"}</button>
                                                 </div>
 
                                             </AvForm>

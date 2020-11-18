@@ -103,29 +103,8 @@ function tToggle()
 
             </div>
             <div className="d-flex">
-              <div className="dropdown d-inline-block d-lg-none ml-2">
-                <button onClick={() => { setsearch(!search) }} type="button" className="btn header-item noti-icon waves-effect" id="page-header-search-dropdown">
-                  <i className="mdi mdi-magnify"></i>
-                </button>
-                <div className={search ? "dropdown-menu dropdown-menu-lg dropdown-menu-right p-0 show" : "dropdown-menu dropdown-menu-lg dropdown-menu-right p-0"}
-                  aria-labelledby="page-header-search-dropdown">
 
-                  <form className="p-3">
-                    <div className="form-group m-0">
-                      <div className="input-group">
-                        <input type="text" className="form-control" placeholder="Search ..." aria-label="Recipient's username" />
-                        <div className="input-group-append">
-                          <button className="btn btn-primary" type="submit"><i className="mdi mdi-magnify"></i></button>
-                        </div>
-                      </div>
-                    </div>
-                  </form>
-                </div>
-              </div>
-
-              
-
-
+          
               <div className="dropdown d-none d-lg-inline-block ml-1">
                 <button type="button" onClick={() => { toggleFullscreen(); }} className="btn header-item noti-icon waves-effect" data-toggle="fullscreen">
                   <i className="bx bx-fullscreen"></i>
@@ -141,8 +120,6 @@ function tToggle()
                   </button>
                 </div>          
               }
-
-
             </div>
           </div>
         </header>

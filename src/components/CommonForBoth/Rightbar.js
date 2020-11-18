@@ -34,9 +34,8 @@ const RightSidebar = (props) => {
                 <h5 className="m-0">Configuração</h5>
               </div>
 
-              <hr className="my-0" />
-
               <div className="p-4">
+                {/*
                 <div className="radio-toolbar">
                   <span className="mb-2 d-block">Layouts</span>
                   <input
@@ -57,29 +56,8 @@ const RightSidebar = (props) => {
                     onChange={(e) => { if (e.target.checked) {   props.changeLayout(e.target.value); } }} />
                   <label htmlFor="radioHorizontal">Horizontal</label>
                 </div>
+                */}
 
-                 <hr className="mt-1"/>
-
-                <div className="radio-toolbar">
-                  <span className="mb-2 d-block" id="radio-title">Largura</span>
-                  <input
-                    type="radio"
-                    id="radioFluid"
-                    name="radioWidth"
-                    value="fluid"
-                    checked={props.layoutWidth !== "boxed"}
-                    onChange={(e) => {  if (e.target.checked) { props.changeLayoutWidth(e.target.value); } }} />
-                  <label htmlFor="radioFluid">Total</label>
-                  {"   "}
-                  <input
-                    type="radio"
-                    id="radioBoxed"
-                    name="radioWidth"
-                    value="boxed"
-                    checked={props.layoutWidth === "boxed"}
-                    onChange={(e) => {  if (e.target.checked) { props.changeLayoutWidth(e.target.value); } }} />
-                  <label htmlFor="radioBoxed">Centralizado</label>
-                </div>
                 <hr className="mt-1"/>
 
                 <div className="radio-toolbar">

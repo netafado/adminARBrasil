@@ -2,9 +2,10 @@ import React, {useState, useEffect} from 'react';
 
 import { Link } from "react-router-dom";
 import { Container, Row, Col, Card, CardBody, CardTitle, Media, Table, Button, UncontrolledDropdown, DropdownToggle, DropdownItem, DropdownMenu, Spinner } from "reactstrap";
-
+import toastr from 'toastr'
+import 'toastr/build/toastr.min.css'
 import ModalContrato                from "./parts/modalContrato"
-import { API, graphqlOperation, }   from "aws-amplify"
+import { API, graphqlOperation  }   from "aws-amplify"
 import * as mutations               from "../../graphql/mutations"
 import TableProdutos                from "./parts/produtosTable"
 import {useSelector, useDispatch}   from "react-redux"
@@ -25,7 +26,7 @@ const ClienteSingle = (props) => {
     const [modalContrato, setmodalContrato]     = useState(false);
     const [modalProdutos, setModalProdutos]     = useState(false)
     const [modal_membro, setmodal_membro]       = useState(false);
-
+    const [atualiazando, setAtualizando]        = useState(false)
     const [modal_membroEdit, setmodal_membroEdit]       = useState(false);
     const [userEdit, setUserEdit]                       = useState({})
 
@@ -60,17 +61,37 @@ const ClienteSingle = (props) => {
             return newItem
         } )
         setprodutosDoCLiente(newArray)
-        console.log(newArray)
         
     }
 
-    const updateContrato = (contrato) =>{
-        const pk_produto = cliente.pk_produto
-        if(!pk_produto)
-            cliente.pk_produto = [{pk_produto: " ", setup: " "}]
-        dispatch(updateCliente({...cliente, contrato}, null))
-        loadInfo();
-        toggleModalContrato()
+    const updateContrato = async(contrato) =>{
+        // update contrato
+        setAtualizando(true)
+        let input = {
+            pk: cliente.pk,
+            razaoSocial: cliente.razaoSocial,
+            cnpj: cliente.cnpj,
+            telefone: cliente.telefone,
+            email: cliente.email,
+            cep: cliente.cep,
+            rua: cliente.rua,
+            bairro: cliente.bairro,
+            cidade: cliente.cidade,
+            uf: cliente.uf,
+            logo: cliente.logo,
+            pk_produto: cliente.pk_produto ? cliente.pk_produto : [{pk_produto: " ", setup: " "}],
+            contrato: contrato
+
+        }
+        setAtualizando(false)
+
+        API.graphql(graphqlOperation( mutations.updateCliente, {input} ))
+        .then( (data) => {
+            loadInfo();
+            toggleModalContrato()
+            toastr.success("", "Contrato atualizado com sucesso.")
+        } )
+        .catch( err => console.log(err) )
     }
 
     const adcionarProdutoComSetUp = async(e, v) =>{
@@ -95,16 +116,50 @@ const ClienteSingle = (props) => {
             foto: foto,
             tipo: "C"
         }
-        console.log(input)
         await API.graphql(graphqlOperation( mutations.createUsuario, {input} ))
         .then( (result) => {
             setMembros([...membros, result.data.createUsuario])
+            toastr.success("", "Novo usuário adicionado.")
         } )
         .catch( err => {
             console.log(err, "teste")
+            toastr.error("", "CPF já cadastrado na base de dados")
         })
 
         tog_membro()
+    }
+
+
+    const deletarProduto = async( pk ) => {
+        const novoProdutoPK = cliente.pk_produto.filter((item)=>{
+            return item.pk_produto !== pk
+        })
+        console.log(novoProdutoPK, pk)
+        setAtualizando(true)
+        let input = {
+            pk: cliente.pk,
+            razaoSocial: cliente.razaoSocial,
+            cnpj: cliente.cnpj,
+            telefone: cliente.telefone,
+            email: cliente.email,
+            cep: cliente.cep,
+            rua: cliente.rua,
+            bairro: cliente.bairro,
+            cidade: cliente.cidade,
+            uf: cliente.uf,
+            logo: cliente.logo,
+            pk_produto: novoProdutoPK ? novoProdutoPK : [{pk_produto: " ", setup: " "}],
+            contrato: cliente.contrato
+
+        }
+        setAtualizando(false)
+
+        API.graphql(graphqlOperation( mutations.updateCliente, {input} ))
+        .then( (data) => {
+            loadInfo();
+            toastr.success("", "Produto deletado.")
+        } )
+        .catch( err => console.log(err) )
     }
 
     const updateUser = async(e,v, foto, user) =>{
@@ -123,7 +178,6 @@ const ClienteSingle = (props) => {
             foto: foto,
             tipo: "C"
         }
-        console.log(input)
         API.graphql(graphqlOperation( mutations.updateUsuario, {input} ))
         .then( (result) => {
             loadInfo()
@@ -191,7 +245,7 @@ const ClienteSingle = (props) => {
                     <Container fluid>
 
                         {/* Render Breadcrumbs */}
-                        <Breadcrumbs title={<> Cliente {loading ? <Spinner size="sm"/> : null} </>} breadcrumbItem="Ver cliente" />
+                        <Breadcrumbs title={<> Cliente {(loading || atualiazando) ? <Spinner size="sm"/> : null} </>} breadcrumbItem="Ver cliente" />
 
                         <Row>
                             <Col lg="12">
@@ -207,12 +261,13 @@ const ClienteSingle = (props) => {
                                                     </span>
                                                 </div>
                                                 :
-                                                <div className="mb-4">
-                                                    <img src={cliente.logo.url} alt="" className="avatar-sm mr-4" />
+                                                <div className="mb-3 mr-3 avatar-md">
+                                                     <span className="avatar-title rounded-circle bg-light text-danger font-size-16" style={{backgroundImage: `url( ${cliente.logo.url} )`}}>
+                                                    </span>
                                                 </div>
                                             }
                                             <Media className="overflow-hidden" body>
-                                                <h5 className="text-truncate font-size-15">{cliente.razaoSocial}</h5>
+                                                <h5 className="text-truncate font-size-15 mt-1">{cliente.razaoSocial}</h5>
                                                 <p className="text-muted">CPNJ: {cliente.cnpj || "---"}</p>
                                             </Media>
                                             <div>
@@ -242,7 +297,7 @@ const ClienteSingle = (props) => {
                                                 <Col sm="6" xs="6">
                                                     <div className="mt-2">
                                                         <h5 className="font-size-14"><i className="bx bx-calendar mr-1 text-primary"></i> Início</h5>
-                                            <p className="text-muted mb-0">{ moment(cliente.contrato.dataInicio).format("DD/MM/YYYY")}</p>
+                                                    <p className="text-muted mb-0">{ moment(cliente.contrato.dataInicio).format("DD/MM/YYYY")}</p>
                                                     </div>
                                                 </Col>
 
@@ -300,7 +355,7 @@ const ClienteSingle = (props) => {
 
                                         </CardTitle>
 
-                                        <div className="table-responsive mb-3">
+                                        <div className="table-responsive mb-3" style={{overflow: "visible"}}>
                                             {membros.length <= 0 ? <Col><p>Nenhum cadastro.</p></Col> : null }
                                             <Table>
                                                 <tbody>
@@ -358,7 +413,7 @@ const ClienteSingle = (props) => {
                                             <Button  type="button" color="success" onClick={toggleModalProduto} className="btn-rounded waves-effect waves-light mb-2 mr-2 float-right">
                                             <i className="mdi mdi-plus mr-1"></i> Produto</Button>
                                         </CardTitle>
-                                        <TableProdutos produtos={produtosDoCLiente} adcionarProdutoComSetUp={adcionarProdutoComSetUp} />
+                                        <TableProdutos deletarProduto={deletarProduto} produtos={produtosDoCLiente} adcionarProdutoComSetUp={adcionarProdutoComSetUp} />
 
                                     </CardBody>
                                 </Card>

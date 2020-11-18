@@ -99,7 +99,7 @@ const SidebarContent = (props) => {
                         </ul>
                     </li>
                     <li className="menu-title">{props.t('Aplicação') }</li>
-                    <li>
+                    {/*<li>
                         <Link to="/#" className="has-arrow waves-effect">
                             <i className="bx bxs-detail"></i>
                             <span>{props.t('Chamados')}</span>
@@ -108,7 +108,7 @@ const SidebarContent = (props) => {
                             <li><Link to="ecommerce-products">{props.t('Lista de chamados') }</Link></li>
                             <li><Link to="ecommerce-product-detail">{props.t('Criar novo') }</Link></li>
                         </ul>
-                    </li>
+                    </li>*/}
                     <li>
                         <Link to="/#" className="has-arrow waves-effect">
                             <i className="bx bxs-basket"></i>

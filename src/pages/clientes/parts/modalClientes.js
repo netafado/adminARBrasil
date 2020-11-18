@@ -58,7 +58,7 @@ const ModalMembros = ({modal, toggle, enviarClienteNovo}) => {
                                 </Col>
                                 <Col sm="12">
                                     <AvField name="cpf" 
-                                        mask="999.999.-999-99"
+                                        mask="999.999.999-99"
                                         tag={[Input, InputMask]} 
                                         label="CPF" type="text" errorMessage="Campo obrigatório" validate={{
                                         required: {value: true, errorMessage: 'Campo obrigatório'},

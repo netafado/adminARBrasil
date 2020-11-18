@@ -39,15 +39,14 @@ const ModalProdutos = ({modal, toggle, enviarNovoProduto}) => {
                                         required: {value: true, errorMessage: 'Campo obrigatório'},
                                     }}
                                      name="pk" label="Escolha o produto" >
+                                    <option>Escolha um produto</option>
                                     {produtcts.map((produto) =>{
                                         return <option key={produto.pk} value={produto.pk}>{produto.nome}</option>
                                     })}
                                 </AvField>
                                 </Col>
                                 <Col sm="12">
-                                    < AvField name="setup" label="Setup" type="textarea" errorMessage="Campo obrigatório" validate={{
-                                        required: {value: true, errorMessage: 'Campo obrigatório'},
-                                    }} />
+                                    < AvField name="setup" label="Setup" type="textarea" errorMessage="Campo obrigatório"  />
                                 </Col>
                             </Row>
                             <FormGroup>

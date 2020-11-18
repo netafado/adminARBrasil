@@ -5,6 +5,7 @@ const inicialState = {
     loading: false,
     error: "",
     newCliente: null,
+    newClienteError: null,
     deleteCliente: null,
     nextToken: "",
     oneCliente: null,
@@ -24,7 +25,9 @@ const clientes = function(state = inicialState, action) {
         case types.ADD_CLIENTE_REQUESTED:
             return {...state, loading: true}
         case types.ADD_CLIENTE_SUCCESS:
-            return {...state, loading: false, newCliente: action.payload}
+            return {...state, loading: false, newCliente: action.payload, newClienteError: null}
+        case types.ADD_CLIENTE_FAILED:
+            return {...state, loading: false, newClienteError: action.payload}
         // delete produto
         case types.DELETE_CLIENTE_REQUESTED:
             return {...state, loading: true}

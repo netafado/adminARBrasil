@@ -18,7 +18,7 @@ const ModalChamados = ({modal, toggle, user}) => {
                     centered={true}
                 >
                     <div className="modal-header">
-                    <h5 className="modal-title mt-0">Profile</h5>
+                        <h5 className="modal-title mt-0">Informações: {user.nome}</h5>
                     <button
                         type="button"
                         onClick={() => { toggle(false) } }

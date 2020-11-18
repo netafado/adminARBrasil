@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 //import { Link } from "react-router-dom";
-import { Container, Row, Col, FormGroup, Input, Card, CardBody, CardTitle, CardSubtitle, Button,  Spinner } from "reactstrap";
+import { Container, Row, Col, FormGroup, Input, Card, CardBody, CardTitle, CardSubtitle, Button,  Spinner,InputGroupAddon,InputGroup  } from "reactstrap";
 import Select from 'react-select';
 import { AvForm, AvField } from 'availity-reactstrap-validation';
 import { v4 as uuidv4 } from 'uuid';
@@ -16,6 +16,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import config from "../../aws-exports"
 import Anexos from "../../components/anexos"
 import BtnLoader from "../../components/ui/btnLoader"
+import CarregarArquivo from "./CarregarArquivo"
 const {
     aws_user_files_s3_bucket_region: region,
     aws_user_files_s3_bucket: bucket
@@ -27,17 +28,20 @@ const filesTypes = [
     { value: 'power-point', label: 'Power Point' },
     { value: 'url', label: 'Site' },
     { value: 'imagem', label: 'Imagem' },
+    { value: 'sr', label: 'Soluções rapidas' },
     { value: 'outro', label: 'Outro' },
 ]
 
 const EditarProduto = (props) => {
 
     const [anexos, setAnexos]                   = useState([]);
+    const [modalUpload, setModalUpload]         = useState(false);
     const [carregandoFoto, setCarregandoFoto]   = useState(false)
     const [newAnexo, setNewAnexo]               = useState({url: "", extensao: "", nome: "", descricao: ""})
     const [image, setImage]                     = useState({url:imageUrls, extensao: null, descricao: "", extensao: ""})
     const loading                               = useSelector(state => state.Products.loading)
     const dispatch                              = useDispatch();
+    const [url, setUrl]                         = useState();
     const salvarToStorage = async(e) => {
         const file = e.target.files[0]
         setCarregandoFoto(true)
@@ -71,6 +75,13 @@ const EditarProduto = (props) => {
         let anexo = {...newAnexo}
         anexo.url = e.target.value
         setNewAnexo(anexo)
+    }
+
+    const updateUrldoAnexo = (url) => {
+        let anexo = {...newAnexo}
+        anexo.url = url
+        setNewAnexo(anexo)
+        toggleModalUpload()
     }
 
     const chagenNewAnexoType = (e) => {
@@ -109,14 +120,18 @@ const EditarProduto = (props) => {
 
     }
 
+    const toggleModalUpload = () =>{
+        setModalUpload(!modalUpload)
+    }
+
     return (
              <React.Fragment>
-                <div className="page-content">
+                <div className="page-content mb-5">
                     <Container fluid>
 
                         {/* Render Breadcrumb */}
                         <Breadcrumbs title="Produtos" breadcrumbItem="Produto" />
-
+                        <CarregarArquivo modal={modalUpload} toggle={toggleModalUpload} f_func={updateUrldoAnexo} />
                         <Row>
                             <Col xs="12">
                                 <AvForm  onValidSubmit={(e,v) => { handleValidSubmit(e,v) }}>
@@ -157,9 +172,7 @@ const EditarProduto = (props) => {
 
                                                         </Col>
                                                         <Col sm="3">
-                                                            <AvField name="informacaoAdicional" label="Informação adicional" type="text" errorMessage="Campo obrigatório" validate={{
-                                                                required: {value: true, errorMessage: 'Campo obrigatório'},
-                                                            }} />
+                                                            <AvField name="informacaoAdicional" label="Informação adicional" type="text" errorMessage="Campo obrigatório"/>
                                                         </Col>
                                                         <Col sm="12">
                                                             <AvField name="descricao" label="Descrição" type="textarea" errorMessage="Campo obrigatório" validate={{
@@ -187,7 +200,12 @@ const EditarProduto = (props) => {
                                                 </Col>
                                                 <Col sm="4">
                                                     <FormGroup>
-                                                        <Input name="price" type="text" onChange={changeNewAnexoURL} value={newAnexo.url} placeholder="www.enderecodoarquivo.com" className="form-control" />
+                                                        <InputGroup>
+                                                            <Input name="price" type="text" onChange={changeNewAnexoURL} value={newAnexo.url} placeholder="www.enderecodoarquivo.com" className="form-control" />
+                                                            <InputGroupAddon onClick={toggleModalUpload} addonType="prepend">Subir</InputGroupAddon>
+
+                                                        </InputGroup>
+
                                                     </FormGroup>
                                                 </Col>
                                                 <Col sm='2'>

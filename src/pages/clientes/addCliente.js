@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Container, Row, Col,  Card, CardBody, CardTitle, CardSubtitle, Button, Input } from "reactstrap";
+import React, { useState, useEffect } from 'react';
+import { Container, Row, Col,  Card, CardBody, CardTitle, CardSubtitle, Alert, Input } from "reactstrap";
 import { AvForm, AvField } from 'availity-reactstrap-validation';
 
 import InputMask from 'react-input-mask';
@@ -24,13 +24,14 @@ const AdicionarCliente = (props) => {
     const clientes = useSelector(state => state.Clientes)
     const [logo, setLogo] = useState({url:imageUrls, extensao: null, descricao: "", extensao: ""})
     const [carregandoLogo, setCarregandoLogo] = useState(false)
+    const [visible, setVisible] = useState(false);
+    const onDismiss = () => setVisible(false);
     const mudarImg = async(e) => {
         const file = e.target.files[0]
         setCarregandoLogo(true)
         const urlFile = await salvarToStorage(file)
         setCarregandoLogo(false)
         setLogo({...logo, url: urlFile})
-
     }
 
     const handleValidSubmit = async(e, values) =>{
@@ -39,6 +40,12 @@ const AdicionarCliente = (props) => {
         await dispatch(saveNewCliente(values, props.history))
         return toastr.success("Cliente adicionado!", "Cliente salvo com sucesso!")
     }
+
+    useEffect(()=>{
+        if(clientes.newClienteError){
+            setVisible(true)
+        }
+    }, [clientes.newClienteError])
 
     return (
              <React.Fragment>
@@ -49,6 +56,9 @@ const AdicionarCliente = (props) => {
                         <Row>
                             <Col xs="12">
                                 <Card>
+                                    <Alert color="danger" isOpen={visible} toggle={onDismiss}>
+                                        {clientes.newClienteError}
+                                    </Alert>
                                     <CardBody>
                                         <CardTitle>Informações da Empresa</CardTitle>
                                         <CardSubtitle className="mb-3">Preencha todos os campos abaixo</CardSubtitle>

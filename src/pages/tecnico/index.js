@@ -73,19 +73,16 @@ const ContactsGrid = (props) => {
         setIdTecnicoDeletar(pk)
         abrirModalParaDeletarTecnico()
     }
-    const confirmDeletarProduto = async() =>{
+    const confirmarDeletarCliente = async() =>{
+
         await dispatch(deleteTecnico(idTecnicoDeletar))
         abrirModalParaDeletarTecnico()
-        recarregarProdutos();
     }
 
     const abrirModalParaDeletarTecnico = () =>{
         setDeletarMsg(!deletarMsg)
     }
 
-    const recarregarProdutos = () => {
-        dispatch(listarTecnicos())
-    }
 
     return (
           <React.Fragment>
@@ -97,7 +94,7 @@ const ContactsGrid = (props) => {
                         danger
                         showCancel
                         title="Tem certeza?"
-                        onConfirm={() => confirmDeletarProduto()  }
+                        onConfirm={(e) => confirmarDeletarCliente(e)  }
                         onCancel={() => abrirModalParaDeletarTecnico()  }
 
                     >

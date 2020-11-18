@@ -35,7 +35,7 @@ const CardContact = (props) => {
                                 </DropdownToggle>
                                 <DropdownMenu right>
                                     <DropdownItem onClick={() => props.editarTecnico(user)}><i className="mdi mdi-pencil font-size-16 text-success mr-2"></i>Editar</DropdownItem>
-                                    <DropdownItem onClick={()=>props.deletarTecnico(user.pk)}><i className="mdi mdi-trash-can font-size-16 text-danger mr-2"></i>Deletar</DropdownItem>
+                                    <DropdownItem onClick={()=> props.deletarTecnico(user.pk)}><i className="mdi mdi-trash-can font-size-16 text-danger mr-2"></i>Deletar</DropdownItem>
                                 </DropdownMenu>
                             </UncontrolledDropdown>
                             </div>
