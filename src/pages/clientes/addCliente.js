@@ -109,9 +109,9 @@ const AdicionarCliente = (props) => {
                                                     <Row>
                                                         <Col sm={6}>
                                                             < AvField 
-                                                            mask="99999-999"
-                                                            tag={[Input, InputMask]} 
-                                                            name="cep" label="CEP" type="text" errorMessage="Campo obrigatório" />
+                                                                mask="99999-999"
+                                                                tag={[Input, InputMask]} 
+                                                                name="cep" label="CEP" type="text" errorMessage="Campo obrigatório" />
                                                         </Col>
                                                         <Col sm={6}>
                                                              <AvField name="rua" label="rua" type="text" errorMessage="Campo obrigatório" />   

@@ -48,6 +48,17 @@ const ModalProdutos = ({modal, toggle, enviarNovoProduto}) => {
                                 <Col sm="12">
                                     < AvField name="setup" label="Setup" type="textarea" errorMessage="Campo obrigatório"  />
                                 </Col>
+                                <Col sm="12">
+                                    < AvField name="devolucao" label="Devolução por conta do"
+                                        validate={{
+                                            required: {value: true, errorMessage: 'Campo obrigatório'},
+                                        }}
+                                        type="select" errorMessage="Campo obrigatório" >
+                                        <option  value="">Selecine</option>
+                                        <option  value="Ar Brasil compressores">Ar Brasil compressores</option>
+                                        <option  value="Cliente">Cliente</option>
+                                    </ AvField>
+                                </Col>
                             </Row>
                             <FormGroup>
                                 <Button type="submit"  className="form-control" >Salvar</Button>

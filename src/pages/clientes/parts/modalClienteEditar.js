@@ -60,6 +60,11 @@ const ModalMembros = ({modal, toggle, enviarClienteNovo, user}) => {
                                         required: {value: true, errorMessage: 'Campo obrigatório'},
                                     }} />
                                 </Col>
+                                <Col sm="12" className="mb-3 border-bottom">
+                                        <AvField name="master"
+                                            default={false}
+                                            label="Master" type="checkbox" value  errorMessage="Campo obrigatório" />
+                                    </Col>
                                 <Col sm="12">
                                     <AvField name="cpf" 
                                         mask="999.999.999-99"

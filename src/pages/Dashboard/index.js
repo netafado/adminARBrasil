@@ -3,8 +3,7 @@ import { Container, Row, Col, Card, CardBody, Media } from "reactstrap";
 //import { Link } from "react-router-dom";
 
 
-// Pages Components
-import LatestTranaction from "./LatestTranaction";
+import LatestChamados from "./LatestChamados";
 
 //Import Breadcrumb
 import Breadcrumbs from '../../components/Common/Breadcrumb';
@@ -53,7 +52,7 @@ import { useSelector } from 'react-redux';
                         </Row>
                         <Row>
                             <Col lg="12">
-                                <LatestTranaction />
+                                <LatestChamados />
                             </Col>
                         </Row>
                     </Container>

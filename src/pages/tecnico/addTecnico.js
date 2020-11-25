@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Container, Row, Col,  Card, CardBody, CardTitle, CardSubtitle, Input, Alert } from "reactstrap";
+import { Container, Row, Col,  Card, CardBody, CardTitle, CardSubtitle, Input, Alert, FormGroup, Button } from "reactstrap";
 import { AvForm, AvField } from 'availity-reactstrap-validation';
 
 //Import Breadcrumb
@@ -22,6 +22,10 @@ const AdicionarCliente = (props) => {
     const [foto, setFoto] = useState({url:imageUrls, extensao: null, descricao: "", extensao: ""})
     const [carregandoLogo, setCarregandoLogo] = useState(false)
     const {loading, erroNewTecnico}  = useSelector(state => state.Tecnicos)
+
+    // habilidades
+    const [habilidade, setHabilidade] = useState("")
+    const [habilidades, setHabilidades] = useState([]);
     const mudarImg = async(e) => {
         const file = e.target.files[0]
         setCarregandoLogo(true)
@@ -29,6 +33,26 @@ const AdicionarCliente = (props) => {
         console.log(urlFile)
         setCarregandoLogo(false)
         setFoto({...foto, url: urlFile})
+    }
+
+    const hanfleHabilidade = (e) =>{
+        setHabilidade(e.target.value)
+    }
+
+    const deletarHabildade = (i) =>{
+        let newArray = [...habilidades]
+        newArray.splice(i, 1)
+        setHabilidades(newArray)
+    }
+
+
+    const adicionadoHabibildade = (e) =>{
+        e.preventDefault()
+        if(!habilidade)
+            return toastr.error("Erro ao adicionar habilidade", "campo habilidade esta vazio.")
+        setHabilidades([...habilidades, habilidade])
+        toastr.success("Habilidade adicionada", "")
+        setHabilidade("")
     }
     const handleValidSubmit = async(e, values) =>{
         values.foto = foto;
@@ -98,7 +122,10 @@ const AdicionarCliente = (props) => {
                                                 <Col>
                                                     <Row>
                                                         <Col sm={6}>
-                                                            < AvField name="cep" label="CEP" type="text" errorMessage="Campo obrigatório" />
+                                                            < AvField 
+                                                            mask="99999-999"
+                                                            tag={[Input, InputMask]} 
+                                                            name="cep" label="CEP" type="text" errorMessage="Campo obrigatório" />
                                                         </Col>
                                                         <Col sm={6}>
                                                              <AvField name="rua" label="rua" type="text" errorMessage="Campo obrigatório" />   
@@ -110,7 +137,7 @@ const AdicionarCliente = (props) => {
                                                             <AvField name="cidade" label="Cidade" type="text" errorMessage="Campo obrigatório" />   
                                                         </Col>
                                                         <Col sm={2}>
-                                                        <AvField type="select" name="uf" label="Estados" >
+                                                            <AvField type="select" name="uf" label="Estados" >
                                                                 <option>AC</option>
                                                                 <option>AL</option>
                                                                 <option>AP</option>
@@ -142,6 +169,80 @@ const AdicionarCliente = (props) => {
                                                     </Row>
                                                 </Col>
                                             </Row>
+                                            <hr />
+                                            
+                                            <Row>
+                                                <Col xs="12 mb-4">
+                                                    <CardTitle>Veículo</CardTitle>
+                                                </Col>
+                                                <Col sm={6}>
+                                                    <AvField name="carro" label="Veículo" type="select" errorMessage="Campo obrigatório" >
+                                                        <option>Veículo</option>
+                                                        <option>Carro</option>
+                                                        <option>Moto</option>
+                                                    </AvField>   
+                                                </Col>
+                                                <Col sm={6}>
+                                                    <AvField name="placa" label="placa" type="text" errorMessage="Campo obrigatório" />   
+                                                </Col>
+                                                <Col sm={12}>
+                                                    <AvField type="select" name="cor" label="Cor" >
+                                                            <option>Cor</option>
+                                                            <option>Preto</option>
+                                                            <option>Branco</option>
+                                                            <option>Vermelho</option>
+                                                            <option>Azul</option>
+                                                            <option>Vinho</option>
+                                                            <option>Prata</option>
+                                                            <option>Cinza</option>
+                                                            <option>Verde</option>
+                                                            <option>Rosa</option>
+                                                            <option>Laranja</option>
+                                                            <option>Marrom</option>
+                                                        </AvField>
+                                                </Col>
+                                            </Row>
+
+                                            <hr />
+                                            <Row>
+                                                <Col xs="12 mb-2">
+                                                    <CardTitle>Habilidades</CardTitle>
+                                                </Col>
+                                            </Row>
+                                            <Row>
+
+                                                <Col sm="8">
+                                                    <FormGroup>
+                                                        <Input name="habilidade" value={habilidade}  onChange={hanfleHabilidade} type="text"  placeholder="Adicione uma habilidade do técnico" className="form-control" />
+                                                    </FormGroup>
+                                                </Col>
+                                                <Col sm="4">
+                                                    <FormGroup>
+                                                        <Button type="text" onClick={adicionadoHabibildade} className="form-control" >adicionar</Button>
+                                                    </FormGroup>
+                                                </Col>
+                                                <Col sm="12">
+                                                    {habilidades.map((item, i)=>{
+                                                        return (
+                                                            <div className="row pb-2 pt-2 border-bottom" key={Math.random()} >
+                                                            <Col xs={6} sm={10}>
+                                                                <h5 className="font-size-15">{item}</h5>
+                                                            </Col>
+                                                            <Col sm={2}>
+                                                            <ul className="list-inline mb-0 font-size-16 mb-3">
+                                                                <li className="list-inline-item text-right float-right">
+                                                                    <button className="btn btn-lg text-danger p-1" onClick={()=>deletarHabildade(i)}><i className="bx bxs-trash"></i></button>
+                                                                </li>
+                                                            </ul>
+                                                            </Col>
+                                                    
+                                                        </div>
+
+                                                        )
+
+                                                    })}
+                                                </Col>
+                                            </Row>
                                             <Row>
                                                 <Col>
                                                     <BtnLoader loading={loading} />
@@ -159,5 +260,5 @@ const AdicionarCliente = (props) => {
             </React.Fragment>
           );
     }
-        
+
 export default AdicionarCliente;

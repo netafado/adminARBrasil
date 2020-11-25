@@ -23,7 +23,6 @@ const ModalMembros = ({modal, toggle, enviarClienteNovo}) => {
 
     return (
              <React.Fragment>
-
                 <Modal
                     size="lg"
                     isOpen={modal}
@@ -43,54 +42,62 @@ const ModalMembros = ({modal, toggle, enviarClienteNovo}) => {
                     </button>
                     </div>
                     <div className="modal-body">
+                        <Row>
+                            <Col sm={3}>
+                                <FileUploader salvarToStorage={mudarImg} url={foto.url} textoBtn="Selecione a foto" carregandoFoto={carregandoLogo} data={foto.extensao}/>
+                            </Col>
+                            <Col sm={9}>
+                            <AvForm  onValidSubmit={(e,v) => { enviarClienteNovo(e,v, foto) }}>
+                                <Row>
+                                    <Col sm="12">
+                                        <AvField name="nome" label="Nome" type="text" errorMessage="Campo obrigatório" validate={{
+                                            required: {value: true, errorMessage: 'Campo obrigatório'},
+                                        }} />
+                                    </Col>
+                                    <Col sm="12" className="mb-3 border-bottom">
+                                        <AvField name="master"
+                                            default={false}
+                                            label="Master" type="checkbox" value  errorMessage="Campo obrigatório" />
+                                    </Col>
+                                    <Col sm="12">
+                                        <AvField name="cargo" 
+                                            label="cargo / função" type="text" errorMessage="Campo obrigatório" validate={{
+                                            required: {value: true, errorMessage: 'Campo obrigatório'},
+                                        }} />
+                                    </Col>
+                                    <Col sm="12">
+                                        <AvField name="cpf" 
+                                            mask="999.999.999-99"
+                                            tag={[Input, InputMask]} 
+                                            label="CPF" type="text" errorMessage="Campo obrigatório" validate={{
+                                            required: {value: true, errorMessage: 'Campo obrigatório'},
+                                        }} />
+                                    </Col>
 
-                    <Row>
-                    <Col sm={3}>
-                        <FileUploader salvarToStorage={mudarImg} url={foto.url} textoBtn="Selecione a foto" carregandoFoto={carregandoLogo} data={foto.extensao}/>
-                    </Col>
-                        <Col sm={9}>
-                        <AvForm  onValidSubmit={(e,v) => { enviarClienteNovo(e,v, foto) }}>
-                            <Row>
-                                <Col sm="12">
-                                    <AvField name="nome" label="Nome" type="text" errorMessage="Campo obrigatório" validate={{
-                                        required: {value: true, errorMessage: 'Campo obrigatório'},
-                                    }} />
-                                </Col>
-                                <Col sm="12">
-                                    <AvField name="cpf" 
-                                        mask="999.999.999-99"
-                                        tag={[Input, InputMask]} 
-                                        label="CPF" type="text" errorMessage="Campo obrigatório" validate={{
-                                        required: {value: true, errorMessage: 'Campo obrigatório'},
-                                    }} />
-                                </Col>
-                            </Row>
-                            <Row>
-                                <Col sm="12">
-                                    <AvField name="telefone" 
-                                        mask="(99) 999-999999"
-                                        maskChar="-"  
-                                        tag={[Input, InputMask]}
-                                        label="Telefone" type="text" errorMessage="Campo obrigatório" validate={{
-                                        required: {value: true, errorMessage: 'Campo obrigatório'},
-                                    }} />
-                                </Col>
-                                <Col sm="12">
-                                    < AvField name="email" label="Email" type="email" errorMessage="Campo obrigatório" validate={{
-                                        required: {value: true, errorMessage: 'Campo obrigatório'},
-                                        email: {value: true, errorMessage: "formato do email invalido"}
-                                    }} />
-                                </Col>
-                            </Row>
-                            <FormGroup>
-                                <Button type="submit"  className="form-control" >Salvar</Button>
-                            </FormGroup>
-                        </AvForm>
-                        </Col>
-                    
-
-
-                </Row>
+                                </Row>
+                                <Row>
+                                    <Col sm="12">
+                                        <AvField name="telefone" 
+                                            mask="(99) 999-999999"
+                                            maskChar="-"  
+                                            tag={[Input, InputMask]}
+                                            label="Telefone" type="text" errorMessage="Campo obrigatório" validate={{
+                                            required: {value: true, errorMessage: 'Campo obrigatório'},
+                                        }} />
+                                    </Col>
+                                    <Col sm="12">
+                                        < AvField name="email" label="Email" type="email" errorMessage="Campo obrigatório" validate={{
+                                            required: {value: true, errorMessage: 'Campo obrigatório'},
+                                            email: {value: true, errorMessage: "formato do email invalido"}
+                                        }} />
+                                    </Col>
+                                </Row>
+                                <FormGroup>
+                                    <Button type="submit"  className="form-control" >Salvar</Button>
+                                </FormGroup>
+                            </AvForm>
+                            </Col>
+                        </Row>
                     </div>
                     <div className="modal-footer">
 

@@ -102,6 +102,7 @@ const ClienteSingle = (props) => {
     }
 
     const adicionarUser = async(e,v, foto) =>{
+        console.log(v)
         const input = {
             pk_cliente: cliente.pk,
             nome: v.nome,
@@ -308,7 +309,7 @@ const ClienteSingle = (props) => {
                                                     </div>
                                                 </Col>
 
-                                                {cliente.contrato.anexo.url ?
+                                                {/*cliente.contrato.anexo.url ?
 
                                                     <Table className="table table-nowrap table-centered table-hover mb-0 mt-2">
                                                     <tbody>
@@ -333,7 +334,7 @@ const ClienteSingle = (props) => {
                                                     </Table>:
                                                     null
                                                 
-                                                }
+                                                */}
 
                                                 </>
                                                 : <Col><Button onClick={ toggleModalContrato }> Cadastrar contrato </Button></Col>

@@ -1,5 +1,5 @@
-import React from 'react';
-import { Row, Col, Alert, Card, CardBody,Container } from "reactstrap";
+import React, {useState} from 'react';
+import { Row, Col, Alert, Card, CardBody,Container, Input } from "reactstrap";
 
 // Redux
 import { connect } from "react-redux";
@@ -8,8 +8,13 @@ import { withRouter, Link } from "react-router-dom";
 // availity-reactstrap-validation
 import { AvForm, AvField } from "availity-reactstrap-validation";
 
+import {Auth} from "aws-amplify"
+
+import toastr from 'toastr'
+import 'toastr/build/toastr.min.css'
+
 // action
-import { userForgetPassword } from "../../store/actions";
+import { userForgetPassword, setUserAction } from "../../store/actions";
 
 // import images
 import profile from "../../assets/images/profile-img.png";
@@ -17,10 +22,83 @@ import logo from "../../assets/images/logo.svg";
 
   const ForgetPasswordPage = (props) => {
 
-  function handleValidSubmit(event, values) {
-    props.userForgetPassword(values, props.history);
+    
+    const [code, setarCode]         = useState(false);
+    const [codigoVerificacao, setarCodigiVerificacao] = useState("");
+    const [username, setatrUser]    = useState("");
+    const [password, setarPassword] = useState("");
+
+
+    async function handleValidSubmit(event, values) {
+
+    await Auth.forgotPassword(values.email.toLowerCase().trim() )
+    .then(data => {
+        setarCode(data.CodeDeliveryDetails)
+        setatrUser(values.email.trim())
+    })
+    .catch(err => {
+      console.log(err)
+      if (! err.message) {
+        toastr.error("Usuário não encontrado.!", "Nenhum usuário com essa combinação")
+      } else {
+        if(err.message === "Attempt limit exceeded, please try after some time."){
+          console.log(err.message === "Attempt limit exceeded, please try after some time")
+          return toastr.error("Tente novamento em alguns minutos.", "Você tentou recuperar sua senha muitas vezes")
+
+        }
+        toastr.error("Usuário não encontrado.!", "Nenhum usuário com essa combinação")
+      }
+    })
   }
-     
+
+  async function reenViar() {
+
+    await Auth.forgotPassword(username.toLowerCase().trim() )
+    .then(data => {
+        toastr.error("Codigo reenviado.!", "")
+        setarCode(data.CodeDeliveryDetails)
+    })
+    .catch(err => {
+      console.log(err)
+      if (! err.message) {
+        toastr.error("Usuário não encontrado.!", "Nenhum usuário com essa combinação")
+      } else {
+        if(err.message === "Attempt limit exceeded, please try after some time."){
+          console.log(err.message === "Attempt limit exceeded, please try after some time")
+          return toastr.error("Tente novamento em alguns minutos.", "Você tentou recuperar sua senha muitas vezes")
+
+        }
+        toastr.error("Usuário não encontrado.!", "Nenhum usuário com essa combinação")
+      }
+    })
+  }
+
+    // Upon confirmation redirect the user to the Sign In page
+    const forgotPasswordSubmit = async () =>{
+      console.log(codigoVerificacao, password)
+      if(!codigoVerificacao || !password)
+          return toastr.error("Por favor preencha os campos para continuar.", "Erro!")
+
+      await Auth.forgotPasswordSubmit(username.toLowerCase().trim(), codigoVerificacao, password)
+      .then(() => {
+        toastr.success("Nova senha configurada com sucesso.", "Senha alterada!")
+        props.history.push('/login')
+        console.log('the New password submitted successfully')
+      })
+      .catch(err => {
+        
+        if (! err.message) {
+          if(err.message ===  "Invalid verification code provided, please try again."){
+            return toastr.error("Erro!", "Codigo de verificação incorreto.")
+          }
+          toastr.error("Erro.!", "Erro ao confirmar nova senha")
+
+        } else {
+          toastr.error("Erro.!", "Erro ao confirmar nova senha")
+        }
+      })
+    }
+     console.log(code)
       return (
         <React.Fragment>
         <div className="home-btn d-none d-sm-block">
@@ -61,44 +139,85 @@ import logo from "../../assets/images/logo.svg";
                           {props.forgetError}
                         </Alert>
                       ) : null}
-                      {props.forgetSuccessMsg ? (
+                      {code ? (
                         <Alert color="success" style={{ marginTop: "13px" }}>
-                          {props.forgetSuccessMsg}
+                          {`Se o e-email informado existir na nossa base de dados um ${code.DeliveryMedium} sera enviado para ${code.Destination || `****`} `}
                         </Alert>
                       ) : null}
 
-                      <AvForm
-                        className="form-horizontal mt-4"
-                        onValidSubmit={(e,v) => handleValidSubmit(e,v)}
-                      >
 
+                        {code ?
+                        <>
                         <div className="form-group">
-                          <AvField
-                            name="email"
-                            label="Email"
+                          <Input
+                            name="codigo"
+                            label="código de verificação"
                             className="form-control"
-                            placeholder="Enter email"
+                            placeholder="código de verificação"
                             type="email"
-                            required
+                            onChange={(e)=> setarCodigiVerificacao(e.target.value)}
                           />
                         </div>
-                        <Row className="form-group">
+                        <div className="form-group">
+                          <Input
+                            className="form-control"
+                            placeholder="nova senha"
+                            type="password"
+                            onChange={(e)=> setarPassword(e.target.value)}
+                          />
+                        </div>
+                        <Row>
                           <Col className="text-right">
-                            <button
-                              className="btn btn-primary w-md waves-effect waves-light"
-                              type="submit"
-                            >
-                              Reset
-                              </button>
-                          </Col>
+                              <button
+                                  onClick={reenViar}
+                                  className="btn btn-primary w-md waves-effect waves-light"
+                                >
+                                  re-enviar código
+                                </button>
+                              <button
+                                className="btn btn-primary w-md waves-effect waves-light"
+                                onClick={forgotPasswordSubmit}
+                              >
+                                Enviar
+                                </button>
+                            </Col>
                         </Row>
-                      </AvForm>
+                        </> : 
+                            <AvForm
+                            className="form-horizontal mt-4"
+                            onValidSubmit={(e,v) => handleValidSubmit(e,v)}
+                          >
+                          <div className="form-group">
+                            <AvField
+                              name="email"
+                              label="Email"
+                              className="form-control"
+                              placeholder="Enter email"
+                              type="email"
+                              required
+                            />
+
+                          </div>
+                          <Row className="form-group">
+                            <Col className="text-right">
+                              <button
+                                className="btn btn-primary w-md waves-effect waves-light"
+                                type="submit"
+                              >
+                                Resetar
+                                </button>
+                            </Col>
+                          </Row>
+                          </AvForm>
+                        }
+
+
                     </div>
                   </CardBody>
                 </Card>
                 <div className="mt-5 text-center">
                   <p>
-                    Go back to{" "}
+                    Voltar para {" "}
                     <Link
                       to="login"
                       className="font-weight-medium text-primary"
@@ -106,7 +225,7 @@ import logo from "../../assets/images/logo.svg";
                       Login
                       </Link>{" "}
                   </p>
-                  <p>© {new Date().getFullYear()} Skote. Crafted with <i className="mdi mdi-heart text-danger"></i> by Themesbrand</p>
+                  <p>© {new Date().getFullYear()}  Ar Brasil Compressores. Criado por <i className="fas fa-bacon text-danger"></i> isaiasfrancisco.com.br</p>
                 </div>
               </Col>
             </Row>

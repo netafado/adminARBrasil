@@ -91,7 +91,7 @@ import {useDispatch} from "react-redux"
                                                 </div>
 
                                                 <div className="mt-4 text-center">
-                                                    {/*<Link to="/forgot-password" className="text-muted"><i className="mdi mdi-lock mr-1"></i> Esqueceu sua senha</Link> */}
+                                                    <Link to="/forgot-password" className="text-muted"><i className="mdi mdi-lock mr-1"></i> Esqueceu sua senha</Link>
                                                 </div>
                                             </AvForm>
                                         </div>
