@@ -1,0 +1,11 @@
+{
+    "AppSyncApiName": "arbrasilapp",
+    "DynamoDBBillingMode": "PAY_PER_REQUEST",
+    "DynamoDBEnableServerSideEncryption": false,
+    "AuthCognitoUserPoolId": {
+        "Fn::GetAtt": [
+            "autharbrasilapp0061d44f",
+            "Outputs.UserPoolId"
+        ]
+    }
+}

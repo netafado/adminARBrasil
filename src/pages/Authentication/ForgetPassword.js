@@ -14,15 +14,13 @@ import toastr from 'toastr'
 import 'toastr/build/toastr.min.css'
 
 // action
-import { userForgetPassword, setUserAction } from "../../store/actions";
+import { userForgetPassword } from "../../store/actions";
 
 // import images
 import profile from "../../assets/images/profile-img.png";
 import logo from "../../assets/images/logo.svg";
 
   const ForgetPasswordPage = (props) => {
-
-    
     const [code, setarCode]         = useState(false);
     const [codigoVerificacao, setarCodigiVerificacao] = useState("");
     const [username, setatrUser]    = useState("");
@@ -31,37 +29,38 @@ import logo from "../../assets/images/logo.svg";
 
     async function handleValidSubmit(event, values) {
 
-    await Auth.forgotPassword(values.email.toLowerCase().trim() )
-    .then(data => {
-        setarCode(data.CodeDeliveryDetails)
-        setatrUser(values.email.trim())
-    })
-    .catch(err => {
-      console.log(err)
-      if (! err.message) {
-        toastr.error("Usuário não encontrado.!", "Nenhum usuário com essa combinação")
-      } else {
-        if(err.message === "Attempt limit exceeded, please try after some time."){
-          console.log(err.message === "Attempt limit exceeded, please try after some time")
-          return toastr.error("Tente novamento em alguns minutos.", "Você tentou recuperar sua senha muitas vezes")
+      await Auth.forgotPassword(values.email.toLowerCase().trim() )
+        .then(data => {
+            setarCode(data.CodeDeliveryDetails)
+            setatrUser(values.email.trim())
+        })
+        .catch(err => {
+          console.log(err)
+          if (! err.message) {
+            toastr.error("Usuário não encontrado.!", "Nenhum usuário com essa combinação")
+          } else {
+            if(err.message === "Attempt limit exceeded, please try after some time."){
+              console.log(err.message === "Attempt limit exceeded, please try after some time")
+              return toastr.error("Tente novamento em alguns minutos.", "Você tentou recuperar sua senha muitas vezes")
 
-        }
-        toastr.error("Usuário não encontrado.!", "Nenhum usuário com essa combinação")
-      }
-    })
-  }
+            }
+            toastr.error("Usuário não encontrado.!", "Nenhum usuário com essa combinação")
+          }
+        })
+    }
 
   async function reenViar() {
 
     await Auth.forgotPassword(username.toLowerCase().trim() )
     .then(data => {
-        toastr.error("Codigo reenviado.!", "")
+      console.log(data)
+        toastr.success("Codigo reenviado!", "")
         setarCode(data.CodeDeliveryDetails)
     })
     .catch(err => {
       console.log(err)
       if (! err.message) {
-        toastr.error("Usuário não encontrado.!", "Nenhum usuário com essa combinação")
+        toastr.success("Usuário não encontrado.!", "Nenhum usuário com essa combinação")
       } else {
         if(err.message === "Attempt limit exceeded, please try after some time."){
           console.log(err.message === "Attempt limit exceeded, please try after some time")
@@ -91,10 +90,10 @@ import logo from "../../assets/images/logo.svg";
           if(err.message ===  "Invalid verification code provided, please try again."){
             return toastr.error("Erro!", "Codigo de verificação incorreto.")
           }
-          toastr.error("Erro.!", "Erro ao confirmar nova senha")
+          toastr.error("Erro!", "Erro ao confirmar nova senha")
 
         } else {
-          toastr.error("Erro.!", "Erro ao confirmar nova senha")
+          toastr.error("Erro!", "Erro ao confirmar nova senha")
         }
       })
     }
@@ -113,8 +112,8 @@ import logo from "../../assets/images/logo.svg";
                     <Row>
                       <Col className="col-7">
                         <div className="text-primary p-4">
-                          <h5 className="text-primary">Welcome Back !</h5>
-                          <p>Sign in to continue to Skote.</p>
+                          <h5 className="text-primary">Esqueci minha senha.</h5>
+                          <p>Recupere sua senha.</p>
                         </div>
                       </Col>
                       <Col className="col-5 align-self-end">
@@ -141,7 +140,7 @@ import logo from "../../assets/images/logo.svg";
                       ) : null}
                       {code ? (
                         <Alert color="success" style={{ marginTop: "13px" }}>
-                          {`Se o e-email informado existir na nossa base de dados um ${code.DeliveryMedium} sera enviado para ${code.Destination || `****`} `}
+                          {`Se o e-email informado existir na nossa base de dados um ${code.DeliveryMedium} será enviado para ${code.Destination || `****`} `}
                         </Alert>
                       ) : null}
 
@@ -153,8 +152,9 @@ import logo from "../../assets/images/logo.svg";
                             name="codigo"
                             label="código de verificação"
                             className="form-control"
+                            autoComplete="off"
                             placeholder="código de verificação"
-                            type="email"
+                            type="text"
                             onChange={(e)=> setarCodigiVerificacao(e.target.value)}
                           />
                         </div>
@@ -163,6 +163,7 @@ import logo from "../../assets/images/logo.svg";
                             className="form-control"
                             placeholder="nova senha"
                             type="password"
+                            autoComplete="off"
                             onChange={(e)=> setarPassword(e.target.value)}
                           />
                         </div>
@@ -170,9 +171,9 @@ import logo from "../../assets/images/logo.svg";
                           <Col className="text-right">
                               <button
                                   onClick={reenViar}
-                                  className="btn btn-primary w-md waves-effect waves-light"
+                                  className="btn btn-primary w-md waves-effect waves-light mr-2"
                                 >
-                                  re-enviar código
+                                  reenviar código
                                 </button>
                               <button
                                 className="btn btn-primary w-md waves-effect waves-light"
@@ -192,8 +193,9 @@ import logo from "../../assets/images/logo.svg";
                               name="email"
                               label="Email"
                               className="form-control"
-                              placeholder="Enter email"
+                              placeholder="Seu e-mail"
                               type="email"
+                              errorMessage="Campo inválido ou não é um e-mail."
                               required
                             />
 

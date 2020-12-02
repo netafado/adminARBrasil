@@ -1,8 +1,8 @@
 {
-    "identityPoolName": "adminarbrasil6326e4c9_identitypool_6326e4c9",
+    "identityPoolName": "arbrasilapp0061d44f_identitypool_0061d44f",
     "allowUnauthenticatedIdentities": true,
-    "resourceNameTruncated": "admina6326e4c9",
-    "userPoolName": "adminarbrasil6326e4c9_userpool_6326e4c9",
+    "resourceNameTruncated": "arbras0061d44f",
+    "userPoolName": "arbrasilapp0061d44f_userpool_0061d44f",
     "autoVerifiedAttributes": [
         "email"
     ],
@@ -28,10 +28,10 @@
     "userpoolClientReadAttributes": [
         "email"
     ],
-    "userpoolClientLambdaRole": "admina6326e4c9_userpoolclient_lambda_role",
+    "userpoolClientLambdaRole": "arbras0061d44f_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": false,
-    "sharedId": "6326e4c9",
-    "resourceName": "adminarbrasil6326e4c9",
+    "sharedId": "0061d44f",
+    "resourceName": "arbrasilapp0061d44f",
     "authSelections": "identityPoolAndUserPool",
     "authRoleArn": {
         "Fn::GetAtt": [

@@ -1,5 +1,5 @@
 projects:
-  AR-Brasil:
+  arbrasilapp-arbrasil:
     schemaPath: src/graphql/schema.json
     includes:
       - src/graphql/**/*.js
@@ -11,7 +11,8 @@ projects:
         generatedFileName: ''
         docsFilePath: src/graphql
         region: us-west-2
-        apiId: s5nehw7acbdargnygcz25gl224
+        apiId: vaxtmmy2cnetjp2ijxtttm4wuq
+        maxDepth: 5
 extensions:
   amplify:
     version: 3

@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 
-import { Link } from "react-router-dom";
+
 import { Container, Row, Col, Card, CardBody, CardTitle, Media, Table, Button, UncontrolledDropdown, DropdownToggle, DropdownItem, DropdownMenu, Spinner } from "reactstrap";
 import toastr from 'toastr'
 import 'toastr/build/toastr.min.css'
@@ -80,7 +80,8 @@ const ClienteSingle = (props) => {
             uf: cliente.uf,
             logo: cliente.logo,
             pk_produto: cliente.pk_produto ? cliente.pk_produto : [{pk_produto: " ", setup: " "}],
-            contrato: contrato
+            dataInicioContrato: contrato.dataInicio,
+            dataFimContrato: contrato.dataFim
 
         }
         setAtualizando(false)
@@ -95,14 +96,13 @@ const ClienteSingle = (props) => {
     }
 
     const adcionarProdutoComSetUp = async(e, v) =>{
-        cliente.pk_produto = [...cliente.pk_produto, {pk_produto: v.pk, setup: v.setup}]
+        cliente.pk_produto = [...cliente.pk_produto, {pk_produto: v.pk, setup: v.setup, devolucao: v.devolucao}]
         await dispatch(updateCliente({...cliente}, null))
         toggleModalProduto()
         loadInfo();
     }
 
     const adicionarUser = async(e,v, foto) =>{
-        console.log(v)
         const input = {
             pk_cliente: cliente.pk,
             nome: v.nome,
@@ -115,7 +115,9 @@ const ClienteSingle = (props) => {
             cidade: v.cidade,
             uf: v.uf,
             foto: foto,
-            tipo: "C"
+            tipo: "C",
+            cargo_funcao: v.cargo_funcao,
+            master: v.marter
         }
         await API.graphql(graphqlOperation( mutations.createUsuario, {input} ))
         .then( (result) => {
@@ -177,7 +179,9 @@ const ClienteSingle = (props) => {
             cidade: v.cidade,
             uf: v.uf,
             foto: foto,
-            tipo: "C"
+            tipo: "C",
+            cargo_funcao: v.cargo_funcao,
+            master: v.marter
         }
         API.graphql(graphqlOperation( mutations.updateUsuario, {input} ))
         .then( (result) => {
@@ -293,53 +297,19 @@ const ClienteSingle = (props) => {
                                         <hr className="mt-2"/>
                                         <h5 className="font-size-15 mt-4">Contrato :</h5>
                                         <Row >
-                                            {cliente.contrato ?
-                                                <>
                                                 <Col sm="6" xs="6">
                                                     <div className="mt-2">
                                                         <h5 className="font-size-14"><i className="bx bx-calendar mr-1 text-primary"></i> Início</h5>
-                                                    <p className="text-muted mb-0">{ moment(cliente.contrato.dataInicio).format("DD/MM/YYYY")}</p>
+                                                    <p className="text-muted mb-0">{ moment(cliente.dataInicio).format("DD/MM/YYYY")}</p>
                                                     </div>
                                                 </Col>
 
                                                 <Col sm="6" xs="6">
                                                     <div className="mt-2">
                                                         <h5 className="font-size-14"><i className="bx bx-calendar-check mr-1 text-primary"></i> Fim</h5>
-                                                        <p className="text-muted mb-0">{moment(cliente.contrato.dataFim).format("DD/MM/YYYY")}</p>
+                                                        <p className="text-muted mb-0">{moment(cliente.dataFim).format("DD/MM/YYYY")}</p>
                                                     </div>
                                                 </Col>
-
-                                                {/*cliente.contrato.anexo.url ?
-
-                                                    <Table className="table table-nowrap table-centered table-hover mb-0 mt-2">
-                                                    <tbody>
-                                                        <tr key={"_file_"} >
-                                                            <td style={{ width: "45px" }}>
-                                                                <div className="avatar-sm">
-                                                                    <span className="avatar-title rounded-circle bg-soft-primary text-primary font-size-24">
-                                                                        <i className="bx bxs-file-doc"></i>
-                                                                    </span>
-                                                                </div>
-                                                            </td>
-                                                            <td style={{ width: "45px" }}>
-                                                                <h5 className="font-size-14 mb-1"><Link to={cliente.contrato.anexo.url} className="text-dark">Contrato</Link></h5>
-                                                            </td>
-                                                            <td className="text-right">
-                                                                
-                                                                    <a  href={cliente.contrato.anexo.url} className="text-dark"><i className="bx bx-download h3 m-0"></i></a>
-                                                               
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                    </Table>:
-                                                    null
-                                                
-                                                */}
-
-                                                </>
-                                                : <Col><Button onClick={ toggleModalContrato }> Cadastrar contrato </Button></Col>
-                                            }
-
 
                                         </Row>
                                     </CardBody>
@@ -374,7 +344,10 @@ const ClienteSingle = (props) => {
                                                                             </span>
                                                                     }
                                                                 </td>
-                                                                <td><h5 className="font-size-14 m-0"><Link to="" className="text-dark">{member.nome}</Link></h5></td>
+                                                                <td>
+                                                                    <h5 className="font-size-14 m-0">{member.nome}</h5>
+                                                                    <p className=" m-0 text-muted">{member.cargo_funcao}</p>
+                                                                    </td>
                                                                 <td>
                                                                     <div>
                                                                         <button disabled={true} type="button" className="btn btn-success btn-small waves-effect waves-light float-right"><i className="bx bx bx-paper-plane font-size-16 align-middle mr-2"></i> Convidar Aplicativo

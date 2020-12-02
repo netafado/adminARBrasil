@@ -92,6 +92,7 @@ export const createCliente = /* GraphQL */ `
       pk_produto {
         pk_produto
         setup
+        devolucao
       }
       produto {
         pk
@@ -120,16 +121,6 @@ export const createCliente = /* GraphQL */ `
         descricao
         extensao
       }
-      contrato {
-        dataInicio
-        dataFim
-        anexo {
-          url
-          nome
-          descricao
-          extensao
-        }
-      }
       membros {
         pk
         nome
@@ -149,7 +140,15 @@ export const createCliente = /* GraphQL */ `
         }
         tipo
         pk_cliente
+        veiculo
+        placa
+        cor
+        habilidades
+        master
+        cargo_funcao
       }
+      dataInicioContrato
+      dataFimContrato
     }
   }
 `;
@@ -169,6 +168,7 @@ export const updateCliente = /* GraphQL */ `
       pk_produto {
         pk_produto
         setup
+        devolucao
       }
       produto {
         pk
@@ -197,16 +197,6 @@ export const updateCliente = /* GraphQL */ `
         descricao
         extensao
       }
-      contrato {
-        dataInicio
-        dataFim
-        anexo {
-          url
-          nome
-          descricao
-          extensao
-        }
-      }
       membros {
         pk
         nome
@@ -226,7 +216,15 @@ export const updateCliente = /* GraphQL */ `
         }
         tipo
         pk_cliente
+        veiculo
+        placa
+        cor
+        habilidades
+        master
+        cargo_funcao
       }
+      dataInicioContrato
+      dataFimContrato
     }
   }
 `;
@@ -246,6 +244,7 @@ export const deleteCliente = /* GraphQL */ `
       pk_produto {
         pk_produto
         setup
+        devolucao
       }
       produto {
         pk
@@ -274,16 +273,6 @@ export const deleteCliente = /* GraphQL */ `
         descricao
         extensao
       }
-      contrato {
-        dataInicio
-        dataFim
-        anexo {
-          url
-          nome
-          descricao
-          extensao
-        }
-      }
       membros {
         pk
         nome
@@ -303,7 +292,15 @@ export const deleteCliente = /* GraphQL */ `
         }
         tipo
         pk_cliente
+        veiculo
+        placa
+        cor
+        habilidades
+        master
+        cargo_funcao
       }
+      dataInicioContrato
+      dataFimContrato
     }
   }
 `;
@@ -328,6 +325,12 @@ export const createUsuario = /* GraphQL */ `
       }
       tipo
       pk_cliente
+      veiculo
+      placa
+      cor
+      habilidades
+      master
+      cargo_funcao
     }
   }
 `;
@@ -352,6 +355,12 @@ export const updateUsuario = /* GraphQL */ `
       }
       tipo
       pk_cliente
+      veiculo
+      placa
+      cor
+      habilidades
+      master
+      cargo_funcao
     }
   }
 `;
@@ -376,6 +385,12 @@ export const deleteUsuario = /* GraphQL */ `
       }
       tipo
       pk_cliente
+      veiculo
+      placa
+      cor
+      habilidades
+      master
+      cargo_funcao
     }
   }
 `;

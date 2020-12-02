@@ -7,6 +7,8 @@ import avatar1 from "../../../assets/images/users/avatar-1.jpg";
 const WelcomeComp = (props) => {
     const {user}  = props
     if(!user) return null
+
+    console.log(user)
           return (
            <React.Fragment>
                 <Card >
@@ -24,9 +26,8 @@ const WelcomeComp = (props) => {
                                 <div className="pt-4">
 
                                     <h5 className="text-muted mb-0 text-center">telefone: {user.telefone || "---"}</h5>
-                                    <p className="text-muted mb-0 text-center">Rua : rua {user.rua || "---"}</p>
-                                    <p className="text-muted mb-0 text-center">Cidade : {user.cidade || "---"} | Bairro: {user.bairro} | Estado: {user.uf}</p>
-                                    <p className="text-muted mb-0 text-center">Veiculo : {user.veculo || "---"}</p>
+                                    <p className="text-muted mb-0 text-center">Rua : {user.rua || "---"} | cidade : {user.cidade || "---"} | Bairro: {user.bairro}  | Estado: {user.uf} </p>
+                                    <p className="text-muted mb-0 text-center">Veiculo : {user.veiculo || "---"}, placa: {user.placa} | cor {user.cor}</p>
 
                                 </div>
                                 <div className="pt-4">
@@ -34,11 +35,9 @@ const WelcomeComp = (props) => {
                                 <h5 className="text-muted mb-0 text-center">Lista de habilidades</h5>
 
                                 <ListGroup>
-                                    <ListGroupItem className="text-center text-muted">Cras justo odio</ListGroupItem>
-                                    <ListGroupItem className="text-center text-muted">Dapibus ac facilisis in</ListGroupItem>
-                                    <ListGroupItem className="text-center text-muted">Morbi leo risus</ListGroupItem>
-                                    <ListGroupItem className="text-center text-muted">Porta ac consectetur ac</ListGroupItem>
-                                    <ListGroupItem className="text-center text-muted">Vestibulum at eros</ListGroupItem>
+                                    {user.habilidades ?
+                                        user.habilidades.map( (habilidade)=> <ListGroupItem className="text-center" key={Math.random()}>{habilidade}</ListGroupItem> )
+                                    : null}
                                 </ListGroup>
                                 </div>
                             </Col>

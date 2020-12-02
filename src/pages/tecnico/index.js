@@ -49,7 +49,7 @@ const ContactsGrid = (props) => {
     useEffect(()=>{
         settecnicoFiltrado( tecnicos )
     }, [tecnicos])
-
+    console.log(tecnicos)
     useEffect(()=>{
         if(!termoFiltro){
             settecnicoFiltrado([...tecnicos])

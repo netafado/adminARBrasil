@@ -1,7 +1,7 @@
 {
     "bucketName": "arbrasilstorage",
-    "authPolicyName": "s3_amplify_5ff81b29",
-    "unauthPolicyName": "s3_amplify_5ff81b29",
+    "authPolicyName": "s3_amplify_8c8e1ab6",
+    "unauthPolicyName": "s3_amplify_8c8e1ab6",
     "authRoleName": {
         "Ref": "AuthRoleName"
     },
@@ -20,15 +20,15 @@
         "s3:DeleteObject"
     ],
     "s3PermissionsAuthenticatedPublic": "s3:PutObject,s3:GetObject,s3:DeleteObject",
-    "s3PublicPolicy": "Public_policy_a4ead564",
+    "s3PublicPolicy": "Public_policy_2716bf29",
     "s3PermissionsAuthenticatedUploads": "s3:PutObject",
-    "s3UploadsPolicy": "Uploads_policy_a4ead564",
+    "s3UploadsPolicy": "Uploads_policy_2716bf29",
     "s3PermissionsAuthenticatedProtected": "s3:PutObject,s3:GetObject,s3:DeleteObject",
-    "s3ProtectedPolicy": "Protected_policy_75f4bb53",
+    "s3ProtectedPolicy": "Protected_policy_9dd329d7",
     "s3PermissionsAuthenticatedPrivate": "s3:PutObject,s3:GetObject,s3:DeleteObject",
-    "s3PrivatePolicy": "Private_policy_75f4bb53",
+    "s3PrivatePolicy": "Private_policy_9dd329d7",
     "AuthenticatedAllowList": "ALLOW",
-    "s3ReadPolicy": "read_policy_a4ead564",
+    "s3ReadPolicy": "read_policy_2716bf29",
     "s3PermissionsGuestPublic": "s3:PutObject,s3:GetObject",
     "s3PermissionsGuestUploads": "s3:PutObject",
     "GuestAllowList": "ALLOW",

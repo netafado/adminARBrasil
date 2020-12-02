@@ -42,6 +42,7 @@ export const retornarCliente = /* GraphQL */ `
       pk_produto {
         pk_produto
         setup
+        devolucao
       }
       produto {
         pk
@@ -70,16 +71,6 @@ export const retornarCliente = /* GraphQL */ `
         descricao
         extensao
       }
-      contrato {
-        dataInicio
-        dataFim
-        anexo {
-          url
-          nome
-          descricao
-          extensao
-        }
-      }
       membros {
         pk
         nome
@@ -99,7 +90,15 @@ export const retornarCliente = /* GraphQL */ `
         }
         tipo
         pk_cliente
+        veiculo
+        placa
+        cor
+        habilidades
+        master
+        cargo_funcao
       }
+      dataInicioContrato
+      dataFimContrato
     }
   }
 `;
@@ -124,6 +123,12 @@ export const retornarUsuario = /* GraphQL */ `
       }
       tipo
       pk_cliente
+      veiculo
+      placa
+      cor
+      habilidades
+      master
+      cargo_funcao
     }
   }
 `;
@@ -172,6 +177,7 @@ export const listarCliente = /* GraphQL */ `
         pk_produto {
           pk_produto
           setup
+          devolucao
         }
         produto {
           pk
@@ -180,6 +186,18 @@ export const listarCliente = /* GraphQL */ `
           fabricante
           descricao
           informacaoAdicional
+          imagens {
+            url
+            nome
+            descricao
+            extensao
+          }
+          anexos {
+            url
+            nome
+            descricao
+            extensao
+          }
           status
         }
         logo {
@@ -187,10 +205,6 @@ export const listarCliente = /* GraphQL */ `
           nome
           descricao
           extensao
-        }
-        contrato {
-          dataInicio
-          dataFim
         }
         membros {
           pk
@@ -203,9 +217,23 @@ export const listarCliente = /* GraphQL */ `
           bairro
           cidade
           uf
+          foto {
+            url
+            nome
+            descricao
+            extensao
+          }
           tipo
           pk_cliente
+          veiculo
+          placa
+          cor
+          habilidades
+          master
+          cargo_funcao
         }
+        dataInicioContrato
+        dataFimContrato
       }
       nextToken
     }
@@ -233,6 +261,12 @@ export const listarUsuario = /* GraphQL */ `
         }
         tipo
         pk_cliente
+        veiculo
+        placa
+        cor
+        habilidades
+        master
+        cargo_funcao
       }
       nextToken
     }

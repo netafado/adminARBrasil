@@ -24,7 +24,7 @@ const ModalMembros = ({modal, toggle, enviarClienteNovo, user}) => {
             setFoto(user.foto)
         }
     }, [user] )
-    console.log(foto)
+
     return (
              <React.Fragment>
 
@@ -62,8 +62,15 @@ const ModalMembros = ({modal, toggle, enviarClienteNovo, user}) => {
                                 </Col>
                                 <Col sm="12" className="mb-3 border-bottom">
                                         <AvField name="master"
-                                            default={false}
-                                            label="Master" type="checkbox" value  errorMessage="Campo obrigatório" />
+                                            value={user.master}
+                                            label="Master" type="checkbox"  errorMessage="Campo obrigatório" />
+                                    </Col>
+                                    <Col sm="12">
+                                        <AvField name="cargo_funcao" 
+                                            value={user.cargo_funcao}
+                                            label="cargo / função" type="text" errorMessage="Campo obrigatório" validate={{
+                                            required: {value: true, errorMessage: 'Campo obrigatório'},
+                                        }} />
                                     </Col>
                                 <Col sm="12">
                                     <AvField name="cpf" 

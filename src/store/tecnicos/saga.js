@@ -56,7 +56,13 @@ function newTecnicoFromAPI ({values})  {
         cidade: values.cidade,
         uf: values.uf,
         foto: values.foto,
-        tipo: "T"
+        tipo: "T",
+        veiculo: values.veiculo,
+        placa: values.placa,
+        cor: values.cor,
+        habilidades: values.habilidades,
+        master: values.master,
+        cargo_funcao: values.cargo
     }
     return new Promise((resolve, reject)=> {
         API.graphql(graphqlOperation( mutations.createUsuario, {input} ))
@@ -68,7 +74,6 @@ function newTecnicoFromAPI ({values})  {
 }
 
 function updateTecnicoAPI ({values})  {
-
     const input = {
         nome: values.nome,
         cpf: values.cpf,
@@ -82,9 +87,14 @@ function updateTecnicoAPI ({values})  {
         uf: values.uf,
         pk_cliente: " ",
         foto: values.foto,
-        tipo: "T"
+        tipo: "T",
+        veiculo: values.veiculo,
+        placa: values.placa,
+        cor: values.cor,
+        habilidades: values.habilidades,
+        master: values.master,
     }
-    console.log("tecnico", input)
+    console.log(input)
     return new Promise((resolve, reject)=> {
         API.graphql(graphqlOperation( mutations.updateUsuario, {input} ))
         .then( (data) => {

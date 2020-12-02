@@ -19,7 +19,7 @@ import { useDispatch, useSelector } from 'react-redux';
 const AdicionarCliente = (props) => {
 
     const dispatch = useDispatch();
-    const [foto, setFoto] = useState({url:imageUrls, extensao: null, descricao: "", extensao: ""})
+    const [foto, setFoto] = useState({url:imageUrls, descricao: "", extensao: ""})
     const [carregandoLogo, setCarregandoLogo] = useState(false)
     const {loading, erroNewTecnico}  = useSelector(state => state.Tecnicos)
 
@@ -56,11 +56,14 @@ const AdicionarCliente = (props) => {
     }
     const handleValidSubmit = async(e, values) =>{
         values.foto = foto;
+        values.habilidades = habilidades
         const result  = await dispatch(addTecnico(values, props.history))
         console.log(result)
         if(!erroNewTecnico)
             return toastr.success("Técnico adicionado!", "Cliente salvo com sucesso!")
     }
+
+
 
     return (
              <React.Fragment>
@@ -176,11 +179,8 @@ const AdicionarCliente = (props) => {
                                                     <CardTitle>Veículo</CardTitle>
                                                 </Col>
                                                 <Col sm={6}>
-                                                    <AvField name="carro" label="Veículo" type="select" errorMessage="Campo obrigatório" >
-                                                        <option>Veículo</option>
-                                                        <option>Carro</option>
-                                                        <option>Moto</option>
-                                                    </AvField>   
+                                                    <AvField name="veiculo" label="Veículo" placeholder="ex: Hb20 - Hyundai ou Moto CB 650R" type="text" errorMessage="Campo obrigatório" />
+
                                                 </Col>
                                                 <Col sm={6}>
                                                     <AvField name="placa" label="placa" type="text" errorMessage="Campo obrigatório" />   
