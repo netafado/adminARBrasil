@@ -1,6 +1,6 @@
 {
   "auth": {
-    "adminarbrasil6326e4c9": {
+    "arbrasilapp0061d44f": {
       "service": "Cognito",
       "providerPlugin": "awscloudformation",
       "dependsOn": [],
@@ -11,6 +11,23 @@
     "arbrasilstorage": {
       "service": "S3",
       "providerPlugin": "awscloudformation"
+    }
+  },
+  "api": {
+    "arbrasilapp": {
+      "service": "AppSync",
+      "providerPlugin": "awscloudformation",
+      "output": {
+        "authConfig": {
+          "defaultAuthentication": {
+            "authenticationType": "AMAZON_COGNITO_USER_POOLS",
+            "userPoolConfig": {
+              "userPoolId": "autharbrasilapp0061d44f"
+            }
+          },
+          "additionalAuthenticationProviders": []
+        }
+      }
     }
   }
 }

@@ -1,20 +1,15 @@
 {
-  "arbrasil": {
-    "awscloudformation": {
-      "AuthRoleName": "amplify-adminarbrasil-arbrasil-93050-authRole",
-      "UnauthRoleArn": "arn:aws:iam::025990721554:role/amplify-adminarbrasil-arbrasil-93050-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::025990721554:role/amplify-adminarbrasil-arbrasil-93050-authRole",
-      "Region": "us-west-2",
-      "DeploymentBucketName": "amplify-adminarbrasil-arbrasil-93050-deployment",
-      "UnauthRoleName": "amplify-adminarbrasil-arbrasil-93050-unauthRole",
-      "StackName": "amplify-adminarbrasil-arbrasil-93050",
-      "StackId": "arn:aws:cloudformation:us-west-2:025990721554:stack/amplify-adminarbrasil-arbrasil-93050/ed5b0f50-16bd-11eb-960d-02e58e6a3e27",
-      "AmplifyAppId": "d2j4ttq4af7wuh"
-    },
-    "categories": {
-      "auth": {
-        "adminarbrasil6326e4c9": {}
-      }
+    "arbrasil": {
+        "awscloudformation": {
+            "AuthRoleName": "amplify-arbrasilapp-arbrasil-111038-authRole",
+            "UnauthRoleArn": "arn:aws:iam::803708710813:role/amplify-arbrasilapp-arbrasil-111038-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::803708710813:role/amplify-arbrasilapp-arbrasil-111038-authRole",
+            "Region": "us-west-2",
+            "DeploymentBucketName": "amplify-arbrasilapp-arbrasil-111038-deployment",
+            "UnauthRoleName": "amplify-arbrasilapp-arbrasil-111038-unauthRole",
+            "StackName": "amplify-arbrasilapp-arbrasil-111038",
+            "StackId": "arn:aws:cloudformation:us-west-2:803708710813:stack/amplify-arbrasilapp-arbrasil-111038/825d1160-2ccc-11eb-93a9-06a27da41c23",
+            "AmplifyAppId": "d21otn8m3ae92d"
+        }
     }
-  }
 }
