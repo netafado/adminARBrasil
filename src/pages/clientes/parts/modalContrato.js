@@ -6,7 +6,7 @@ import { salvarToStorage } from "../../../helpers/amplify/storage"
 
 const ModalContrato = ({modal, toggle, f_func, contratoCliente}) => {
     const [carregandoArquivo, setCarregandoArquivo] = useState(false)
-    const [contrato, setContrato] = useState(contratoCliente || {dataInicio: "", dataFim: "", anexo: {descricao: "", extensao: "", nome: "", url: ""}})
+    const [contrato, setContrato] = useState(contratoCliente || {dataInicio: "", dataFim: ""})
     const setDataInicio = (e) =>{
         setContrato({...contrato, dataInicio: e.target.value})
     }

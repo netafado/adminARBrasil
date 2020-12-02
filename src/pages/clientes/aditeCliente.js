@@ -38,6 +38,7 @@ const EditarCliente = (props) => {
         values.logo = logo
         values.membros = cliente.membros || []
         values.pk_produto = cliente.pk_produto || [{pk_produto: " ", setup: " "}]
+        
 
         await dispatch(updateCliente(values, props.history))
         return toastr.success("Cliente atualizado!", "Cliente atualizado com sucesso!")

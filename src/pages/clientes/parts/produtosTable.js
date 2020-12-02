@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 
 import { Col } from "reactstrap";
 
@@ -15,7 +15,8 @@ const Produto = ({order, deletarProduto}) => {
         </Col>
         <Col xs={6} sm={6}>
             <h5 className="font-size-15 mt-2">{order.nome}</h5>
-            <p>Setup: { order.set ?  (order.set[0].setup || "---") : "---"}</p>
+            <p className="m-0">Setup: { order.set ?  (order.set[0].setup || "---") : "---"}</p>
+            <p className="m-0 text-muted">Devolução por conta: { order.set ?  (order.set[0].devolucao || "---") : "---"}</p>
         </Col>
         <Col sm={2}>
         <ul className="list-inline mb-0 font-size-16">

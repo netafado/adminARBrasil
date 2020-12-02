@@ -1,8 +1,8 @@
-import React, {useState} from 'react';
+import React  from 'react';
 
 import {  Col,  Modal,  Row } from "reactstrap";
 
-import { AvForm, AvField }  from 'availity-reactstrap-validation';
+import { AvForm }  from 'availity-reactstrap-validation';
 
 
 const ModalChamados = ({modal, toggle, enviarClienteNovo}) => {

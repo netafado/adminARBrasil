@@ -12,11 +12,9 @@ const  _handleError =(error) => {
 }
 
 function getClienteFromAPI(pk){
-    console.log(pk)
     return new Promise((resolve, reject)=> {
         API.graphql(graphqlOperation( queries.retornarCliente, {pk}))
         .then( (result) => {
-            console.log(result.data.retornarCliente)
             resolve(result.data.retornarCliente)
         } )
         .catch( err => reject( _handleError(err)) )

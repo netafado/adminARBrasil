@@ -15,7 +15,7 @@ const LatestTranaction = (props) => {
                                 <h4 style={{flex: 1}}>Últimos chamados</h4>
                                 <div className="text-sm-right">
                                     <Button type="button" className="btn-rounded waves-effect waves-light mb-2 mr-2 btn btn-success"  disabled={true}>
-                                    <i class="mdi mdi-plus mr-1"></i> novo Chamado
+                                    <i className="mdi mdi-plus mr-1"></i> novo Chamado
                                     </Button>
                                 </div>
                             </div>

@@ -54,6 +54,9 @@ function newClienteFromAPI ({values})  {
         uf: values.uf,
         logo: values.logo,
         pk_produto: values.pk_produto,
+        cargo_funcao: values.cargo_funcao,
+        master: values.master,
+        
     }
     return new Promise((resolve, reject)=> {
         API.graphql(graphqlOperation( mutations.createCliente, {input} ))
