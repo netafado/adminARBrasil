@@ -30,7 +30,7 @@ const Cardcliente = ({delete_func, clientes}) => {
 
                                                 <p className="text-muted mb-1">contrato:  
                                                 {
-                                                    cliente.contrato ?
+                                                    cliente.dataFimContrato ?
                                                     <> <Badge color="success" className="mr-1">vigente</Badge></>
                                                     :
                                                     <> <Badge color="danger" className="mr-1">Sem contrato</Badge></>
@@ -43,16 +43,16 @@ const Cardcliente = ({delete_func, clientes}) => {
 
                                 <div className="px-4 py-3 border-top">
                                     <ul className="list-inline mb-0">
-                                        <li className="list-inline-item mr-3" id="comments">
+                                        <li className="list-inline-item mr-3" id="chamados">
                                             <i className="bx bxs-detail mr-1"></i> {0}
-                                            <UncontrolledTooltip placement="top" target="comments">
+                                            <UncontrolledTooltip placement="top" target="chamados">
                                                Chamados
                                             </UncontrolledTooltip>
                                         </li>
-                                        <li className="list-inline-item mr-3" id="comments">
+                                        <li className="list-inline-item mr-3" id="users">
                                             <i className="bx bxs-user mr-1"></i> {cliente.membros ? cliente.membros.length : 0 }
-                                            <UncontrolledTooltip placement="top" target="comments">
-                                               Usurios
+                                            <UncontrolledTooltip placement="top" target="users">
+                                               Usuários
                                             </UncontrolledTooltip>
                                         </li>
                                         <li className="list-inline-item mr-3 float-right">

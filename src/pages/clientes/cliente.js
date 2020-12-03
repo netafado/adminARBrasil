@@ -66,6 +66,7 @@ const ClienteSingle = (props) => {
 
     const updateContrato = async(contrato) =>{
         // update contrato
+        console.log(contrato)
         setAtualizando(true)
         let input = {
             pk: cliente.pk,
@@ -300,14 +301,14 @@ const ClienteSingle = (props) => {
                                                 <Col sm="6" xs="6">
                                                     <div className="mt-2">
                                                         <h5 className="font-size-14"><i className="bx bx-calendar mr-1 text-primary"></i> Início</h5>
-                                                    <p className="text-muted mb-0">{ moment(cliente.dataInicio).format("DD/MM/YYYY")}</p>
+                                                    <p className="text-muted mb-0">{ moment(cliente.dataInicioContrato).format("DD/MM/YYYY")}</p>
                                                     </div>
                                                 </Col>
 
                                                 <Col sm="6" xs="6">
                                                     <div className="mt-2">
                                                         <h5 className="font-size-14"><i className="bx bx-calendar-check mr-1 text-primary"></i> Fim</h5>
-                                                        <p className="text-muted mb-0">{moment(cliente.dataFim).format("DD/MM/YYYY")}</p>
+                                                        <p className="text-muted mb-0">{moment(cliente.dataFimContrato).format("DD/MM/YYYY")}</p>
                                                     </div>
                                                 </Col>
 
