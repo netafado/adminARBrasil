@@ -25,8 +25,6 @@ import logo from "../../assets/images/logo.svg";
     const [codigoVerificacao, setarCodigiVerificacao] = useState("");
     const [username, setatrUser]    = useState("");
     const [password, setarPassword] = useState("");
-
-
     async function handleValidSubmit(event, values) {
 
       await Auth.forgotPassword(values.email.toLowerCase().trim() )
