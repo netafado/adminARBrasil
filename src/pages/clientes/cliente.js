@@ -21,10 +21,13 @@ import {listarProdutos}             from "../../store/listaProdutos/actions"
 import ModalCliente from "./parts/modalClientes"
 import ModalProduto from "./parts/modalProdutos"
 import ModalClienteEdit from "./parts/modalClienteEditar"
+import ModalGerarLink from "./parts/modalGerarLink"
 
 const ClienteSingle = (props) => {
     const [modalContrato, setmodalContrato]     = useState(false);
     const [modalProdutos, setModalProdutos]     = useState(false)
+    const [modalConvite, setModalConvite]     = useState(false)
+    const [convidado, setConvidaddo]          = useState(false)
     const [modal_membro, setmodal_membro]       = useState(false);
     const [atualiazando, setAtualizando]        = useState(false)
     const [modal_membroEdit, setmodal_membroEdit]       = useState(false);
@@ -206,12 +209,15 @@ const ClienteSingle = (props) => {
         loadInfo()
 
     }
+    
+
     const toggleModalProduto = () => {
         setModalProdutos(!modalProdutos)
     }
     const toggleModalClienteEdit = () => {
         setmodal_membroEdit(!modal_membroEdit)
     }
+
     useEffect(()=>{
         loadInfo()
     }, [])
@@ -228,7 +234,10 @@ const ClienteSingle = (props) => {
         toggleModalClienteEdit( true )
     }
 
-
+    const abrirModalConvide = (user) =>{
+        setConvidaddo(user)
+        setModalConvite(true)
+    }
 
     function toggleModalContrato() {
         setmodalContrato(!modalContrato);
@@ -244,6 +253,7 @@ const ClienteSingle = (props) => {
     return (
              <React.Fragment>
                 <ModalCliente modal={modal_membro} toggle={tog_membro} enviarClienteNovo={adicionarUser} />
+                <ModalGerarLink modal={modalConvite} toggle={()=> setModalConvite(!modalConvite) } />
                 <ModalProduto modal={modalProdutos} toggle={toggleModalProduto}  enviarNovoProduto={adcionarProdutoComSetUp} />
                 <ModalContrato modal={modalContrato} toggle={toggleModalContrato} f_func={updateContrato} contratoCliente={cliente.contrato}/>
                 <ModalClienteEdit modal={modal_membroEdit} toggle={toggleModalClienteEdit} enviarClienteNovo={updateUser} user={userEdit}/>
@@ -351,7 +361,8 @@ const ClienteSingle = (props) => {
                                                                     </td>
                                                                 <td>
                                                                     <div>
-                                                                        <button disabled={true} type="button" className="btn btn-success btn-small waves-effect waves-light float-right"><i className="bx bx bx-paper-plane font-size-16 align-middle mr-2"></i> Convidar Aplicativo
+                                                                        <button onClick={()=> abrirModalConvide(member)} type="button" className="btn btn-success btn-small waves-effect waves-light float-right">
+                                                                            <i className="bx bx bx-paper-plane font-size-16 align-middle mr-2"></i> Convidar Aplicativo
                                                                         </button >
                                                                     </div>
                                                                 </td>

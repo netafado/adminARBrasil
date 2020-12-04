@@ -26,7 +26,7 @@ const AdicionarCliente = (props) => {
     const [carregandoLogo, setCarregandoLogo] = useState(false)
     const [visible, setVisible] = useState(false);
     const onDismiss = () => setVisible(false);
-    const mudarImg = async(e) => {
+    const mudarImg = async(e) => { 
         const file = e.target.files[0]
         setCarregandoLogo(true)
         const urlFile = await salvarToStorage(file)

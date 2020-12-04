@@ -14,7 +14,7 @@ import Clientes from "../pages/clientes";
 import ClientesAdd from "../pages/clientes/addCliente";
 import EditarCliente from "../pages/clientes/aditeCliente";
 import Cliente from "../pages/clientes/cliente";
-
+import LinkCadastro from "../pages/linkCadastro"
 import AddProduto from "../pages/produtos/produto";
 import EditarProduto from "../pages/produtos/editProduto";
 import Produtos from "../pages/produtos"
@@ -36,7 +36,6 @@ const userRoutes = [
 	{ path: "/produtos", component: Produtos },
 	{ path: "/tecnicos", component: Tecnicos },
 	{ path: "/tecnico-editar", component: EditarTecnico },
-
 	{ path: "/adicionar-tecnico", component: AddTecnico },
 
 	{ path: "/", exact: true, component: () => <Redirect to="/dashboard" /> }
@@ -45,6 +44,7 @@ const userRoutes = [
 const authRoutes = [
 	{ path: "/logout", component: Logout },
 	{ path: "/login", component: Login },
+	{ path: "/linkCadastro/:id", component: LinkCadastro },
 	{ path: "/alter-password", component: AlterPassword },
 	{ path: "/forgot-password", component: ForgetPwd },
 	{ path: "/register", component: Register },
